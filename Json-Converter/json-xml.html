@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>JSON to XML Converter</title>
+<link rel="stylesheet" href="../common.css">
+<style>
+/* Your provided CSS exactly retained */
+body {
+  background: linear-gradient(135deg, #fafdff 0%, #e8f6ef 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+}
+/* Rest same as your shared CSS */
+.json-formatter-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  margin-top: 100px;
+  padding: 32px 0;
+  max-width: 1800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.json-title {
+  text-align: center;
+  font-size: 2.2em;
+  font-weight: bold;
+  color: #2196f3;
+  letter-spacing: 0.03em;
+}
+.button-panel {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+}
+.button-panel button {
+  min-width: 180px;
+  padding: 16px 0;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.08em;
+  font-weight: 500;
+  background: linear-gradient(90deg, #2196f3 0%, #43e97b 100%);
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.button-panel button:hover {
+  background: linear-gradient(90deg, #43e97b 0%, #2196f3 100%);
+}
+.json-box-row {
+  display: flex;
+  gap: 32px;
+  width: 100%;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.json-box {
+  background: #f4fbfa;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(33, 150, 243, 0.10);
+  border: 1px solid #e0f2f1;
+  padding: 0 18px;
+  width: 90vw;
+  max-width: 700px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+.box-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #111;
+  color: #fff;
+  padding: 12px;
+  border-top-left-radius: 14px;
+  border-top-right-radius: 14px;
+  margin-bottom: 8px;
+}
+.box-label {
+  font-weight: bold;
+}
+.box-options {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.box-options label, .box-options button {
+  background: none;
+  border: none;
+  color: #2196f3;
+  cursor: pointer;
+  font-size: 1.3em;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+.box-options label input {
+  display: none;
+}
+.code-area-wrapper {
+  display: flex;
+  flex: 1 1 auto;
+  min-height: 320px;
+  max-height: 900px;
+  background: #fafdff;
+  border-radius: 8px;
+  border: 1px solid #b2ebf2;
+  overflow: hidden;
+  box-sizing: border-box;
+  margin-bottom: 8px;
+  height: 100%;
+  width: 100%;
+  max-width: 700px;
+  min-width: 260px;
+}
+.code-scroll {
+  overflow: auto;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  min-width: 0;
+  min-height: 320px;
+  max-height: 900px;
+}
+.json-textarea {
+  width: 100%;
+  min-height: 300px;
+  max-height: 900px;
+  height: 100%;
+  resize: none;
+  border: none;
+  outline: none;
+  padding: 16px;
+  font-size: 1.08em;
+  font-family: 'Fira Mono', 'Consolas', monospace;
+  background: transparent;
+  color: #1a2a32;
+  box-sizing: border-box;
+}
+.close-fullscreen-btn {
+  position: absolute;
+  top: 10px;
+  right: 18px;
+  z-index: 100000;
+  background: #fff;
+  color: #111;
+  border: 1px solid #b2ebf2;
+  border-radius: 6px;
+  font-size: 1.5em;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 2px 12px;
+  box-shadow: 0 2px 8px rgba(33, 150, 243, 0.07);
+  display: none;
+}
+.json-box:fullscreen .close-fullscreen-btn,
+.json-box:-webkit-full-screen .close-fullscreen-btn,
+.json-box:-ms-fullscreen .close-fullscreen-btn {
+  display: block;
+}
+.json-box:fullscreen .code-area-wrapper,
+.json-box:-webkit-full-screen .code-area-wrapper,
+.json-box:-ms-fullscreen .code-area-wrapper {
+  flex: 1 1 auto;
+  min-height: 0;
+  max-height: none;
+  width: 100vw;
+  max-width: 100vw;
+  min-width: 0;
+  margin-bottom: 0;
+  border-radius: 0;
+  border: none;
+}
+.json-box:fullscreen .code-scroll,
+.json-box:-webkit-full-screen .code-scroll,
+.json-box:-ms-fullscreen .code-scroll {
+  width: 100vw;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  max-width: 100vw;
+  max-height: 100vh;
+}
+.json-box:fullscreen .json-textarea,
+.json-box:-webkit-full-screen .json-textarea,
+.json-box:-ms-fullscreen .json-textarea {
+  width: 100vw;
+  height: 100vh;
+  min-height: 0;
+  max-height: none;
+  font-size: 1.2em;
+  padding: 24px;
+  background: #fafdff;
+}
+.json-box:fullscreen .box-header,
+.json-box:-webkit-full-screen .box-header,
+.json-box:-ms-fullscreen .box-header {
+  border-radius: 0;
+  height: 54px;
+  font-size: 1.2em;
+}
+.json-box:fullscreen .box-options .icon-btn,
+.json-box:-webkit-full-screen .box-options .icon-btn,
+.json-box:-ms-fullscreen .box-options .icon-btn {
+  font-size: 1.5em;
+}
+.upload-label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  color: #1976d2;
+  font-size: 1.1em;
+  font-weight: 500;
+  gap: 4px;
+  margin-right: 12px;
+}
+.upload-label input[type='file'] {
+  display: none;
+}
+.upload-icon {
+  font-size: 1.2em;
+}
+.upload-text {
+  color: #1976d2;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.icon-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.3em;
+  color: #1976d2;
+  padding: 4px 8px;
+  border-radius: 6px;
+  position: relative;
+  transition: background 0.2s;
+  display: inline-flex;
+  align-items: center;
+}
+.icon-btn:hover {
+  background: #e0f7fa;
+}
+.icon-btn .tooltip {
+  display: none;
+  position: absolute;
+  bottom: 120%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #222;
+  color: #fff;
+  padding: 5px 12px;
+  border-radius: 6px;
+  font-size: 0.95em;
+  white-space: nowrap;
+  z-index: 10;
+  pointer-events: none;
+  opacity: 0.95;
+}
+.icon-btn:hover .tooltip {
+  display: block;
+}
+</style>
+</head>
+<body>
+
+<div class="navbar">
+  <img src="../images/logo.png" alt="Logo">
+  <a href="../index.html">HOME</a>
+  <a href="../admin/">ARTICLE</a>
+</div>
+
+<div class="json-formatter-container">
+  <div class="json-title">JSON to XML Converter</div>
+
+  <div class="button-panel">
+    <button onclick="convertToXML()">Convert to XML</button>
+    <button onclick="copyOutput()">Copy XML</button>
+    <button onclick="downloadOutput()">Download XML</button>
+  </div>
+
+  <div class="json-box-row">
+    <div class="json-box">
+      <div class="box-header">
+        <span class="box-label">Input</span>
+        <div class="box-options">
+          <label class="upload-label">
+            <input type="file" accept="application/json" onchange="uploadJSONFile(event)">
+            <span class="upload-icon">📁</span>
+            <span class="upload-text">Upload a file</span>
+          </label>
+          <button class="icon-btn" title="Full Screen" onclick="toggleFullScreen(this)">
+            ⛶
+            <span class="tooltip">Full Screen</span>
+          </button>
+          <button class="icon-btn" title="Clear" onclick="clearJSON('input')">
+            🗑️
+            <span class="tooltip">Clear</span>
+          </button>
+        </div>
+      </div>
+      <div class="code-area-wrapper">
+        <div class="code-scroll">
+          <textarea class="json-textarea" id="jsonInput" placeholder='Enter JSON Object or Array'></textarea>
+        </div>
+      </div>
+      <button class="close-fullscreen-btn" onclick="exitFullScreen()">✕</button>
+    </div>
+
+    <div class="json-box">
+      <div class="box-header">
+        <span class="box-label">Output</span>
+        <div class="box-options">
+          <button class="icon-btn" title="Full Screen" onclick="toggleFullScreen(this)">
+            ⛶
+            <span class="tooltip">Full Screen</span>
+          </button>
+          <button class="icon-btn" title="Clear" onclick="clearJSON('output')">
+            🗑️
+            <span class="tooltip">Clear</span>
+          </button>
+        </div>
+      </div>
+      <div class="code-area-wrapper">
+        <div class="code-scroll">
+          <textarea class="json-textarea" id="xmlOutput" placeholder="XML result will appear here..." readonly></textarea>
+        </div>
+      </div>
+      <button class="close-fullscreen-btn" onclick="exitFullScreen()">✕</button>
+    </div>
+  </div>
+</div>
+
+<script>
+function convertToXML() {
+  const input = document.getElementById('jsonInput').value.trim();
+  const output = document.getElementById('xmlOutput');
+  output.value = '';
+
+  try {
+    const obj = JSON.parse(input);
+    const xml = jsonToXml(obj);
+    output.value = xml;
+  } catch (e) {
+    alert('Invalid JSON format.');
+  }
+}
+
+function jsonToXml(obj, root = 'root') {
+  if (typeof obj !== 'object' || obj === null) return `<${root}>${obj}</${root}>`;
+
+  if (Array.isArray(obj)) {
+    return obj.map(item => jsonToXml(item, root)).join('');
+  }
+
+  let xml = `<${root}>`;
+  for (const key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      xml += jsonToXml(obj[key], key);
+    }
+  }
+  xml += `</${root}>`;
+  return xml;
+}
+
+function clearJSON(which) {
+  if (which === 'input') document.getElementById('jsonInput').value = '';
+  else document.getElementById('xmlOutput').value = '';
+}
+
+function uploadJSONFile(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    document.getElementById('jsonInput').value = e.target.result;
+  };
+  reader.readAsText(file);
+}
+
+function toggleFullScreen(button) {
+  const box = button.closest('.json-box');
+  if (!document.fullscreenElement) {
+    if (box.requestFullscreen) box.requestFullscreen();
+    else if (box.webkitRequestFullscreen) box.webkitRequestFullscreen();
+    else if (box.msRequestFullscreen) box.msRequestFullscreen();
+  } else {
+    exitFullScreen();
+  }
+}
+
+function exitFullScreen() {
+  if (document.exitFullscreen) document.exitFullscreen();
+  else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+  else if (document.msExitFullscreen) document.msExitFullscreen();
+}
+
+function copyOutput() {
+  const output = document.getElementById('xmlOutput').value;
+  if (!output || output.trim() === '') {
+    alert('Please convert JSON to XML first.');
+    return;
+  }
+  
+  navigator.clipboard.writeText(output).then(() => {
+    alert('XML copied to clipboard!');
+  }).catch(err => {
+    console.error('Failed to copy: ', err);
+    alert('Failed to copy to clipboard. Please try again.');
+  });
+}
+
+function downloadOutput() {
+  const output = document.getElementById('xmlOutput').value;
+  if (!output || output.trim() === '') {
+    alert('Please convert JSON to XML first.');
+    return;
+  }
+  
+  const blob = new Blob([output], { type: 'application/xml;charset=utf-8;' });
+  const link = document.createElement('a');
+  const url = URL.createObjectURL(blob);
+  link.setAttribute('href', url);
+  link.setAttribute('download', 'converted.xml');
+  link.style.visibility = 'hidden';
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>JSON to SQL Insert Converter</title>
+<link rel="stylesheet" href="../common.css">
+<style>
+body {
+  background: linear-gradient(135deg, #fafdff 0%, #e8f6ef 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.json-formatter-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  margin-top: 100px;
+  padding: 32px 0;
+  max-width: 1800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.json-title {
+  text-align: center;
+  font-size: 2.2em;
+  font-weight: bold;
+  color: #2196f3;
+  letter-spacing: 0.03em;
+}
+
+.button-panel {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+}
+
+.button-panel button {
+  min-width: unset;
+  padding: 16px 32px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.08em;
+  font-weight: 500;
+  background: linear-gradient(90deg, #2196f3 0%, #43e97b 100%);
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.button-panel button:hover {
+  background: linear-gradient(90deg, #43e97b 0%, #2196f3 100%);
+}
+
+.json-box-row {
+  display: flex;
+  gap: 32px;
+  width: 100%;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.json-box {
+  background: #f4fbfa;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(33, 150, 243, 0.10);
+  border: 1px solid #e0f2f1;
+  padding: 0 18px;
+  width: 90vw;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.box-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #111;
+  color: #fff;
+  padding: 12px;
+  border-top-left-radius: 14px;
+  border-top-right-radius: 14px;
+  margin-bottom: 8px;
+}
+
+.box-label {
+  font-weight: bold;
+}
+
+.box-options {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.box-options button {
+  background: none;
+  border: none;
+  color: #2196f3;
+  cursor: pointer;
+  font-size: 1.3em;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.code-area-wrapper {
+  display: flex;
+  flex: 1 1 auto;
+  min-height: 320px;
+  max-height: 900px;
+  background: #fafdff;
+  border-radius: 8px;
+  border: 1px solid #b2ebf2;
+  overflow: hidden;
+  box-sizing: border-box;
+  margin-bottom: 8px;
+  height: 100%;
+  width: 100%;
+  max-width: 600px;
+  min-width: 260px;
+}
+
+.code-scroll {
+  overflow: auto;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  min-width: 0;
+  min-height: 320px;
+  max-height: 900px;
+}
+
+.json-textarea {
+  width: 100%;
+  min-height: 300px;
+  max-height: 900px;
+  height: 100%;
+  resize: none;
+  border: none;
+  outline: none;
+  padding: 16px;
+  font-size: 1.08em;
+  font-family: 'Fira Mono', 'Consolas', monospace;
+  background: transparent;
+  color: #1a2a32;
+  box-sizing: border-box;
+}
+
+.table-name-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-width: 220px;
+  max-width: 220px;
+  margin: 0 8px;
+  background: #fafdff;
+  border-radius: 12px;
+  border: 1px solid #b2ebf2;
+  box-shadow: 0 2px 8px rgba(33, 150, 243, 0.04);
+  padding: 18px 8px;
+  height: fit-content;
+}
+
+.upload-label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  color: #1976d2;
+  font-size: 1.1em;
+  font-weight: 500;
+  gap: 4px;
+  margin-right: 12px;
+}
+.upload-label input[type='file'] {
+  display: none;
+}
+.upload-icon {
+  font-size: 1.2em;
+}
+.upload-text {
+  color: #1976d2;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.icon-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.3em;
+  color: #1976d2;
+  padding: 4px 8px;
+  border-radius: 6px;
+  position: relative;
+  transition: background 0.2s;
+  display: inline-flex;
+  align-items: center;
+}
+.icon-btn:hover {
+  background: #e0f7fa;
+}
+.icon-btn .tooltip {
+  display: none;
+  position: absolute;
+  bottom: 120%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #222;
+  color: #fff;
+  padding: 5px 12px;
+  border-radius: 6px;
+  font-size: 0.95em;
+  white-space: nowrap;
+  z-index: 10;
+  pointer-events: none;
+  opacity: 0.95;
+}
+.icon-btn:hover .tooltip {
+  display: block;
+}
+</style>
+</head>
+<body>
+
+<div class="navbar">
+  <img src="../images/logo.png" alt="Logo">
+  <a href="../index.html">HOME</a>
+  <a href="../admin/">ARTICLE</a>
+</div>
+
+<div class="json-formatter-container">
+  <div class="json-title">JSON to SQL Insert Converter</div>
+
+  <div class="button-panel">
+    <button onclick="convertToSQL()">Convert to SQL</button>
+    <button onclick="copyOutput()">Copy SQL</button>
+    <button onclick="downloadOutput()">Download SQL</button>
+  </div>
+
+  <div class="json-box-row">
+    <div class="json-box">
+      <div class="box-header">
+        <span class="box-label">Input</span>
+        <div class="box-options">
+          <label class="upload-label">
+            <input type="file" accept="application/json" onchange="uploadJSONFile(event)">
+            <span class="upload-icon">📁</span>
+            <span class="upload-text">Upload a file</span>
+          </label>
+          <button class="icon-btn" title="Full Screen" onclick="toggleFullScreen(this)">
+            ⛶
+            <span class="tooltip">Full Screen</span>
+          </button>
+          <button class="icon-btn" title="Clear" onclick="clearJSON('input')">
+            🗑️
+            <span class="tooltip">Clear</span>
+          </button>
+        </div>
+      </div>
+      <div class="code-area-wrapper">
+        <div class="code-scroll">
+          <textarea class="json-textarea" id="jsonInput" placeholder='Enter JSON Array of Objects Example: [{"id":1,"name":"Alice","profile":{"age":30,"city":"New York"},"hobbies":["reading","swimming"]}]'></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="table-name-container">
+      <label for="tableNameInput" style="font-weight: 500; color: #1565c0; margin-bottom: 8px;">Table Name</label>
+      <input id="tableNameInput" type="text" placeholder="table_name" style="padding: 10px 18px; border-radius: 8px; border: 1px solid #b2ebf2; font-size: 1.08em; width: 180px; margin-top: 8px;">
+    </div>
+
+    <div class="json-box">
+      <div class="box-header">
+        <span class="box-label">Output</span>
+        <div class="box-options">
+          <button class="icon-btn" title="Full Screen" onclick="toggleFullScreen(this)">
+            ⛶
+            <span class="tooltip">Full Screen</span>
+          </button>
+          <button class="icon-btn" title="Clear" onclick="clearJSON('output')">
+            🗑️
+            <span class="tooltip">Clear</span>
+          </button>
+        </div>
+      </div>
+      <div class="code-area-wrapper">
+        <div class="code-scroll">
+          <textarea class="json-textarea" id="sqlOutput" placeholder="SQL INSERT statements will appear here..." readonly></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function convertToSQL() {
+  const input = document.getElementById('jsonInput').value.trim();
+  const output = document.getElementById('sqlOutput');
+  const tableNameInput = document.getElementById('tableNameInput');
+  const tableName = (tableNameInput && tableNameInput.value.trim()) ? tableNameInput.value.trim() : 'table_name';
+  output.value = '';
+  try {
+    const arr = JSON.parse(input);
+    if (!Array.isArray(arr) || arr.length === 0 || typeof arr[0] !== 'object') {
+      alert('Input JSON must be a non-empty array of objects.');
+      return;
+    }
+    const sql = jsonToSQL(arr, tableName);
+    output.value = sql;
+  } catch (e) {
+    alert('Invalid JSON format.');
+  }
+}
+
+function jsonToSQL(arr, tableName) {
+  // Get all unique keys
+  const keys = Array.from(new Set(arr.flatMap(obj => Object.keys(obj))));
+  let sql = '';
+  for (const obj of arr) {
+    const columns = keys.join(', ');
+    const values = keys.map(key => sqlValue(obj[key])).join(', ');
+    sql += `INSERT INTO ${tableName} (${columns}) VALUES (${values});\n`;
+  }
+  return sql.trim();
+}
+
+function sqlValue(val) {
+  if (val === null || val === undefined) return 'NULL';
+  if (typeof val === 'number') return val;
+  if (typeof val === 'boolean') return val ? 'TRUE' : 'FALSE';
+  if (typeof val === 'object') return `'${JSON.stringify(val).replace(/'/g, "''")}'`;
+  return `'${String(val).replace(/'/g, "''")}'`;
+}
+
+function clearJSON(which) {
+  if (which === 'input') document.getElementById('jsonInput').value = '';
+  else document.getElementById('sqlOutput').value = '';
+}
+
+function toggleFullScreen(button) {
+  const box = button.closest('.json-box');
+  if (!document.fullscreenElement) {
+    if (box.requestFullscreen) box.requestFullscreen();
+    else if (box.webkitRequestFullscreen) box.webkitRequestFullscreen();
+    else if (box.msRequestFullscreen) box.msRequestFullscreen();
+  } else {
+    if (document.exitFullscreen) document.exitFullscreen();
+    else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+    else if (document.msExitFullscreen) document.msExitFullscreen();
+  }
+}
+
+function copyOutput() {
+  const output = document.getElementById('sqlOutput').value;
+  if (!output || output.trim() === '') {
+    alert('Please convert JSON to SQL first.');
+    return;
+  }
+  navigator.clipboard.writeText(output).then(() => {
+    alert('SQL statements copied to clipboard!');
+  }).catch(err => {
+    console.error('Failed to copy: ', err);
+    alert('Failed to copy to clipboard. Please try again.');
+  });
+}
+
+function downloadOutput() {
+  const output = document.getElementById('sqlOutput').value;
+  if (!output || output.trim() === '') {
+    alert('Please convert JSON to SQL first.');
+    return;
+  }
+  const blob = new Blob([output], { type: 'text/plain;charset=utf-8;' });
+  const link = document.createElement('a');
+  const url = URL.createObjectURL(blob);
+  link.setAttribute('href', url);
+  link.setAttribute('download', 'insert_statements.sql');
+  link.style.visibility = 'hidden';
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>JSON to Excel Converter</title>
+<link rel="stylesheet" href="../common.css">
+<style>
+body {
+  background: linear-gradient(135deg, #fafdff 0%, #e8f6ef 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.json-formatter-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  margin-top: 100px;
+  padding: 32px 0;
+  max-width: 1800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.json-title {
+  text-align: center;
+  font-size: 2.2em;
+  font-weight: bold;
+  color: #2196f3;
+  letter-spacing: 0.03em;
+}
+
+.button-panel {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+}
+
+.button-panel button {
+  min-width: 180px;
+  padding: 16px 0;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.08em;
+  font-weight: 500;
+  background: linear-gradient(90deg, #2196f3 0%, #43e97b 100%);
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.button-panel button:hover {
+  background: linear-gradient(90deg, #43e97b 0%, #2196f3 100%);
+}
+
+.json-box-row {
+  display: flex;
+  gap: 32px;
+  width: 100%;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.json-box {
+  background: #f4fbfa;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(33, 150, 243, 0.10);
+  border: 1px solid #e0f2f1;
+  padding: 0 18px;
+  width: 90vw;
+  max-width: 700px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.box-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #111;
+  color: #fff;
+  padding: 12px;
+  border-top-left-radius: 14px;
+  border-top-right-radius: 14px;
+  margin-bottom: 8px;
+}
+
+.box-label {
+  font-weight: bold;
+}
+
+.box-options {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.box-options label, .box-options button {
+  background: none;
+  border: none;
+  color: #2196f3;
+  cursor: pointer;
+  font-size: 1.3em;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.box-options label input {
+  display: none;
+}
+
+.code-area-wrapper {
+  display: flex;
+  flex: 1 1 auto;
+  min-height: 320px;
+  max-height: 900px;
+  background: #fafdff;
+  border-radius: 8px;
+  border: 1px solid #b2ebf2;
+  overflow: hidden;
+  box-sizing: border-box;
+  margin-bottom: 8px;
+  height: 100%;
+  width: 100%;
+  max-width: 700px;
+  min-width: 260px;
+}
+
+.code-scroll {
+  overflow: auto;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  min-width: 0;
+  min-height: 320px;
+  max-height: 900px;
+}
+
+.json-textarea {
+  width: 100%;
+  min-height: 300px;
+  max-height: 900px;
+  height: 100%;
+  resize: none;
+  border: none;
+  outline: none;
+  padding: 16px;
+  font-size: 1.08em;
+  font-family: 'Fira Mono', 'Consolas', monospace;
+  background: transparent;
+  color: #1a2a32;
+  box-sizing: border-box;
+}
+
+.close-fullscreen-btn {
+  position: absolute;
+  top: 10px;
+  right: 18px;
+  z-index: 100000;
+  background: #fff;
+  color: #111;
+  border: 1px solid #b2ebf2;
+  border-radius: 6px;
+  font-size: 1.5em;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 2px 12px;
+  box-shadow: 0 2px 8px rgba(33, 150, 243, 0.07);
+  display: none;
+}
+
+.json-box:fullscreen .close-fullscreen-btn,
+.json-box:-webkit-full-screen .close-fullscreen-btn,
+.json-box:-ms-fullscreen .close-fullscreen-btn {
+  display: block;
+}
+
+.json-box:fullscreen .code-area-wrapper,
+.json-box:-webkit-full-screen .code-area-wrapper,
+.json-box:-ms-fullscreen .code-area-wrapper {
+  flex: 1 1 auto;
+  min-height: 0;
+  max-height: none;
+  width: 100vw;
+  max-width: 100vw;
+  min-width: 0;
+  margin-bottom: 0;
+  border-radius: 0;
+  border: none;
+}
+
+.json-box:fullscreen .code-scroll,
+.json-box:-webkit-full-screen .code-scroll,
+.json-box:-ms-fullscreen .code-scroll {
+  width: 100vw;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  max-width: 100vw;
+  max-height: 100vh;
+}
+
+.json-box:fullscreen .json-textarea,
+.json-box:-webkit-full-screen .json-textarea,
+.json-box:-ms-fullscreen .json-textarea {
+  width: 100vw;
+  height: 100vh;
+  min-height: 0;
+  max-height: none;
+  font-size: 1.2em;
+  padding: 24px;
+  background: #fafdff;
+}
+
+.json-box:fullscreen .box-header,
+.json-box:-webkit-full-screen .box-header,
+.json-box:-ms-fullscreen .box-header {
+  border-radius: 0;
+  height: 54px;
+  font-size: 1.2em;
+}
+
+.json-box:fullscreen .box-options .icon-btn,
+.json-box:-webkit-full-screen .box-options .icon-btn,
+.json-box:-ms-fullscreen .box-options .icon-btn {
+  font-size: 1.5em;
+}
+
+.upload-label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  color: #1976d2;
+  font-size: 1.1em;
+  font-weight: 500;
+  gap: 4px;
+  margin-right: 12px;
+}
+.upload-label input[type='file'] {
+  display: none;
+}
+.upload-icon {
+  font-size: 1.2em;
+}
+.upload-text {
+  color: #1976d2;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.icon-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.3em;
+  color: #1976d2;
+  padding: 4px 8px;
+  border-radius: 6px;
+  position: relative;
+  transition: background 0.2s;
+  display: inline-flex;
+  align-items: center;
+}
+.icon-btn:hover {
+  background: #e0f7fa;
+}
+.icon-btn .tooltip {
+  display: none;
+  position: absolute;
+  bottom: 120%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #222;
+  color: #fff;
+  padding: 5px 12px;
+  border-radius: 6px;
+  font-size: 0.95em;
+  white-space: nowrap;
+  z-index: 10;
+  pointer-events: none;
+  opacity: 0.95;
+}
+.icon-btn:hover .tooltip {
+  display: block;
+}
+</style>
+<!-- SheetJS CDN for Excel export -->
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+</head>
+<body>
+
+<!-- TOOLBAR: remains as per your working common.css -->
+<div class="navbar">
+  <img src="../images/logo.png" alt="Logo">
+  <a href="../index.html">HOME</a>
+  <a href="../admin/">ARTICLE</a>
+</div>
+
+<div class="json-formatter-container">
+  <div class="json-title">JSON to Excel Converter</div>
+
+  <div class="json-box-row">
+    <div class="json-box">
+      <div class="box-header">
+        <span class="box-label">Input</span>
+        <div class="box-options">
+          <label class="upload-label">
+            <input type="file" accept="application/json" onchange="uploadJSONFile(event)">
+            <span class="upload-icon">📁</span>
+            <span class="upload-text">Upload a file</span>
+          </label>
+          <button class="icon-btn" title="Full Screen" onclick="toggleFullScreen(this)">
+            ⛶
+            <span class="tooltip">Full Screen</span>
+          </button>
+          <button class="icon-btn" title="Clear" onclick="clearJSON('input')">
+            🗑️
+            <span class="tooltip">Clear</span>
+          </button>
+        </div>
+      </div>
+      <div class="code-area-wrapper">
+        <div class="code-scroll">
+          <textarea class="json-textarea" id="jsonInput" placeholder='Enter JSON Array of Objects Example: [{"name":"John","age":30,"city":"New York"}]'></textarea>
+        </div>
+      </div>
+      <button class="close-fullscreen-btn" onclick="exitFullScreen()">✕</button>
+    </div>
+  </div>
+
+  <!-- Conversion Progress Bar and Buttons -->
+  <div id="conversionSection" style="width: 100%; max-width: 700px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 24px;">
+    <div id="progressBarContainer" style="width: 100%; display: none; flex-direction: column; align-items: center;">
+      <div style="width: 100%; margin-top: 18px;">
+        <div style="background: #e0e0e0; border-radius: 8px; width: 100%; height: 32px; position: relative;">
+          <div id="progressBar" style="background: #2196f3; height: 100%; width: 0%; border-radius: 8px; display: flex; align-items: center; transition: width 0.4s;"><span id="progressPercent" style="margin-left: 12px; color: #fff; font-weight: bold;">0%</span></div>
+        </div>
+        <div id="progressStatus" style="text-align: center; margin-top: 8px; font-size: 1.1em; font-weight: 500; color: #222;">Pending</div>
+      </div>
+    </div>
+    <div class="button-panel">
+      <button id="convertBtn" onclick="convertToExcel()">Convert to Excel</button>
+      <button id="downloadBtn" onclick="downloadOutput()" disabled>Download Excel</button>
+    </div>
+  </div>
+</div>
+
+<script>
+let lastExcelData = null;
+
+function showProgressBar() {
+  document.getElementById('progressBarContainer').style.display = 'flex';
+  setProgress(0, 'Pending');
+  document.getElementById('downloadBtn').disabled = true;
+}
+
+function setProgress(percent, status) {
+  const bar = document.getElementById('progressBar');
+  const percentText = document.getElementById('progressPercent');
+  const statusText = document.getElementById('progressStatus');
+  bar.style.width = percent + '%';
+  percentText.textContent = percent + '%';
+  statusText.textContent = status;
+}
+
+function convertToExcel() {
+  const input = document.getElementById('jsonInput').value.trim();
+  lastExcelData = null;
+  showProgressBar();
+  setProgress(10, 'Starting...');
+
+  setTimeout(() => {
+    setProgress(35, 'Parsing JSON...');
+    setTimeout(() => {
+      try {
+        const obj = JSON.parse(input);
+        if (!Array.isArray(obj)) {
+          setProgress(0, 'Input JSON must be an array of objects.');
+          alert('Input JSON must be an array of objects.');
+          return;
+        }
+        setProgress(70, 'Preparing Excel...');
+        setTimeout(() => {
+          lastExcelData = obj;
+          setProgress(100, 'Conversion Complete!');
+          document.getElementById('downloadBtn').disabled = false;
+        }, 600);
+      } catch (e) {
+        setProgress(0, 'Invalid JSON format.');
+        alert('Invalid JSON format.');
+      }
+    }, 700);
+  }, 500);
+}
+
+function clearJSON(which) {
+  if (which === 'input') document.getElementById('jsonInput').value = '';
+}
+
+function uploadJSONFile(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    document.getElementById('jsonInput').value = e.target.result;
+  };
+  reader.readAsText(file);
+}
+
+function toggleFullScreen(button) {
+  const box = button.closest('.json-box');
+  if (!document.fullscreenElement) {
+    if (box.requestFullscreen) box.requestFullscreen();
+    else if (box.webkitRequestFullscreen) box.webkitRequestFullscreen();
+    else if (box.msRequestFullscreen) box.msRequestFullscreen();
+  } else {
+    exitFullScreen();
+  }
+}
+
+function exitFullScreen() {
+  if (document.exitFullscreen) document.exitFullscreen();
+  else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+  else if (document.msExitFullscreen) document.msExitFullscreen();
+}
+
+function downloadOutput() {
+  if (!lastExcelData || !Array.isArray(lastExcelData)) {
+    alert('Please convert JSON to Excel first.');
+    return;
+  }
+  // Use SheetJS to create and download Excel file
+  const ws = XLSX.utils.json_to_sheet(lastExcelData);
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+  XLSX.writeFile(wb, 'converted.xlsx');
+}
+</script>
+
+</body>
+</html>
