@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>QR Code Generator</title>
+<link rel="stylesheet" href="../common.css">
+<style>
+body {
+  background: linear-gradient(135deg, #fafdff 0%, #e8f6ef 100%);
+  min-height: 100vh;
+  margin: 0;
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+}
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.qr-title {
+  font-size: 2.2em;
+  font-weight: 800;
+  color: #1976d2;
+  margin-top: 32px;
+  margin-bottom: 32px;
+  letter-spacing: 0.5px;
+  text-align: center;
+  background: #fafdff;
+  z-index: 2;
+  position: relative;
+}
+.qr-main-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 64px;
+  margin-top: 0;
+  width: 100%;
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.qr-left {
+  flex: 1 1 0;
+  min-width: 420px;
+  max-width: 600px;
+  background: #fff;
+  border-radius: 22px;
+  box-shadow: 0 6px 24px rgba(33, 150, 243, 0.10);
+  padding: 48px 44px 48px 44px;
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+.qr-selector-bar {
+  display: flex;
+  gap: 32px;
+  background: none;
+  border-radius: 0;
+  padding: 0;
+  margin-bottom: 32px;
+  justify-content: space-between;
+  box-shadow: none;
+}
+.qr-selector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  padding: 8px 24px;
+  border-radius: 12px;
+  transition: background 0.18s, box-shadow 0.18s;
+  border: 2px solid transparent;
+}
+.qr-selector.selected {
+  background: #f3f6fd;
+  border: 2px solid #1976d2;
+  box-shadow: 0 2px 8px rgba(33, 150, 243, 0.08);
+}
+.qr-selector i {
+  font-size: 2em;
+  color: #1976d2;
+  margin-bottom: 4px;
+}
+.qr-selector.selected i {
+  color: #1976d2;
+}
+.qr-selector-label {
+  font-size: 1.08em;
+  color: #757575;
+  font-weight: 500;
+}
+.qr-selector.selected .qr-selector-label {
+  color: #1976d2;
+  font-weight: 700;
+}
+.qr-step-title {
+  font-size: 1.18em;
+  font-weight: 700;
+  color: #2d223c;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.qr-step-title .step-num {
+  background: #2d223c;
+  color: #fff;
+  border-radius: 8px;
+  font-size: 1.1em;
+  font-weight: 700;
+  padding: 2px 12px;
+  margin-right: 10px;
+  display: inline-block;
+}
+.qr-input {
+  width: 100%;
+  padding: 18px;
+  border-radius: 10px;
+  border: 1.5px solid #b2ebf2;
+  font-size: 1.13em;
+  margin-bottom: 8px;
+  background: #fafdff;
+  color: #222;
+}
+.qr-tabs {
+  display: flex;
+  gap: 0;
+  margin-bottom: 18px;
+}
+.qr-tab {
+  padding: 12px 36px;
+  border-radius: 12px 12px 0 0;
+  background: #fafdff;
+  color: #1976d2;
+  font-weight: 500;
+  border: 1.5px solid #b2ebf2;
+  border-bottom: none;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  font-size: 1.08em;
+}
+.qr-tab.active {
+  background: #fff;
+  color: #2d223c;
+  border-bottom: 2px solid #fff;
+  font-weight: 700;
+}
+.qr-tab-content {
+  background: #fff;
+  border: 1.5px solid #b2ebf2;
+  border-radius: 0 0 16px 16px;
+  padding: 24px 24px 16px 24px;
+  margin-bottom: 18px;
+}
+.qr-logo-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  margin-bottom: 12px;
+}
+.qr-logo-option {
+  width: 54px;
+  height: 54px;
+  border-radius: 12px;
+  background: #fafdff;
+  border: 2px solid #b2ebf2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border 0.2s, box-shadow 0.2s;
+  font-size: 2.2em;
+}
+.qr-logo-option.selected {
+  border: 2.5px solid #1976d2;
+  box-shadow: 0 2px 8px rgba(33, 150, 243, 0.13);
+}
+.qr-right {
+  min-width: 340px;
+  max-width: 400px;
+  background: #fff;
+  border-radius: 22px;
+  box-shadow: 0 6px 24px rgba(33, 150, 243, 0.10);
+  padding: 48px 44px 48px 44px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+}
+.qr-result-title {
+  font-size: 1.18em;
+  font-weight: 700;
+  color: #2d223c;
+  margin-bottom: 12px;
+}
+.qr-code-box {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 2px 8px rgba(33, 150, 243, 0.07);
+  border: 1px solid #b2ebf2;
+  padding: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 18px;
+  position: relative;
+}
+.qr-download-btn {
+  padding: 16px 0;
+  width: 100%;
+  border: none;
+  border-radius: 10px;
+  font-size: 1.13em;
+  font-weight: 600;
+  background: linear-gradient(90deg, #2196f3 0%, #43e97b 100%);
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.qr-download-btn:hover {
+  background: linear-gradient(90deg, #43e97b 0%, #2196f3 100%);
+}
+</style>
+<!-- QRCode.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+<!-- Icons CDN (FontAwesome for demo) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+<div class="navbar">
+  <img src="../images/logo.png" alt="Logo">
+  <a href="../index.html">HOME</a>
+  <a href="../admin/">ARTICLE</a>
+</div>
+<div class="qr-title">Generate your fancy QR code here!</div>
+<div class="qr-main-container">
+  <div class="qr-left">
+    <div style="margin-bottom: 18px;">
+      <div style="font-size:1.13em;font-weight:700;margin-bottom:10px;">QR code can be generated for the following :</div>
+      <div class="qr-selector-bar" style="pointer-events:none;gap:28px;">
+        <div class="qr-selector" style="cursor:default;">
+          <i class="fa-solid fa-globe"></i>
+          <span class="qr-selector-label">Website</span>
+        </div>
+        <div class="qr-selector" style="cursor:default;">
+          <i class="fa-solid fa-file-lines"></i>
+          <span class="qr-selector-label">Text</span>
+        </div>
+        <div class="qr-selector" style="cursor:default;">
+          <i class="fa-regular fa-file-pdf"></i>
+          <span class="qr-selector-label">PDF</span>
+        </div>
+        <div class="qr-selector" style="cursor:default;">
+          <i class="fa-regular fa-image"></i>
+          <span class="qr-selector-label">Images</span>
+        </div>
+        <div class="qr-selector" style="cursor:default;">
+          <i class="fa-regular fa-circle-play"></i>
+          <span class="qr-selector-label">Video</span>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="qr-step-title"><span class="step-num">1</span>Complete the content</div>
+      <input class="qr-input" id="qrText" type="text" placeholder="Enter the content for your QR code..." />
+    </div>
+    <div>
+      <div class="qr-step-title"><span class="step-num">2</span>Design your QR</div>
+      <div class="qr-tabs">
+        <div class="qr-tab active">Logo</div>
+      </div>
+      <div class="qr-tab-content" id="tab-logo">
+        <div style="font-weight: 500; margin-bottom: 10px;">Select a logo</div>
+        <div class="qr-logo-options" id="logoOptions">
+          <div class="qr-logo-option selected" data-logo="none" onclick="selectLogo(this)"><i class="fa-solid fa-ban"></i></div>
+          <div class="qr-logo-option" data-logo="whatsapp" onclick="selectLogo(this)"><img src="../images/whatsapp.png" alt="whatsapp" style="width:32px;height:32px;"></div>
+          <div class="qr-logo-option" data-logo="instagram" onclick="selectLogo(this)"><img src="../images/instagram.png" alt="instagram" style="width:32px;height:32px;"></div>
+          <div class="qr-logo-option" data-logo="facebook" onclick="selectLogo(this)"><img src="../images/facebook.png" alt="facebook" style="width:32px;height:32px;"></div>
+          <div class="qr-logo-option" data-logo="twitter" onclick="selectLogo(this)"><img src="../images/twitter.png" alt="twitter" style="width:32px;height:32px;"></div>
+          <div class="qr-logo-option" data-logo="link" onclick="selectLogo(this)"><img src="../images/link.png" alt="link" style="width:32px;height:32px;"></div>
+          <div class="qr-logo-option" data-logo="location" onclick="selectLogo(this)"><img src="../images/location.png" alt="location" style="width:32px;height:32px;"></div>
+          <div class="qr-logo-option" data-logo="wifi" onclick="selectLogo(this)"><img src="../images/wifi.png" alt="wifi" style="width:32px;height:32px;"></div>
+          <div class="qr-logo-option" data-logo="mail" onclick="selectLogo(this)"><img src="../images/mail.png" alt="mail" style="width:32px;height:32px;"></div>
+          <div class="qr-logo-option" data-logo="scanner" onclick="selectLogo(this)"><img src="../images/scanner.png" alt="scanner" style="width:32px;height:32px;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="qr-right">
+    <div class="qr-result-title">Download your QR</div>
+    <div class="qr-code-box" id="qrCodeBox">
+      <div id="qrcode-hidden" style="display:none"></div>
+      <canvas id="qrcode-preview" width="220" height="220"></canvas>
+    </div>
+    <button class="qr-download-btn" onclick="downloadQR()">Download QR</button>
+  </div>
+</div>
+<script>
+let selectedLogo = 'none';
+
+function selectLogo(el) {
+  document.querySelectorAll('.qr-logo-option').forEach(opt => opt.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedLogo = el.getAttribute('data-logo');
+  setTimeout(updateQRCodePreview, 50);
+}
+function getLogoUrl(logo) {
+  const icons = {
+    whatsapp: '../images/whatsapp.png',
+    instagram: '../images/instagram.png',
+    facebook: '../images/facebook.png',
+    twitter: '../images/twitter.png',
+    link: '../images/link.png',
+    location: '../images/location.png',
+    wifi: '../images/wifi.png',
+    mail: '../images/mail.png',
+    scanner: '../images/scanner.png'
+  };
+  return icons[logo] || '';
+}
+function updateQRCodePreview() {
+  let text = document.getElementById('qrText').value.trim();
+  const qrBox = document.getElementById('qrcode-hidden');
+  const previewCanvas = document.getElementById('qrcode-preview');
+  if (!qrBox || !previewCanvas) return;
+  qrBox.innerHTML = '';
+  // Show placeholder QR if input is empty
+  if (!text) {
+    text = 'https://';
+  }
+  new QRCode(qrBox, {
+    text: text,
+    width: 220,
+    height: 220,
+    colorDark: '#222',
+    colorLight: '#fff',
+    correctLevel: QRCode.CorrectLevel.H
+  });
+  setTimeout(function() {
+    const qrCanvas = qrBox.querySelector('canvas');
+    if (qrCanvas) {
+      const ctx = previewCanvas.getContext('2d');
+      ctx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
+      ctx.drawImage(qrCanvas, 0, 0);
+      // Draw logo
+      if (selectedLogo !== 'none') {
+        let img = new window.Image();
+        img.onload = function() {
+          const size = 60;
+          ctx.save();
+          ctx.beginPath();
+          ctx.arc(previewCanvas.width/2, previewCanvas.height/2, size/2 + 6, 0, 2*Math.PI);
+          ctx.closePath();
+          ctx.fillStyle = '#fff';
+          ctx.fill();
+          ctx.restore();
+          ctx.save();
+          ctx.beginPath();
+          ctx.arc(previewCanvas.width/2, previewCanvas.height/2, size/2, 0, 2*Math.PI);
+          ctx.closePath();
+          ctx.clip();
+          ctx.drawImage(img, previewCanvas.width/2-size/2, previewCanvas.height/2-size/2, size, size);
+          ctx.restore();
+        };
+        img.src = getLogoUrl(selectedLogo) + '?cb=' + new Date().getTime();
+      }
+    }
+  }, 200);
+}
+function downloadQR() {
+  const previewCanvas = document.getElementById('qrcode-preview');
+  if (!previewCanvas) {
+    alert('Please generate a QR code first.');
+    return;
+  }
+  const link = document.createElement('a');
+  link.href = previewCanvas.toDataURL('image/png');
+  link.download = 'qrcode.png';
+  link.click();
+}
+// Event listeners for live preview
+const qrTextInput = document.getElementById('qrText');
+if (qrTextInput) {
+  qrTextInput.addEventListener('input', updateQRCodePreview);
+}
+// Initial preview
+setTimeout(updateQRCodePreview, 200);
+</script>
+</body>
+</html>
