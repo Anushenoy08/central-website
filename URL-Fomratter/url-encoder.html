@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>URL Encoder</title>
+  <link rel="stylesheet" href="../common.css">
+  <style>
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #fafdff 0%, #e8f6ef 100%);
+      font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+    }
+    .main-container {
+      max-width: 600px;
+      margin: 110px auto 32px auto;
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 6px 24px rgba(33, 150, 243, 0.10);
+      padding: 40px 32px 32px 32px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 32px;
+    }
+    .url-title {
+      font-size: 2.1em;
+      font-weight: 800;
+      color: #1976d2;
+      margin-bottom: 8px;
+      letter-spacing: 0.5px;
+      text-align: center;
+    }
+    .form-group {
+      width: 100%;
+      margin-bottom: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    label {
+      font-weight: 600;
+      color: #2196f3;
+      margin-bottom: 4px;
+    }
+    .url-input, .url-output {
+      width: 100%;
+      padding: 14px;
+      border-radius: 10px;
+      border: 1.5px solid #b2ebf2;
+      font-size: 1.13em;
+      background: #fafdff;
+      color: #222;
+      resize: vertical;
+      font-family: 'Fira Mono', 'Consolas', monospace;
+    }
+    .url-output {
+      background: #fafdff;
+      color: #1976d2;
+      margin-bottom: 0;
+    }
+    .action-btns {
+      display: flex;
+      gap: 16px;
+      width: 100%;
+      justify-content: flex-end;
+    }
+    .encode-btn, .copy-btn {
+      background: #2196f3;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 22px;
+      font-size: 1.08em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.18s;
+    }
+    .encode-btn:hover, .copy-btn:hover {
+      background: #43e97b;
+    }
+    @media (max-width: 700px) {
+      .main-container { padding: 18px 2vw; }
+    }
+  </style>
+</head>
+<body>
+  <div class="navbar">
+    <img src="../images/logo.png" alt="Logo">
+    <a href="../index.html">HOME</a>
+    <a href="../admin/">ARTICLE</a>
+  </div>
+  <div class="main-container">
+    <div class="url-title">URL Encoder</div>
+    <div class="form-group">
+      <label for="url-input">Enter text or URL to encode:</label>
+      <textarea id="url-input" class="url-input" rows="4" placeholder="Paste your text or URL here..."></textarea>
+    </div>
+    <div class="action-btns">
+      <button class="encode-btn" id="encode-btn">Encode</button>
+    </div>
+    <div class="form-group">
+      <label for="url-output">Encoded URL:</label>
+      <textarea id="url-output" class="url-output" rows="3" readonly placeholder="Encoded result will appear here..."></textarea>
+    </div>
+    <div class="action-btns">
+      <button class="copy-btn" id="copy-btn">Copy</button>
+    </div>
+  </div>
+  <script>
+    const encodeBtn = document.getElementById('encode-btn');
+    const copyBtn = document.getElementById('copy-btn');
+    const input = document.getElementById('url-input');
+    const output = document.getElementById('url-output');
+
+    encodeBtn.addEventListener('click', function() {
+      const val = input.value;
+      try {
+        output.value = encodeURIComponent(val);
+      } catch (e) {
+        output.value = 'Encoding error!';
+      }
+    });
+
+    copyBtn.addEventListener('click', function() {
+      output.select();
+      document.execCommand('copy');
+      copyBtn.textContent = 'Copied!';
+      setTimeout(() => { copyBtn.textContent = 'Copy'; }, 1200);
+    });
+  </script>
+</body>
+</html> 
