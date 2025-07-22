@@ -2,9 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>JSON Formatter | Developer Tools</title>
-    <link rel="stylesheet" href="common.css">
+    <title>Python Formatter | Developer Tools</title>
+    <link rel="stylesheet" href="../common.css">
     <style>
+        /* Copy all CSS from perlFormatter.html for identical UI */
         * { box-sizing: border-box; }
         body {
             background: linear-gradient(135deg, #fafdff 0%, #e8f6ef 100%);
@@ -267,14 +268,6 @@
             text-align: center;
             display: none;
         }
-        .ad-space {
-            height: 120px;
-            margin: 30px 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-        }
         .popup {
             position: fixed;
             top: 40px;
@@ -460,20 +453,19 @@
 
 <!-- TOOLBAR: remains as per your working common.css -->
 <div class="navbar">
-  <img src="images/logo.png" alt="Logo">
-  <a href="index.html">HOME</a>
-  <a href="admin/">ARTICLE</a>
+  <img src="../images/logo.png" alt="Logo">
+  <a href="../index.html">HOME</a>
+  <a href="../admin/">ARTICLE</a>
 </div>
 
 <div class="json-formatter-container">
-    <div class="json-title">JSON FORMATTER</div>
+    <div class="json-title">PYTHON FORMATTER</div>
     <div class="button-panel">
-        <button onclick="formatJSON()">Format</button>
-        <button onclick="validateJSON()">Validate</button>
-        <button onclick="beautifyJSON()">Beautify</button>
-        <button onclick="minifyJSON()">Minify</button>
-        <button onclick="copyJSON()">Copy JSON</button>
-        <button onclick="downloadJSON()">Download JSON</button>
+        <button onclick="formatPython()">Format</button>
+        <button onclick="validatePython()">Validate</button>
+        <button onclick="beautifyPython()">Beautify</button>
+        <button onclick="copyPython()">Copy Python</button>
+        <button onclick="downloadPython()">Download Python</button>
     </div>
     <div class="json-box-row">
         <div class="json-box">
@@ -481,17 +473,17 @@
                 <span class="box-label">Input</span>
                 <div class="box-options">
                     <label title="Upload a file">
-                        <input type="file" accept="application/json" onchange="uploadJSONFile('input', event)">
+                        <input type="file" accept=".py,.txt" onchange="uploadPythonFile('input', event)">
                         <span>📁<span class="tooltip">Upload a file</span></span>
                     </label>
                     <button class="icon-btn" title="Full Screen" onclick="toggleFullScreen(this)">⛶<span class="tooltip">Full Screen</span></button>
-                    <button class="icon-btn" title="Clear" onclick="clearJSON('input')">🗑️<span class="tooltip">Clear</span></button>
+                    <button class="icon-btn" title="Clear" onclick="clearPython('input')">🗑️<span class="tooltip">Clear</span></button>
                 </div>
             </div>
             <div class="code-area-wrapper">
                 <div class="code-scroll" id="inputScroll">
                     <div class="line-numbers" id="inputLineNumbers"></div>
-                    <textarea class="json-textarea" id="jsonInput" placeholder="Paste or type your JSON here..." oninput="updateInputLineNumbers()" onscroll="syncScroll('input')"></textarea>
+                    <textarea class="json-textarea" id="pythonInput" placeholder="Paste or type your Python script here..." oninput="updateInputLineNumbers()" onscroll="syncScroll('input')"></textarea>
                 </div>
             </div>
             <div id="errorMsg" class="error-message" style="display:none;"></div>
@@ -502,13 +494,13 @@
                 <span class="box-label">Output</span>
                 <div class="box-options">
                     <button class="icon-btn" title="Full Screen" onclick="toggleFullScreen(this)">⛶<span class="tooltip">Full Screen</span></button>
-                    <button class="icon-btn" title="Clear" onclick="clearJSON('output')">🗑️<span class="tooltip">Clear</span></button>
+                    <button class="icon-btn" title="Clear" onclick="clearPython('output')">🗑️<span class="tooltip">Clear</span></button>
                 </div>
             </div>
             <div class="code-area-wrapper">
                 <div class="code-scroll" id="outputScroll">
                     <div class="line-numbers" id="outputLineNumbers"></div>
-                    <textarea class="json-textarea" id="jsonOutput" placeholder="Formatted/Beautified JSON will appear here..." readonly oninput="updateOutputLineNumbers()" onscroll="syncScroll('output')"></textarea>
+                    <textarea class="json-textarea" id="pythonOutput" placeholder="Formatted/Beautified Python will appear here..." readonly oninput="updateOutputLineNumbers()" onscroll="syncScroll('output')"></textarea>
                 </div>
             </div>
             <button class="close-fullscreen-btn" onclick="exitFullScreen()">✕</button>
@@ -517,6 +509,7 @@
     <div id="popupMsg" class="popup" style="display:none;"><span id="popupText"></span><button class="close-btn" onclick="closePopup()">✕</button></div>
 </div>
 <script>
+    // --- UI helpers (copied from perlFormatter.html) ---
     function showError(msg) {
         const errorDiv = document.getElementById('errorMsg');
         errorDiv.innerText = msg;
@@ -527,105 +520,6 @@
         errorDiv.innerText = '';
         errorDiv.style.display = 'none';
     }
-    function showCopied() {
-        const copiedDiv = document.getElementById('copiedMsg');
-        copiedDiv.style.display = 'block';
-        setTimeout(() => { copiedDiv.style.display = 'none'; }, 1500);
-    }
-    function updateInputLineNumbers() {
-        const textarea = document.getElementById('jsonInput');
-        const lineNumbers = document.getElementById('inputLineNumbers');
-        const lines = textarea.value.split('\n').length || 1;
-        let html = '';
-        for (let i = 1; i <= lines; i++) html += i + '<br>';
-        lineNumbers.innerHTML = html;
-    }
-    function updateOutputLineNumbers() {
-        const textarea = document.getElementById('jsonOutput');
-        const lineNumbers = document.getElementById('outputLineNumbers');
-        const lines = textarea.value.split('\n').length || 1;
-        let html = '';
-        for (let i = 1; i <= lines; i++) html += i + '<br>';
-        lineNumbers.innerHTML = html;
-    }
-    function syncScroll(which) {
-        if (which === 'input') {
-            const textarea = document.getElementById('jsonInput');
-            const lineNumbers = document.getElementById('inputLineNumbers');
-            lineNumbers.scrollTop = textarea.scrollTop;
-        } else {
-            const textarea = document.getElementById('jsonOutput');
-            const lineNumbers = document.getElementById('outputLineNumbers');
-            lineNumbers.scrollTop = textarea.scrollTop;
-        }
-    }
-    function formatJSON() {
-        clearError();
-        const input = document.getElementById('jsonInput').value;
-        try {
-            const obj = JSON.parse(input);
-            const formatted = JSON.stringify(obj, null, 2);
-            document.getElementById('jsonOutput').value = formatted;
-            updateOutputLineNumbers();
-        } catch (e) {
-            showError('Invalid JSON: ' + e.message);
-            document.getElementById('jsonOutput').value = '';
-            updateOutputLineNumbers();
-        }
-    }
-    function validateJSON() {
-        clearError();
-        const input = document.getElementById('jsonInput').value;
-        try {
-            JSON.parse(input);
-            showPopup('Valid JSON');
-        } catch (e) {
-            showPopup('Invalid JSON');
-        }
-    }
-    function beautifyJSON() {
-        clearError();
-        const input = document.getElementById('jsonInput').value;
-        try {
-            const obj = JSON.parse(input);
-            const beautified = JSON.stringify(obj, null, 4);
-            document.getElementById('jsonOutput').value = beautified;
-            updateOutputLineNumbers();
-        } catch (e) {
-            showError('Invalid JSON: ' + e.message);
-            document.getElementById('jsonOutput').value = '';
-            updateOutputLineNumbers();
-        }
-    }
-    function minifyJSON() {
-        clearError();
-        const input = document.getElementById('jsonInput').value;
-        try {
-            const obj = JSON.parse(input);
-            const minified = JSON.stringify(obj);
-            document.getElementById('jsonOutput').value = minified;
-            updateOutputLineNumbers();
-        } catch (e) {
-            showError('Invalid JSON: ' + e.message);
-            document.getElementById('jsonOutput').value = '';
-            updateOutputLineNumbers();
-        }
-    }
-    function copyJSON() {
-        const output = document.getElementById('jsonOutput').value;
-        if (!output) return;
-        navigator.clipboard.writeText(output);
-        showPopup('Copied to clipboard!');
-    }
-    function downloadJSON() {
-        const output = document.getElementById('jsonOutput').value;
-        if (!output) return;
-        const blob = new Blob([output], { type: 'application/json' });
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(blob);
-        link.download = 'formatted.json';
-        link.click();
-    }
     function showPopup(msg) {
         const popup = document.getElementById('popupMsg');
         document.getElementById('popupText').innerText = msg;
@@ -634,33 +528,225 @@
     function closePopup() {
         document.getElementById('popupMsg').style.display = 'none';
     }
-    function uploadJSONFile(which, event) {
+    function updateInputLineNumbers() {
+        const textarea = document.getElementById('pythonInput');
+        const lineNumbers = document.getElementById('inputLineNumbers');
+        const lines = textarea.value.split('\n').length || 1;
+        let html = '';
+        for (let i = 1; i <= lines; i++) html += i + '<br>';
+        lineNumbers.innerHTML = html;
+    }
+    function updateOutputLineNumbers() {
+        const textarea = document.getElementById('pythonOutput');
+        const lineNumbers = document.getElementById('outputLineNumbers');
+        const lines = textarea.value.split('\n').length || 1;
+        let html = '';
+        for (let i = 1; i <= lines; i++) html += i + '<br>';
+        lineNumbers.innerHTML = html;
+    }
+    function syncScroll(which) {
+        if (which === 'input') {
+            const textarea = document.getElementById('pythonInput');
+            const lineNumbers = document.getElementById('inputLineNumbers');
+            lineNumbers.scrollTop = textarea.scrollTop;
+        } else {
+            const textarea = document.getElementById('pythonOutput');
+            const lineNumbers = document.getElementById('outputLineNumbers');
+            lineNumbers.scrollTop = textarea.scrollTop;
+        }
+    }
+    // --- Python formatting/beautifying/validation (best effort) ---
+    function isPythonCodeValid(input) {
+        if (!input.trim()) return false;
+        // Check for balanced brackets
+        if (!areBracketsBalanced(input)) return false;
+        // Check for unclosed strings (single or double quotes)
+        let inSingle = false, inDouble = false;
+        for (let i = 0; i < input.length; ++i) {
+            let c = input[i];
+            if (c === "'" && !inDouble) inSingle = !inSingle;
+            if (c === '"' && !inSingle) inDouble = !inDouble;
+        }
+        if (inSingle || inDouble) return false;
+        // Check for consistent indentation (very basic)
+        const lines = input.split('\n');
+        let indentStack = [0];
+        for (let i = 0; i < lines.length; ++i) {
+            let line = lines[i];
+            if (!line.trim() || line.trim().startsWith('#')) continue;
+            let leadingSpaces = line.match(/^\s*/)[0].length;
+            if (leadingSpaces > indentStack[indentStack.length-1]) {
+                indentStack.push(leadingSpaces);
+            } else {
+                while (indentStack.length > 1 && leadingSpaces < indentStack[indentStack.length-1]) {
+                    indentStack.pop();
+                }
+                if (leadingSpaces !== indentStack[indentStack.length-1]) return false;
+            }
+        }
+        return true;
+    }
+    function formatPython() {
+        clearError();
+        const input = document.getElementById('pythonInput').value;
+        if (!isPythonCodeValid(input)) {
+            showPopup('Invalid Python code. Cannot format.');
+            return;
+        }
+        try {
+            const formatted = beautifyPythonCode(input, 2); // 2 spaces indent
+            document.getElementById('pythonOutput').value = formatted;
+            updateOutputLineNumbers();
+        } catch (e) {
+            showError('Could not format Python: ' + e.message);
+            document.getElementById('pythonOutput').value = '';
+            updateOutputLineNumbers();
+        }
+    }
+    function beautifyPython() {
+        clearError();
+        const input = document.getElementById('pythonInput').value;
+        if (!isPythonCodeValid(input)) {
+            showPopup('Invalid Python code. Cannot beautify.');
+            return;
+        }
+        try {
+            const beautified = beautifyPythonCode(input, 4); // 4 spaces indent
+            document.getElementById('pythonOutput').value = beautified;
+            updateOutputLineNumbers();
+        } catch (e) {
+            showError('Could not beautify Python: ' + e.message);
+            document.getElementById('pythonOutput').value = '';
+            updateOutputLineNumbers();
+        }
+    }
+    function validatePython() {
+        clearError();
+        const input = document.getElementById('pythonInput').value;
+        if (!isPythonCodeValid(input)) {
+            showPopup('Invalid Python code.');
+        } else {
+            showPopup('Valid Python code.');
+        }
+    }
+    // --- Python code beautifier (best effort: normalize indentation, split blocks) ---
+    function beautifyPythonCode(code, indentSize) {
+        let lines = code.replace(/\r\n?/g, '\n').split('\n');
+        let beautified = [];
+        let indentLevel = 0;
+        let blockStarters = /^(def |class |if |elif |else:|for |while |try:|except |with |finally:|else:|elif )/;
+        let dedentTriggers = /^(return|break|continue|pass|raise|except |finally:|elif |else:)/;
+        let prevLineBlock = false;
+        for (let idx = 0; idx < lines.length; ++idx) {
+            let line = lines[idx].replace(/\t/g, '    ').trimEnd();
+            if (line === '') {
+                if (beautified.length && beautified[beautified.length-1] !== '') beautified.push('');
+                continue;
+            }
+            // Split multiple statements on a line (but not inside strings)
+            let stmts = [];
+            let stmtBuffer = '';
+            let inString = false;
+            let stringChar = '';
+            for (let j = 0; j < line.length; ++j) {
+                let c = line[j];
+                if (!inString && (c === '"' || c === "'")) {
+                    inString = true;
+                    stringChar = c;
+                    stmtBuffer += c;
+                    continue;
+                } else if (inString && c === stringChar) {
+                    inString = false;
+                    stringChar = '';
+                    stmtBuffer += c;
+                    continue;
+                }
+                if (!inString && c === ';') {
+                    if (stmtBuffer.trim() !== '') stmts.push(stmtBuffer.trim());
+                    stmtBuffer = '';
+                    continue;
+                }
+                stmtBuffer += c;
+            }
+            if (stmtBuffer.trim() !== '') stmts.push(stmtBuffer.trim());
+            for (let s = 0; s < stmts.length; ++s) {
+                let stmt = stmts[s];
+                // Dedent for dedent triggers
+                if (dedentTriggers.test(stmt)) {
+                    indentLevel = Math.max(0, indentLevel - 1);
+                }
+                // Add line
+                beautified.push(' '.repeat(indentLevel * indentSize) + stmt);
+                // Indent for block starters
+                if (/(:\s*$)/.test(stmt) && /^(def|class|if|elif|else|for|while|try|except|with|finally)/.test(stmt)) {
+                    indentLevel++;
+                    prevLineBlock = true;
+                } else {
+                    prevLineBlock = false;
+                }
+            }
+        }
+        while (beautified.length && beautified[0] === '') beautified.shift();
+        while (beautified.length && beautified[beautified.length-1] === '') beautified.pop();
+        let final = [];
+        for (let i = 0; i < beautified.length; ++i) {
+            if (beautified[i] === '' && beautified[i-1] === '') continue;
+            final.push(beautified[i]);
+        }
+        return final.join('\n');
+    }
+    // --- Bracket balance check (copied from perlFormatter.html) ---
+    function areBracketsBalanced(str) {
+        const stack = [];
+        const pairs = { '{': '}', '(': ')', '[': ']' };
+        for (let c of str) {
+            if (c === '{' || c === '(' || c === '[') stack.push(c);
+            else if (c === '}' || c === ')' || c === ']') {
+                if (!stack.length) return false;
+                const last = stack.pop();
+                if (pairs[last] !== c) return false;
+            }
+        }
+        return stack.length === 0;
+    }
+    // --- Copy/Download/Clear/Upload/Fullscreen ---
+    function copyPython() {
+        const output = document.getElementById('pythonOutput').value;
+        if (!output) return;
+        navigator.clipboard.writeText(output);
+        showPopup('Copied to clipboard!');
+    }
+    function downloadPython() {
+        const output = document.getElementById('pythonOutput').value;
+        if (!output) return;
+        const blob = new Blob([output], { type: 'text/plain' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = 'formatted.py';
+        link.click();
+    }
+    function uploadPythonFile(which, event) {
         const file = event.target.files[0];
         if (!file) return;
         const reader = new FileReader();
         reader.onload = function(e) {
-            try {
-                const json = JSON.parse(e.target.result);
-                const text = JSON.stringify(json, null, 2);
-                if (which === 'input') {
-                    document.getElementById('jsonInput').value = text;
-                    updateInputLineNumbers();
-                } else {
-                    document.getElementById('jsonOutput').value = text;
-                    updateOutputLineNumbers();
-                }
-            } catch (err) {
-                showPopup('Invalid JSON file');
+            const text = e.target.result;
+            if (which === 'input') {
+                document.getElementById('pythonInput').value = text;
+                updateInputLineNumbers();
+            } else {
+                document.getElementById('pythonOutput').value = text;
+                updateOutputLineNumbers();
             }
         };
         reader.readAsText(file);
     }
-    function clearJSON(which) {
+    function clearPython(which) {
         if (which === 'input') {
-            document.getElementById('jsonInput').value = '';
+            document.getElementById('pythonInput').value = '';
             updateInputLineNumbers();
         } else {
-            document.getElementById('jsonOutput').value = '';
+            document.getElementById('pythonOutput').value = '';
             updateOutputLineNumbers();
         }
     }
@@ -684,10 +770,8 @@
         updateInputLineNumbers();
         updateOutputLineNumbers();
     };
-    // Also update output line numbers when user pastes or types in output (for completeness)
-    document.getElementById('jsonOutput').addEventListener('input', updateOutputLineNumbers);
-    // Update input line numbers on input
-    document.getElementById('jsonInput').addEventListener('input', updateInputLineNumbers);
+    document.getElementById('pythonOutput').addEventListener('input', updateOutputLineNumbers);
+    document.getElementById('pythonInput').addEventListener('input', updateInputLineNumbers);
 </script>
 </body>
 </html>
