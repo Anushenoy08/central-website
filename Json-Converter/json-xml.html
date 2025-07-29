@@ -408,40 +408,43 @@ function uploadJSONFile(event) {
 }
 
 function toggleFullScreen(button) {
-  const box = button.closest('.json-box');
-  console.log('Toggle fullscreen called for:', box);
-  
-  if (!document.fullscreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement) {
-    console.log('Attempting to enter fullscreen...');
-    
-    if (box.requestFullscreen) {
-      box.requestFullscreen().then(() => {
-        console.log('Fullscreen entered successfully');
-      }).catch(err => {
-        console.error('Fullscreen error:', err);
-        alert('Failed to enter fullscreen mode: ' + err.message);
-      });
-    } else if (box.webkitRequestFullscreen) {
-      box.webkitRequestFullscreen().then(() => {
-        console.log('Webkit fullscreen entered successfully');
-      }).catch(err => {
-        console.error('Webkit fullscreen error:', err);
-        alert('Failed to enter fullscreen mode: ' + err.message);
-      });
-    } else if (box.msRequestFullscreen) {
-      box.msRequestFullscreen().then(() => {
-        console.log('MS fullscreen entered successfully');
-      }).catch(err => {
-        console.error('MS fullscreen error:', err);
-        alert('Failed to enter fullscreen mode: ' + err.message);
-      });
-    } else {
-      console.error('No fullscreen API available');
-      alert('Fullscreen is not supported in this browser');
-    }
+  // Check if we're on mobile/tablet
+  if (window.innerWidth <= 1024) {
+    // Mobile/Tablet fullscreen
+    const which = button.closest('.json-box').querySelector('.box-label').textContent.toLowerCase();
+    enterMobileFullscreen(which);
   } else {
-    console.log('Exiting fullscreen...');
-    exitFullScreen();
+    // Desktop fullscreen
+    const box = button.closest('.json-box');
+    if (!document.fullscreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement) {
+      if (box.requestFullscreen) {
+        box.requestFullscreen().then(() => {
+          console.log('Fullscreen entered successfully');
+        }).catch(err => {
+          console.error('Fullscreen error:', err);
+          alert('Failed to enter fullscreen mode: ' + err.message);
+        });
+      } else if (box.webkitRequestFullscreen) {
+        box.webkitRequestFullscreen().then(() => {
+          console.log('Webkit fullscreen entered successfully');
+        }).catch(err => {
+          console.error('Webkit fullscreen error:', err);
+          alert('Failed to enter fullscreen mode: ' + err.message);
+        });
+      } else if (box.msRequestFullscreen) {
+        box.msRequestFullscreen().then(() => {
+          console.log('MS fullscreen entered successfully');
+        }).catch(err => {
+          console.error('MS fullscreen error:', err);
+          alert('Failed to enter fullscreen mode: ' + err.message);
+        });
+      } else {
+        console.error('No fullscreen API available');
+        alert('Fullscreen is not supported in this browser');
+      }
+    } else {
+      exitFullScreen();
+    }
   }
 }
 
