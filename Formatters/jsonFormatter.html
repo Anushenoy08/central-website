@@ -577,66 +577,56 @@
         <a href="../admin/">ARTICLE</a>
     </div>
     <div class="json-formatter-container">
-        <div class="json-title">JSON FORMATTER</div>
-        <div class="json-box-row">
-            <div class="json-box">
-                <div class="box-header">
-                    <div class="box-label">Input</div>
-                    <div class="box-options">
-                        <label for="fileInput" style="cursor: pointer; color: #2196f3; font-size: 1.1em; font-weight: 500; display: flex; align-items: center; gap: 4px;">
-                            📁 Upload
-                        </label>
-                        <input type="file" id="fileInput" accept=".json,.txt" style="display: none;">
-                        <button class="icon-btn" onclick="toggleFullScreen('input')" title="Toggle Fullscreen">
-                            ⛶
-                            <span class="tooltip">Toggle Fullscreen</span>
-                        </button>
-                    </div>
-                </div>
-                <div class="code-area-wrapper">
-                    <div class="line-numbers" id="inputLineNumbers">1</div>
-                    <div class="code-scroll">
-                        <textarea id="jsonInput" class="json-textarea" placeholder="Enter JSON here..." onscroll="syncScroll('input')" oninput="updateInputLineNumbers()"></textarea>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="json-box-row">
-            <div class="json-box">
-                <div class="box-header">
-                    <div class="box-label">Output</div>
-                    <div class="box-options">
-                        <button class="icon-btn" onclick="copyJson()" title="Copy">
-                            📋
-                            <span class="tooltip">Copy</span>
-                        </button>
-                        <button class="icon-btn" onclick="downloadJson()" title="Download">
-                            💾
-                            <span class="tooltip">Download</span>
-                        </button>
-                        <button class="icon-btn" onclick="toggleFullScreen('output')" title="Toggle Fullscreen">
-                            ⛶
-                            <span class="tooltip">Toggle Fullscreen</span>
-                        </button>
-                    </div>
-                </div>
-                <div class="code-area-wrapper">
-                    <div class="line-numbers" id="outputLineNumbers">1</div>
-                    <div class="code-scroll">
-                        <textarea id="jsonOutput" class="json-textarea" readonly onscroll="syncScroll('output')"></textarea>
-                    </div>
+    <div class="json-title">JSON FORMATTER</div>
+    <div class="action-buttons-container">
+        <button onclick="formatJSON()" style="background: linear-gradient(90deg, #2196f3 0%, #43e97b 100%); color: #fff; border: none; border-radius: 8px; padding: 12px 24px; font-size: 1.1em; font-weight: 500; cursor: pointer; box-shadow: 0 2px 8px rgba(33,150,243,0.07); transition: background 0.2s, box-shadow 0.2s;">Format</button>
+        <button onclick="beautifyJSON()" style="background: linear-gradient(90deg, #43e97b 0%, #2196f3 100%); color: #fff; border: none; border-radius: 8px; padding: 12px 24px; font-size: 1.1em; font-weight: 500; cursor: pointer; box-shadow: 0 2px 8px rgba(67, 233, 123, 0.07); transition: background 0.2s, box-shadow 0.2s;">Beautify</button>
+        <button onclick="minifyJSON()" style="background: linear-gradient(90deg, #ff9800 0%, #f44336 100%); color: #fff; border: none; border-radius: 8px; padding: 12px 24px; font-size: 1.1em; font-weight: 500; cursor: pointer; box-shadow: 0 2px 8px rgba(255, 152, 0, 0.07); transition: background 0.2s, box-shadow 0.2s;">Minify</button>
+        <button onclick="validateJSON()" style="background: linear-gradient(90deg, #9c27b0 0%, #e91e63 100%); color: #fff; border: none; border-radius: 8px; padding: 12px 24px; font-size: 1.1em; font-weight: 500; cursor: pointer; box-shadow: 0 2px 8px rgba(156, 39, 176, 0.07); transition: background 0.2s, box-shadow 0.2s;">Validate</button>
+        <button onclick="copyJSON()" style="background: linear-gradient(90deg, #ff9800 0%, #f44336 100%); color: #fff; border: none; border-radius: 8px; padding: 12px 24px; font-size: 1.1em; font-weight: 500; cursor: pointer; box-shadow: 0 2px 8px rgba(255, 152, 0, 0.07); transition: background 0.2s, box-shadow 0.2s;">Copy JSON</button>
+        <button onclick="downloadJSON()" style="background: linear-gradient(90deg, #607d8b 0%, #9e9e9e 100%); color: #fff; border: none; border-radius: 8px; padding: 12px 24px; font-size: 1.1em; font-weight: 500; cursor: pointer; box-shadow: 0 2px 8px rgba(96, 125, 139, 0.07); transition: background 0.2s, box-shadow 0.2s;">Download JSON</button>
+    </div>
+    <div class="json-box-row">
+        <div class="json-box">
+            <div class="box-header">
+                <span class="box-label">Input</span>
+                <div class="box-options">
+                    <label title="Upload a file">
+                        <input type="file" accept=".json,.txt" onchange="uploadJSONFile('input', event)">
+                        <span>📁<span class="tooltip">Upload a file</span></span>
+                    </label>
+                    <button class="icon-btn" title="Full Screen" onclick="toggleFullScreen(this)">⛶<span class="tooltip">Full Screen</span></button>
+                    <button class="icon-btn" title="Clear" onclick="clearJSON('input')">🗑️<span class="tooltip">Clear</span></button>
                 </div>
             </div>
+            <div class="code-area-wrapper">
+                <div class="code-scroll" id="inputScroll">
+                    <div class="line-numbers" id="inputLineNumbers"></div>
+                    <textarea class="json-textarea" id="jsonInput" placeholder="Paste or type your JSON here..." oninput="updateInputLineNumbers()" onscroll="syncScroll('input')"></textarea>
+                </div>
+            </div>
+            <div id="errorMsg" class="error-message" style="display:none;"></div>
+            <button class="close-fullscreen-btn" onclick="exitFullScreen()">✕</button>
         </div>
-        <div class="action-buttons-container">
-            <button onclick="formatJson()" style="background: linear-gradient(90deg, #2196f3 0%, #43e97b 100%); color: #fff; border: none; border-radius: 8px; padding: 12px 24px; font-size: 1.1em; font-weight: 500; cursor: pointer; box-shadow: 0 2px 8px rgba(33,150,243,0.07); transition: background 0.2s, box-shadow 0.2s;">Format</button>
-            <button onclick="beautifyJson()" style="background: linear-gradient(90deg, #43e97b 0%, #2196f3 100%); color: #fff; border: none; border-radius: 8px; padding: 12px 24px; font-size: 1.1em; font-weight: 500; cursor: pointer; box-shadow: 0 2px 8px rgba(67, 233, 123, 0.07); transition: background 0.2s, box-shadow 0.2s;">Beautify</button>
-            <button onclick="minifyJson()" style="background: linear-gradient(90deg, #ff9800 0%, #f44336 100%); color: #fff; border: none; border-radius: 8px; padding: 12px 24px; font-size: 1.1em; font-weight: 500; cursor: pointer; box-shadow: 0 2px 8px rgba(255, 152, 0, 0.07); transition: background 0.2s, box-shadow 0.2s;">Minify</button>
-            <button onclick="validateJson()" style="background: linear-gradient(90deg, #9c27b0 0%, #e91e63 100%); color: #fff; border: none; border-radius: 8px; padding: 12px 24px; font-size: 1.1em; font-weight: 500; cursor: pointer; box-shadow: 0 2px 8px rgba(156, 39, 176, 0.07); transition: background 0.2s, box-shadow 0.2s;">Validate</button>
-            <button onclick="clearJson()" style="background: linear-gradient(90deg, #607d8b 0%, #9e9e9e 100%); color: #fff; border: none; border-radius: 8px; padding: 12px 24px; font-size: 1.1em; font-weight: 500; cursor: pointer; box-shadow: 0 2px 8px rgba(96, 125, 139, 0.07); transition: background 0.2s, box-shadow 0.2s;">Clear</button>
+        <div class="json-box">
+            <div class="box-header">
+                <span class="box-label">Output</span>
+                <div class="box-options">
+                    <button class="icon-btn" title="Full Screen" onclick="toggleFullScreen(this)">⛶<span class="tooltip">Full Screen</span></button>
+                    <button class="icon-btn" title="Clear" onclick="clearJSON('output')">🗑️<span class="tooltip">Clear</span></button>
+                </div>
+            </div>
+            <div class="code-area-wrapper">
+                <div class="code-scroll" id="outputScroll">
+                    <div class="line-numbers" id="outputLineNumbers"></div>
+                    <textarea class="json-textarea" id="jsonOutput" placeholder="Formatted/Beautified JSON will appear here..." readonly oninput="updateOutputLineNumbers()" onscroll="syncScroll('output')"></textarea>
+                </div>
+            </div>
+            <button class="close-fullscreen-btn" onclick="exitFullScreen()">✕</button>
         </div>
-        <div class="popup" id="jsonPopup">Copied!</div>
-        <div class="error" id="jsonError"></div>
+    </div>
+
+    <div id="popupMsg" class="popup" style="display:none;"><span id="popupText"></span><button class="close-btn" onclick="closePopup()">✕</button></div>
     </div>
     
     <!-- Mobile Fullscreen Overlays -->
@@ -662,19 +652,22 @@
     
     <script>
         function showError(msg) {
-            const errorDiv = document.getElementById('jsonError');
+            const errorDiv = document.getElementById('errorMsg');
             errorDiv.innerText = msg;
             errorDiv.style.display = 'block';
         }
         function clearError() {
-            const errorDiv = document.getElementById('jsonError');
+            const errorDiv = document.getElementById('errorMsg');
             errorDiv.innerText = '';
             errorDiv.style.display = 'none';
         }
-        function showCopied() {
-            const copiedDiv = document.getElementById('jsonPopup');
-            copiedDiv.style.display = 'block';
-            setTimeout(() => { copiedDiv.style.display = 'none'; }, 1500);
+        function showPopup(msg) {
+            const popup = document.getElementById('popupMsg');
+            document.getElementById('popupText').innerText = msg;
+            popup.style.display = 'flex';
+        }
+        function closePopup() {
+            document.getElementById('popupMsg').style.display = 'none';
         }
         function updateInputLineNumbers() {
             const textarea = document.getElementById('jsonInput');
@@ -722,7 +715,7 @@
             const input = document.getElementById('jsonInput').value;
             try {
                 JSON.parse(input);
-                showCopied();
+                showPopup('Valid JSON');
             } catch (e) {
                 showError('Invalid JSON');
             }
@@ -759,7 +752,7 @@
             const output = document.getElementById('jsonOutput').value;
             if (!output) return;
             navigator.clipboard.writeText(output);
-            showCopied();
+            showPopup('Copied to clipboard!');
         }
         function downloadJSON() {
             const output = document.getElementById('jsonOutput').value;
@@ -770,14 +763,7 @@
             link.download = 'formatted.json';
             link.click();
         }
-        function showPopup(msg) {
-            const popup = document.getElementById('jsonPopup');
-            popup.innerText = msg;
-            popup.style.display = 'block';
-        }
-        function closePopup() {
-            document.getElementById('jsonPopup').style.display = 'none';
-        }
+
         function uploadJSONFile(which, event) {
             const file = event.target.files[0];
             if (!file) return;
@@ -794,7 +780,7 @@
                         updateOutputLineNumbers();
                     }
                 } catch (err) {
-                    showPopup('Invalid JSON file');
+                    showError('Invalid JSON file');
                 }
             };
             reader.readAsText(file);
@@ -903,6 +889,8 @@
         document.getElementById('jsonOutput').addEventListener('input', updateOutputLineNumbers);
         // Update input line numbers on input
         document.getElementById('jsonInput').addEventListener('input', updateInputLineNumbers);
+        
+
     </script>
 </body>
 </html>
