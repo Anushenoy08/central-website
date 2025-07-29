@@ -175,6 +175,29 @@ body {
   display: none;
 }
 
+/* Fullscreen styles for the container */
+.json-box:fullscreen,
+.json-box:-webkit-full-screen,
+.json-box:-ms-fullscreen {
+  width: 100vw !important;
+  max-width: 100vw !important;
+  min-width: 0 !important;
+  height: 100vh !important;
+  max-height: 100vh !important;
+  min-height: 0 !important;
+  position: fixed !important;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 99999;
+  background: #fafdff !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+}
+
 .json-box:fullscreen .close-fullscreen-btn,
 .json-box:-webkit-full-screen .close-fullscreen-btn,
 .json-box:-ms-fullscreen .close-fullscreen-btn {

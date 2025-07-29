@@ -12,6 +12,7 @@
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
+            overflow-x: hidden;
         }
         /* Copy all CSS from rubyFormatter.html for identical UI */
         .container { padding: 1rem; }
@@ -322,18 +323,18 @@
             }
             
             .json-box-row {
-                flex-direction: row;
-                gap: 16px;
-                flex-wrap: wrap;
+                flex-direction: column;
+                gap: 20px;
+                width: 100%;
             }
             
             .json-box {
-                width: calc(50% - 8px);
-                max-width: none;
+                width: 100%;
+                max-width: 100%;
                 min-width: 0;
                 padding: 0 12px 0 12px;
                 min-height: 300px;
-                flex: 1;
+                flex: none;
             }
             
             .box-header {

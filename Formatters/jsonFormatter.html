@@ -15,6 +15,7 @@
             min-height: 100vh;
             margin: 0;
             padding: 0;
+            overflow-x: hidden;
         }
         .container {
             padding: 1rem;
@@ -254,18 +255,18 @@
             }
             
             .json-box-row {
-                flex-direction: row;
-                gap: 16px;
-                flex-wrap: wrap;
+                flex-direction: column !important;
+                gap: 20px !important;
+                width: 100% !important;
             }
             
             .json-box {
-                width: calc(50% - 8px);
-                max-width: none;
-                min-width: 0;
-                padding: 0 12px 0 12px;
-                min-height: 300px;
-                flex: 1;
+                width: 100% !important;
+                max-width: 100% !important;
+                min-width: 0 !important;
+                padding: 0 12px 0 12px !important;
+                min-height: 300px !important;
+                flex: none !important;
             }
             
             .box-header {
@@ -302,12 +303,16 @@
             .code-area-wrapper {
                 min-height: 250px;
                 max-height: 600px;
+                width: 100%;
+                box-sizing: border-box;
             }
             
             .json-textarea {
                 min-height: 250px;
                 font-size: 1em;
                 padding: 12px 12px 12px 0;
+                width: 100%;
+                box-sizing: border-box;
             }
             
             .line-numbers {
@@ -324,6 +329,8 @@
                 justify-content: center;
                 margin-top: 20px;
                 padding: 0 8px;
+                width: 100%;
+                box-sizing: border-box;
             }
             
             .action-buttons-container button {
@@ -332,8 +339,84 @@
                 min-width: 80px;
                 flex: 1;
                 max-width: 120px;
+                white-space: nowrap;
             }
         }
+        
+        /* Extra small mobile styles */
+        @media (max-width: 480px) {
+            .json-formatter-container {
+                padding: 12px;
+                margin-top: 90px;
+            }
+            
+            .json-title {
+                font-size: 1.6em;
+                margin-top: 50px;
+            }
+            
+            .json-box {
+                padding: 0 8px 0 8px !important;
+                min-height: 250px !important;
+            }
+            
+            .box-header {
+                height: 36px;
+                padding: 0 6px 0 0;
+            }
+            
+            .box-header .box-label {
+                font-size: 0.95em;
+                margin-left: 8px;
+            }
+            
+            .box-options {
+                gap: 6px;
+            }
+            
+            .box-options .icon-btn {
+                font-size: 1em;
+                padding: 2px 4px;
+                min-width: 28px;
+                height: 28px;
+            }
+            
+            .box-options label {
+                font-size: 0.85em;
+                padding: 3px 6px;
+            }
+            
+            .code-area-wrapper {
+                min-height: 200px;
+                max-height: 500px;
+            }
+            
+            .json-textarea {
+                min-height: 200px;
+                font-size: 0.95em;
+                padding: 10px 10px 10px 0;
+            }
+            
+            .line-numbers {
+                font-size: 0.95em;
+                padding: 10px 4px 10px 0;
+                min-width: 28px;
+            }
+            
+            .action-buttons-container {
+                gap: 8px;
+                padding: 0 4px;
+            }
+            
+            .action-buttons-container button {
+                padding: 8px 12px;
+                font-size: 0.9em;
+                min-width: 70px;
+                max-width: 100px;
+            }
+        }
+        
+
         
         /* Tablet styles */
         @media (min-width: 769px) and (max-width: 1024px) {
