@@ -444,14 +444,62 @@ function clearJSON(which) {
 
 function toggleFullScreen(button) {
   const box = button.closest('.json-box');
-  if (!document.fullscreenElement) {
-    if (box.requestFullscreen) box.requestFullscreen();
-    else if (box.webkitRequestFullscreen) box.webkitRequestFullscreen();
-    else if (box.msRequestFullscreen) box.msRequestFullscreen();
+  console.log('Toggle fullscreen called for:', box);
+  
+  if (!document.fullscreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement) {
+    console.log('Attempting to enter fullscreen...');
+    
+    if (box.requestFullscreen) {
+      box.requestFullscreen().then(() => {
+        console.log('Fullscreen entered successfully');
+      }).catch(err => {
+        console.error('Fullscreen error:', err);
+        alert('Failed to enter fullscreen mode: ' + err.message);
+      });
+    } else if (box.webkitRequestFullscreen) {
+      box.webkitRequestFullscreen().then(() => {
+        console.log('Webkit fullscreen entered successfully');
+      }).catch(err => {
+        console.error('Webkit fullscreen error:', err);
+        alert('Failed to enter fullscreen mode: ' + err.message);
+      });
+    } else if (box.msRequestFullscreen) {
+      box.msRequestFullscreen().then(() => {
+        console.log('MS fullscreen entered successfully');
+      }).catch(err => {
+        console.error('MS fullscreen error:', err);
+        alert('Failed to enter fullscreen mode: ' + err.message);
+      });
+    } else {
+      console.error('No fullscreen API available');
+      alert('Fullscreen is not supported in this browser');
+    }
   } else {
-    if (document.exitFullscreen) document.exitFullscreen();
-    else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
-    else if (document.msExitFullscreen) document.msExitFullscreen();
+    console.log('Exiting fullscreen...');
+    exitFullScreen();
+  }
+}
+
+function exitFullScreen() {
+  console.log('Exit fullscreen called');
+  if (document.exitFullscreen) {
+    document.exitFullscreen().then(() => {
+      console.log('Fullscreen exited successfully');
+    }).catch(err => {
+      console.error('Exit fullscreen error:', err);
+    });
+  } else if (document.webkitExitFullscreen) {
+    document.webkitExitFullscreen().then(() => {
+      console.log('Webkit fullscreen exited successfully');
+    }).catch(err => {
+      console.error('Webkit exit fullscreen error:', err);
+    });
+  } else if (document.msExitFullscreen) {
+    document.msExitFullscreen().then(() => {
+      console.log('MS fullscreen exited successfully');
+    }).catch(err => {
+      console.error('MS exit fullscreen error:', err);
+    });
   }
 }
 
