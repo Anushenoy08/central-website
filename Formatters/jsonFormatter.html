@@ -651,6 +651,32 @@
         .json-box:-ms-fullscreen .close-fullscreen-btn {
             display: block;
         }
+        
+        /* Action buttons container base styles */
+        .action-buttons-container {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 20px;
+            padding: 0 8px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        
+        .action-buttons-container button {
+            padding: 12px 24px;
+            font-size: 1.1em;
+            font-weight: 500;
+            cursor: pointer;
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(33,150,243,0.07);
+            transition: background 0.2s, box-shadow 0.2s;
+            flex: 1;
+            min-width: 120px;
+            max-width: 200px;
+        }
     </style>
 </head>
 <body>
