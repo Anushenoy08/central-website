@@ -325,67 +325,65 @@ body {
     <button onclick="downloadOutput()">Download Query</button>
   </div>
 
-  <div class="json-box-row">
-    <div class="json-box">
-      <div class="box-header">
-        <span class="box-label">Input</span>
-        <div class="box-options">
-          <label class="upload-label">
-            <input type="file" accept="application/json" onchange="uploadJSONFile(event)">
-            <span class="upload-icon">📁</span>
-            <span class="upload-text">Upload a file</span>
-          </label>
-          <button class="icon-btn" title="Full Screen" onclick="toggleFullScreen(this)">
-            ⛶
-            <span class="tooltip">Full Screen</span>
-          </button>
-          <button class="icon-btn" title="Clear" onclick="clearJSON('input')">
-            🗑️
-            <span class="tooltip">Clear</span>
-          </button>
-        </div>
+  <div class="json-box">
+    <div class="box-header">
+      <span class="box-label">Input</span>
+      <div class="box-options">
+        <label class="upload-label">
+          <input type="file" accept="application/json" onchange="uploadJSONFile(event)">
+          <span class="upload-icon">📁</span>
+          <span class="upload-text">Upload a file</span>
+        </label>
+        <button class="icon-btn" title="Full Screen" onclick="toggleFullScreen(this)">
+          ⛶
+          <span class="tooltip">Full Screen</span>
+        </button>
+        <button class="icon-btn" title="Clear" onclick="clearJSON('input')">
+          🗑️
+          <span class="tooltip">Clear</span>
+        </button>
       </div>
-      <div class="code-area-wrapper">
-        <div class="code-scroll">
-          <textarea class="json-textarea" id="jsonInput" placeholder='Enter JSON Object or Array Example: {"name":"John","age":30,"city":"New York"}'></textarea>
-        </div>
-      </div>
-      <button class="close-fullscreen-btn" onclick="exitFullScreen()">✕</button>
     </div>
+    <div class="code-area-wrapper">
+      <div class="code-scroll">
+        <textarea class="json-textarea" id="jsonInput" placeholder='Enter JSON Object or Array Example: {"name":"John","age":30,"city":"New York"}'></textarea>
+      </div>
+    </div>
+    <button class="close-fullscreen-btn" onclick="exitFullScreen()">✕</button>
+  </div>
 
-    <div class="dropdown-container-query">
-      <label for="queryStyleSelect" style="font-weight: 500; color: #1565c0; margin-bottom: 8px;">Query Parameter Style</label>
-      <select id="queryStyleSelect" style="padding: 10px 18px; border-radius: 8px; border: 1px solid #b2ebf2; font-size: 1.08em; width: 180px;">
-        <option value="simple">Simple Key-Value Pairs</option>
-        <option value="array_repeat">Array Parameters: Repeated Keys</option>
-        <option value="array_bracket">Array Parameters: Bracket Notation</option>
-        <option value="nested_bracket">Nested: Bracket Notation</option>
-        <option value="nested_flat">Nested: Flattened Underscore</option>
-        <option value="json_string">Encoded JSON as String</option>
-      </select>
-    </div>
+  <div class="dropdown-container-query" style="display: flex; flex-direction: column; justify-content: center; align-items: center; width: 100%; max-width: 400px; margin: 20px auto;">
+    <label for="queryStyleSelect" style="font-weight: 500; color: #1565c0; margin-bottom: 8px;">Query Parameter Style</label>
+    <select id="queryStyleSelect" style="padding: 10px 18px; border-radius: 8px; border: 1px solid #b2ebf2; font-size: 1.08em; width: 100%;">
+      <option value="simple">Simple Key-Value Pairs</option>
+      <option value="array_repeat">Array Parameters: Repeated Keys</option>
+      <option value="array_bracket">Array Parameters: Bracket Notation</option>
+      <option value="nested_bracket">Nested: Bracket Notation</option>
+      <option value="nested_flat">Nested: Flattened Underscore</option>
+      <option value="json_string">Encoded JSON as String</option>
+    </select>
+  </div>
 
-    <div class="json-box">
-      <div class="box-header">
-        <span class="box-label">Output</span>
-        <div class="box-options">
-          <button class="icon-btn" title="Full Screen" onclick="toggleFullScreen(this)">
-            ⛶
-            <span class="tooltip">Full Screen</span>
-          </button>
-          <button class="icon-btn" title="Clear" onclick="clearJSON('output')">
-            🗑️
-            <span class="tooltip">Clear</span>
-          </button>
-        </div>
+  <div class="json-box">
+    <div class="box-header">
+      <span class="box-label">Output</span>
+      <div class="box-options">
+        <button class="icon-btn" title="Full Screen" onclick="toggleFullScreen(this)">
+          ⛶
+          <span class="tooltip">Full Screen</span>
+        </button>
+        <button class="icon-btn" title="Clear" onclick="clearJSON('output')">
+          🗑️
+          <span class="tooltip">Clear</span>
+        </button>
       </div>
-      <div class="code-area-wrapper">
-        <div class="code-scroll">
-          <textarea class="json-textarea" id="queryOutput" placeholder="Query string will appear here..." readonly></textarea>
-        </div>
-      </div>
-      <button class="close-fullscreen-btn" onclick="exitFullScreen()">✕</button>
     </div>
+    <div class="code-area-wrapper">
+      <div class="code-scroll">
+        <textarea class="json-textarea" id="queryOutput" placeholder="Query string will appear here..." readonly></textarea>
+      </div>
+    </div>
+    <button class="close-fullscreen-btn" onclick="exitFullScreen()">✕</button>
   </div>
 </div>
 

@@ -244,56 +244,54 @@ body {
     <button onclick="downloadOutput()">Download SQL</button>
   </div>
 
-  <div class="json-box-row">
-    <div class="json-box">
-      <div class="box-header">
-        <span class="box-label">Input</span>
-        <div class="box-options">
-          <label class="upload-label">
-            <input type="file" accept="application/json" onchange="uploadJSONFile(event)">
-            <span class="upload-icon">📁</span>
-            <span class="upload-text">Upload a file</span>
-          </label>
-          <button class="icon-btn" title="Full Screen" onclick="toggleFullScreen(this)">
-            ⛶
-            <span class="tooltip">Full Screen</span>
-          </button>
-          <button class="icon-btn" title="Clear" onclick="clearJSON('input')">
-            🗑️
-            <span class="tooltip">Clear</span>
-          </button>
-        </div>
-      </div>
-      <div class="code-area-wrapper">
-        <div class="code-scroll">
-          <textarea class="json-textarea" id="jsonInput" placeholder='Enter JSON Array of Objects Example: [{"id":1,"name":"Alice","profile":{"age":30,"city":"New York"},"hobbies":["reading","swimming"]}]'></textarea>
-        </div>
+  <div class="json-box">
+    <div class="box-header">
+      <span class="box-label">Input</span>
+      <div class="box-options">
+        <label class="upload-label">
+          <input type="file" accept="application/json" onchange="uploadJSONFile(event)">
+          <span class="upload-icon">📁</span>
+          <span class="upload-text">Upload a file</span>
+        </label>
+        <button class="icon-btn" title="Full Screen" onclick="toggleFullScreen(this)">
+          ⛶
+          <span class="tooltip">Full Screen</span>
+        </button>
+        <button class="icon-btn" title="Clear" onclick="clearJSON('input')">
+          🗑️
+          <span class="tooltip">Clear</span>
+        </button>
       </div>
     </div>
-
-    <div class="table-name-container">
-      <label for="tableNameInput" style="font-weight: 500; color: #1565c0; margin-bottom: 8px;">Table Name</label>
-      <input id="tableNameInput" type="text" placeholder="table_name" style="padding: 10px 18px; border-radius: 8px; border: 1px solid #b2ebf2; font-size: 1.08em; width: 180px; margin-top: 8px;">
-    </div>
-
-    <div class="json-box">
-      <div class="box-header">
-        <span class="box-label">Output</span>
-        <div class="box-options">
-          <button class="icon-btn" title="Full Screen" onclick="toggleFullScreen(this)">
-            ⛶
-            <span class="tooltip">Full Screen</span>
-          </button>
-          <button class="icon-btn" title="Clear" onclick="clearJSON('output')">
-            🗑️
-            <span class="tooltip">Clear</span>
-          </button>
-        </div>
+    <div class="code-area-wrapper">
+      <div class="code-scroll">
+        <textarea class="json-textarea" id="jsonInput" placeholder='Enter JSON Array of Objects Example: [{"id":1,"name":"Alice","profile":{"age":30,"city":"New York"},"hobbies":["reading","swimming"]}]'></textarea>
       </div>
-      <div class="code-area-wrapper">
-        <div class="code-scroll">
-          <textarea class="json-textarea" id="sqlOutput" placeholder="SQL INSERT statements will appear here..." readonly></textarea>
-        </div>
+    </div>
+  </div>
+
+  <div class="table-name-container" style="display: flex; flex-direction: column; justify-content: center; align-items: center; width: 100%; max-width: 400px; margin: 20px auto;">
+    <label for="tableNameInput" style="font-weight: 500; color: #1565c0; margin-bottom: 8px;">Table Name</label>
+    <input id="tableNameInput" type="text" placeholder="table_name" style="padding: 10px 18px; border-radius: 8px; border: 1px solid #b2ebf2; font-size: 1.08em; width: 100%; margin-top: 8px;">
+  </div>
+
+  <div class="json-box">
+    <div class="box-header">
+      <span class="box-label">Output</span>
+      <div class="box-options">
+        <button class="icon-btn" title="Full Screen" onclick="toggleFullScreen(this)">
+          ⛶
+          <span class="tooltip">Full Screen</span>
+        </button>
+        <button class="icon-btn" title="Clear" onclick="clearJSON('output')">
+          🗑️
+          <span class="tooltip">Clear</span>
+        </button>
+      </div>
+    </div>
+    <div class="code-area-wrapper">
+      <div class="code-scroll">
+        <textarea class="json-textarea" id="sqlOutput" placeholder="SQL INSERT statements will appear here..." readonly></textarea>
       </div>
     </div>
   </div>
