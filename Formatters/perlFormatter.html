@@ -475,6 +475,9 @@
             flex: 1;
             min-width: 120px;
             max-width: 200px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
         
         /* Mobile styles */
@@ -575,11 +578,13 @@
                 font-size: 0.95em !important;
                 min-width: 80px !important;
                 flex: 1 !important;
-                max-width: 120px !important;
+                max-width: 140px !important;
                 white-space: nowrap !important;
                 border-radius: 8px !important;
                 box-shadow: 0 2px 8px rgba(33,150,243,0.07) !important;
                 transition: background 0.2s, box-shadow 0.2s !important;
+                overflow: hidden !important;
+                text-overflow: ellipsis !important;
             }
         }
         
@@ -648,9 +653,11 @@
                 padding: 8px 12px !important;
                 font-size: 0.9em !important;
                 min-width: 70px !important;
-                max-width: 100px !important;
+                max-width: 120px !important;
                 border-radius: 6px !important;
                 box-shadow: 0 1px 4px rgba(33,150,243,0.07) !important;
+                overflow: hidden !important;
+                text-overflow: ellipsis !important;
             }
         }
         

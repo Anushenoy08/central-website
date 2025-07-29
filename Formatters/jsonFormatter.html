@@ -338,8 +338,10 @@
                 font-size: 0.95em;
                 min-width: 80px;
                 flex: 1;
-                max-width: 120px;
+                max-width: 140px;
                 white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
             }
         }
         
@@ -412,7 +414,9 @@
                 padding: 8px 12px;
                 font-size: 0.9em;
                 min-width: 70px;
-                max-width: 100px;
+                max-width: 120px;
+                overflow: hidden;
+                text-overflow: ellipsis;
             }
         }
         
@@ -676,6 +680,9 @@
             flex: 1;
             min-width: 120px;
             max-width: 200px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
     </style>
 </head>
