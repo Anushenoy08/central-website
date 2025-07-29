@@ -1,19 +1,15 @@
 backend:
   name: github
-  repo: Anushenoy08/central-website
+  repo: yourusername/yourrepo
   branch: main
 
-auth:
-  client_id: Ov23liEnkW3GSXkNggR2
-  redirect_uri: https://central-website.netlify.app/callback
-
-media_folder: "images/uploads"
-public_folder: "/images/uploads"
+media_folder: "images"
+public_folder: "/images"
 
 collections:
   - name: "blog"
     label: "Blog"
-    folder: "posts"
+    folder: "blog"
     create: true
     slug: "{{slug}}"
     fields:
