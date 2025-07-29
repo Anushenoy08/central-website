@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perl Formatter | Developer Tools</title>
     <link rel="stylesheet" href="../common.css">
     <style>
@@ -13,6 +14,8 @@
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
+            margin: 0;
+            padding: 0;
         }
         .container {
             padding: 1rem;
@@ -446,6 +449,126 @@
         .json-box:-webkit-full-screen .close-fullscreen-btn,
         .json-box:-ms-fullscreen .close-fullscreen-btn {
             display: block;
+        }
+        
+        /* Mobile styles */
+        @media (max-width: 768px) {
+            .json-formatter-container {
+                margin-top: 100px;
+                padding: 16px;
+                gap: 20px;
+            }
+            
+            .json-title {
+                font-size: 1.8em;
+                margin-top: 60px;
+            }
+            
+            .json-box-row {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .json-box {
+                width: 100vw;
+                max-width: 100vw;
+                min-width: 0;
+                padding: 0 12px 0 12px;
+                min-height: 300px;
+            }
+            
+            .box-header {
+                height: 40px;
+                padding: 0 8px 0 0;
+            }
+            
+            .box-header .box-label {
+                font-size: 1em;
+                margin-left: 12px;
+            }
+            
+            .box-options {
+                gap: 12px;
+            }
+            
+            .box-options .icon-btn {
+                font-size: 1.2em;
+                padding: 3px 6px;
+            }
+            
+            .code-area-wrapper {
+                min-height: 250px;
+                max-height: 600px;
+            }
+            
+            .perl-textarea {
+                min-height: 250px;
+                font-size: 1em;
+                padding: 12px 12px 12px 0;
+            }
+            
+            .line-numbers {
+                font-size: 1em;
+                padding: 12px 6px 12px 0;
+                min-width: 32px;
+            }
+        }
+        
+        /* Tablet styles */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .json-formatter-container {
+                margin-top: 110px;
+                padding: 24px;
+            }
+            
+            .json-title {
+                font-size: 2em;
+            }
+            
+            .json-box {
+                padding: 0 16px 0 16px;
+            }
+            
+            .code-area-wrapper {
+                min-height: 280px;
+            }
+            
+            .perl-textarea {
+                min-height: 280px;
+                font-size: 1.1em;
+            }
+        }
+        
+        /* Large desktop styles */
+        @media (min-width: 1200px) {
+            .json-formatter-container {
+                margin-top: 130px;
+                padding: 40px;
+            }
+            
+            .json-title {
+                font-size: 2.4em;
+            }
+            
+            .json-box {
+                padding: 0 24px 0 24px;
+            }
+            
+            .code-area-wrapper {
+                min-height: 350px;
+            }
+            
+            .perl-textarea {
+                min-height: 350px;
+                font-size: 1.2em;
+            }
+        }
+        
+        /* Extra large screens */
+        @media (min-width: 1600px) {
+            .json-box {
+                max-width: 800px;
+            }
         }
     </style>
 </head>
