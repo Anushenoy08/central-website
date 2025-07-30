@@ -1,45 +1,14 @@
-collections:
-  posts:
-    output: true
-    permalink: /blog/:title/
-
-
-title: Articles
-description: Read and Grow!
-baseurl: "" # Leave blank if deploying to root
-url: "https://pink-needle.cloudvent.net/"" # Replace with your site URL
-
 markdown: kramdown
 highlighter: rouge
 
-# Enable Jekyll collections
 collections:
   posts:
     output: true
     permalink: /blog/:title/
-    _icon: 📄
-    _editable: true
 
-# Include and exclude files/folders
+permalink: pretty
+
 include:
+  - article.md
   - _posts
   - _layouts
-  - article.md
-
-# CloudCannon settings (optional, but helpful)
-_defaults:
-  - scope:
-      path: ""
-      type: posts
-    values:
-      layout: post
-      _options:
-        layout:
-          hidden: true
-        tags:
-          type: tag
-          label: "Tags"
-          placeholder: "Add tags"
-
-# Permalinks
-permalink: pretty
