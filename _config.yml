@@ -25,7 +25,6 @@ include:
   - _posts
   - _layouts
 
-
 # CloudCannon settings (optional, but helpful)
 _defaults:
   - scope:
