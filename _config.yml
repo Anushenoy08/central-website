@@ -24,6 +24,7 @@ collections:
 include:
   - _posts
   - _layouts
+  - article.md
 
 # CloudCannon settings (optional, but helpful)
 _defaults:
