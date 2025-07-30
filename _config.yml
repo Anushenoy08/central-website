@@ -9,6 +9,6 @@ collections:
 permalink: pretty
 
 include:
-  - article.md
+  - _pages
   - _posts
   - _layouts
