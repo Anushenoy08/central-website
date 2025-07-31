@@ -2,7 +2,7 @@
 layout: post
 title: The Evolution and Impact of Technology
 date: 2025-07-31T00:00:00Z
-image: /images/facebook.png
+image: /images/evolution_of_technology.png
 excerpt: >-
   Technology has profoundly reshaped human civilization, offering both
   unprecedented advancements and potential challenges.
