@@ -12,72 +12,22 @@
   <body>
     <header class="blog-header">
       <nav>
+        <a href="/article/" class="btn-back-arrow">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M19 12H5M12 19L5 12L12 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
         <a href="/index.html" class="btn-home">HOME</a>
         <a href="/article/" class="btn-back">ARTICLES</a>
       </nav>
     </header>
 
     <main class="blog-post-content">
-      <!-- Breadcrumb Navigation -->
-      <nav class="breadcrumb-nav">
-        <a href="/index.html" class="breadcrumb-link">Home</a>
-        <span class="breadcrumb-separator">›</span>
-        <a href="/article/" class="breadcrumb-link">Articles</a>
-        <span class="breadcrumb-separator">›</span>
-        <span class="breadcrumb-current">{{ page.title }}</span>
-      </nav>
-
       <h1>{{ page.title }}</h1>
       <p class="post-date"><em>{{ page.date | date: "%B %d, %Y" }}</em></p>
-      
       <article>
         {{ content }}
       </article>
-
-      <!-- Post Navigation -->
-      <div class="post-navigation">
-        <div class="nav-buttons">
-          <a href="/article/" class="nav-btn back-to-articles">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M19 12H5M12 19L5 12L12 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            Back to Articles
-          </a>
-          
-          <a href="/index.html" class="nav-btn back-to-home">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M9 22V12H15V22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            Back to Home
-          </a>
-        </div>
-
-        <!-- Related Articles Section -->
-        <div class="related-articles">
-          <h3>More Articles</h3>
-          <div class="related-grid">
-            {% assign current_post = page %}
-            {% assign related_count = 0 %}
-            {% for post in site.posts %}
-              {% if post.url != current_post.url and related_count < 3 %}
-                <a href="{{ post.url | relative_url }}" class="related-card">
-                  {% if post.image %}
-                  <div class="related-image" style="background-image: url('{{ post.image }}')"></div>
-                  {% else %}
-                  <div class="related-image-placeholder"></div>
-                  {% endif %}
-                  <div class="related-content">
-                    <h4>{{ post.title }}</h4>
-                    <p class="related-date">{{ post.date | date: "%B %d, %Y" }}</p>
-                  </div>
-                </a>
-                {% assign related_count = related_count | plus: 1 %}
-              {% endif %}
-            {% endfor %}
-          </div>
-        </div>
-      </div>
     </main>
   </body>
 </html>
