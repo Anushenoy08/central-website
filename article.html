@@ -35,7 +35,8 @@ permalink: /article/
         </div>
         
         <div class="articles-grid">
-            {% for post in site.posts %}
+            {% assign sorted_posts = site.posts | sort: 'date' | reverse %}
+            {% for post in sorted_posts %}
             <article class="article-card">
                 <a href="{{ post.url | relative_url }}" class="article-link">
                     <div class="article-image-container">
