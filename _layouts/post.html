@@ -1,14 +1,36 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{{ page.title }}</title>
+    <meta name="description" content="{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}" />
+    <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
   </head>
   <body>
-    <h1>{{ page.title }}</h1>
-    <p><em>{{ page.date | date: "%B %d, %Y" }}</em></p>
-    <div>
-      {{ content }}
-    </div>
-    <a href="/article/">← Back to Articles</a>
+    <header class="site-header">
+      <div class="container">
+        <h1 class="site-title"><a href="{{ '/' | relative_url }}">My Blog</a></h1>
+      </div>
+    </header>
+
+    <main class="container post-content">
+      <article>
+        <h1>{{ page.title }}</h1>
+        <p class="post-date"><em>{{ page.date | date: "%B %d, %Y" }}</em></p>
+        <div class="post-body">
+          {{ content }}
+        </div>
+      </article>
+      <div class="back-link">
+        <a href="{{ '/articles/' | relative_url }}">← Back to Articles</a>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <p>&copy; {{ site.time | date: "%Y" }} {{ site.title }}. All rights reserved.</p>
+      </div>
+    </footer>
   </body>
 </html>

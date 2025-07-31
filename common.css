@@ -373,3 +373,36 @@ body {
     font-size: 0.9rem;
   }
 }
+
+.post-container {
+  max-width: 800px;
+  margin: 4rem auto;
+  padding: 2rem;
+  background-color: #fff;
+}
+
+.post-inner {
+  font-family: 'Georgia', serif;
+  color: #000;
+  line-height: 1.7;
+}
+
+.post-title {
+  font-size: 3.5rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin-bottom: 2rem;
+  font-family: 'Playfair Display', 'Georgia', serif;
+}
+
+.post-content p {
+  margin-bottom: 1.5rem;
+  font-size: 1.125rem;
+}
+
+.post-content h2 {
+  font-size: 1.5rem;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
