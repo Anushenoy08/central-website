@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Articles
-permalink: /articles/
+permalink: /article/
 ---
 
 <section class="articles-grid">
@@ -15,6 +15,7 @@ permalink: /articles/
         {% endif %}
         <div class="article-content">
           <h2>{{ post.title }}</h2>
+          <p class="post-date">{{ post.date | date: "%B %d, %Y" }}</p>
           <p>{{ post.excerpt | strip_html | truncatewords: 20 }}</p>
         </div>
       </a>
