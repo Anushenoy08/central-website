@@ -2,35 +2,24 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{{ page.title }}</title>
-    <meta name="description" content="{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}" />
-    <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/assets/css/common.css" />
   </head>
   <body>
-    <header class="site-header">
-      <div class="container">
-        <h1 class="site-title"><a href="{{ '/' | relative_url }}">My Blog</a></h1>
-      </div>
+    <header class="blog-header">
+      <nav>
+        <a href="/index.html" class="btn-home">🏠 Home</a>
+        <a href="/article.html" class="btn-back">← Back to Articles</a>
+      </nav>
     </header>
 
-    <main class="container post-content">
+    <main class="blog-post-content">
+      <h1>{{ page.title }}</h1>
+      <p class="post-date"><em>{{ page.date | date: "%B %d, %Y" }}</em></p>
       <article>
-        <h1>{{ page.title }}</h1>
-        <p class="post-date"><em>{{ page.date | date: "%B %d, %Y" }}</em></p>
-        <div class="post-body">
-          {{ content }}
-        </div>
+        {{ content }}
       </article>
-      <div class="back-link">
-        <a href="{{ '/articles/' | relative_url }}">← Back to Articles</a>
-      </div>
     </main>
-
-    <footer class="site-footer">
-      <div class="container">
-        <p>&copy; {{ site.time | date: "%Y" }} {{ site.title }}. All rights reserved.</p>
-      </div>
-    </footer>
   </body>
 </html>
