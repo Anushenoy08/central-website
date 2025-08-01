@@ -35,9 +35,6 @@ permalink: /Generators/qrcode.html
           <i class="fa-regular fa-circle-play"></i>
           <span class="qr-selector-label">Video</span>
         </div>
-        <div class="url-info">
-          <p><i class="fa-solid fa-info-circle"></i> URL for files can be generated with <a href="/Generators/url.html">File URL Generator</a></p>
-        </div>
       </div>
     </div>
     <div>
@@ -207,7 +204,18 @@ function generateQRCodeWithContent(content) {
     
     // Check if QRCode library is available
     if (typeof QRCode === 'undefined') {
-      throw new Error('QRCode library not loaded. Please refresh the page and try again.');
+      // Try to load the library dynamically
+      const script = document.createElement('script');
+      script.src = 'https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js';
+      script.onload = function() {
+        // Retry generation after library loads
+        setTimeout(() => generateQRCodeWithContent(content), 100);
+      };
+      script.onerror = function() {
+        throw new Error('QRCode library failed to load. Please check your internet connection and try again.');
+      };
+      document.head.appendChild(script);
+      return; // Exit early, will be handled by onload
     }
     
     // Generate QR code
@@ -336,14 +344,27 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
   
-  // Check if QRCode library is loaded
-  setTimeout(function() {
-    if (typeof QRCode === 'undefined') {
-      console.error('QRCode library not loaded');
-      alert('QRCode library failed to load. Please refresh the page.');
-    } else {
+  // Check if QRCode library is loaded with multiple attempts
+  let attempts = 0;
+  const maxAttempts = 5;
+  
+  function checkQRCodeLibrary() {
+    attempts++;
+    if (typeof QRCode !== 'undefined') {
       console.log('QRCode library loaded successfully');
+      return;
     }
-  }, 1000);
+    
+    if (attempts < maxAttempts) {
+      console.log(`QRCode library not loaded, attempt ${attempts}/${maxAttempts}`);
+      setTimeout(checkQRCodeLibrary, 1000);
+    } else {
+      console.error('QRCode library failed to load after multiple attempts');
+      // Don't show alert immediately, let user try to use the tool first
+    }
+  }
+  
+  // Start checking after a short delay
+  setTimeout(checkQRCodeLibrary, 500);
 });
 </script>
