@@ -11137,6 +11137,9 @@ body {
   font-size: 1em;
   background: #fafdff;
   color: #333;
+  min-height: 50px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .url-output:focus {
@@ -11154,7 +11157,13 @@ body {
   font-weight: 600;
   cursor: pointer;
   transition: background 0.2s;
-  white-space: nowrap;
+  white-space: normal;
+  min-width: 100px;
+  height: fit-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
 
 .copy-url-btn:hover:not(:disabled) {
@@ -11255,8 +11264,13 @@ body {
     flex-direction: column;
   }
   
+  .url-output {
+    min-height: 60px;
+  }
+  
   .copy-url-btn {
     width: 100%;
+    min-height: 50px;
   }
 }
 
