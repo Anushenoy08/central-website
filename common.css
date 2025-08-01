@@ -10602,7 +10602,11 @@ body {
   justify-content: center;
   cursor: pointer;
   transition: border 0.2s, box-shadow 0.2s;
-  font-size: 2.2em;
+  font-size: 0.9em;
+  font-weight: 500;
+  color: #666;
+  text-align: center;
+  padding: 4px;
 }
 .qr-logo-option.selected {
   border: 2.5px solid #1976d2;
@@ -10671,6 +10675,18 @@ body {
 .qr-generate-btn:disabled {
   background: #ccc;
   cursor: not-allowed;
+}
+
+.qr-placeholder-text {
+  text-align: center;
+  color: #999;
+  font-size: 14px;
+  margin-top: 10px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
 }
 
 .qr-download-btn:hover {
