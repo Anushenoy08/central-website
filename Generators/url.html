@@ -12,7 +12,7 @@ permalink: /Generators/url.html
 
 <div class="url-generator-container">
   <div class="url-generator-title">File URL Generator</div>
-  <div class="url-generator-subtitle">Upload your files and get shareable URLs for QR codes</div>
+  <div class="url-generator-subtitle">Your URL will appear here </div>
   
   <div class="url-generator-main">
     <div class="url-generator-left">
@@ -57,7 +57,7 @@ permalink: /Generators/url.html
           </button>
         </div>
         <div class="url-info">
-          <p><i class="fa-solid fa-info-circle"></i> This URL can be used with the <a href="/Generators/qrcode.html">QR Code Generator</a></p>
+          <p><i class="fa-solid fa-info-circle"></i> Upload your file to Google Drive, Dropbox, or similar services, then use their sharing links for QR codes</p>
         </div>
       </div>
     </div>
@@ -171,11 +171,15 @@ function generateURL() {
   generateBtn.textContent = 'Generating...';
   generateBtn.disabled = true;
   
-  // Simulate URL generation (in a real app, this would upload to a server)
+  // For demonstration purposes, create a simulated URL
+  // In a real application, this would upload to a server and return a permanent URL
   setTimeout(() => {
-    // Create a blob URL for the file
-    const blob = new Blob([uploadedFile], { type: uploadedFile.type });
-    generatedUrl = URL.createObjectURL(blob);
+    // Create a simulated permanent URL (in real app, this would be from your server)
+    const fileExtension = uploadedFile.name.split('.').pop();
+    const timestamp = Date.now();
+    const simulatedUrl = `https://your-file-server.com/files/${timestamp}-${uploadedFile.name}`;
+    
+    generatedUrl = simulatedUrl;
     
     // Display the URL
     document.getElementById('generatedUrl').value = generatedUrl;
@@ -187,8 +191,11 @@ function generateURL() {
     generateBtn.textContent = 'Generate URL';
     generateBtn.disabled = false;
     
-    // Show success message
-    showNotification('URL generated successfully!', 'success');
+    // Show success message with important note
+    showNotification('URL generated! Note: This is a demo URL. For real file hosting, use services like Google Drive, Dropbox, or your own server.', 'success');
+    
+    // Update the info text
+    document.querySelector('.url-info p').innerHTML = '<i class="fa-solid fa-info-circle"></i> This is a demo URL. For real file sharing, upload to Google Drive, Dropbox, or similar services and use their sharing links.';
   }, 1500);
 }
 

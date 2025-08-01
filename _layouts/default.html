@@ -5,6 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="google-site-verification" content="qDuGkH2CTvMiTDbq-krTG2dOfthufxZMN7kZJ1ezGps" />
   <title>{{ page.title }}</title>
+  
+  <!-- FontAwesome Icons - Load for all pages -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
   {% if page.path == "/Json-Converter/json-excel.html" %}
   <!-- SheetJS CDN for Excel export -->
     <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
@@ -13,8 +17,6 @@
   {% if page.path == "/Generators/qrcode.html" %}
     <!-- QRCode.js CDN -->
       <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
-    <!-- Icons CDN (FontAwesome for demo) -->
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   {% endif %}
   <!-- SEO -->
   {% seo %}
