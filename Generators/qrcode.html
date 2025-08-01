@@ -55,20 +55,7 @@ permalink: /Generators/qrcode.html
       
       <!-- File Upload Inputs -->
       <div id="file-input" class="qr-input-container" style="display: none;">
-        <div class="file-upload-area" id="fileUploadArea">
-          <i class="fa-solid fa-cloud-upload-alt"></i>
-          <p>Click to upload or drag and drop</p>
-          <span id="fileTypeLabel">PDF file</span>
-          <input type="file" id="fileInput" accept="" style="display: none;" />
-        </div>
-        <div id="fileInfo" style="display: none; margin-top: 10px; padding: 10px; background: #f0f8ff; border-radius: 8px;">
-          <p id="fileName"></p>
-          <p id="fileSize"></p>
-        </div>
-        <div class="file-note" style="margin-top: 10px; padding: 10px; background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 8px; font-size: 0.9em; color: #856404;">
-          <i class="fa-solid fa-info-circle"></i>
-          <strong>Note:</strong> File QR codes work best for small files (&lt;1MB). For larger files, consider uploading to a cloud service first and using the sharing link.
-        </div>
+        <input class="qr-input" id="fileUrl" type="url" placeholder="Enter the file URL" />
       </div>
     </div>
     <div>
@@ -109,7 +96,6 @@ permalink: /Generators/qrcode.html
 let selectedLogo = 'none';
 let selectedType = 'website';
 let qrGenerated = false;
-let uploadedFile = null;
 
 function selectType(el) {
   document.querySelectorAll('.qr-selector').forEach(opt => opt.classList.remove('selected'));
@@ -127,18 +113,14 @@ function selectType(el) {
     document.getElementById('text-input').style.display = 'block';
   } else {
     document.getElementById('file-input').style.display = 'block';
-    const fileInput = document.getElementById('fileInput');
-    const fileTypeLabel = document.getElementById('fileTypeLabel');
+    const fileUrlInput = document.getElementById('fileUrl');
     
     if (selectedType === 'pdf') {
-      fileInput.accept = '.pdf';
-      fileTypeLabel.textContent = 'PDF file';
+      fileUrlInput.placeholder = 'Enter the PDF URL (e.g., https://example.com/document.pdf)';
     } else if (selectedType === 'image') {
-      fileInput.accept = 'image/*';
-      fileTypeLabel.textContent = 'Image file (JPG, PNG, GIF, etc.)';
+      fileUrlInput.placeholder = 'Enter the Image URL (e.g., https://example.com/image.jpg)';
     } else if (selectedType === 'video') {
-      fileInput.accept = 'video/*';
-      fileTypeLabel.textContent = 'Video file (MP4, AVI, MOV, etc.)';
+      fileUrlInput.placeholder = 'Enter the Video URL (e.g., https://example.com/video.mp4)';
     }
   }
 }
@@ -164,30 +146,6 @@ function getLogoUrl(logo) {
   return icons[logo] || '';
 }
 
-function handleFileUpload(event) {
-  const file = event.target.files[0];
-  if (file) {
-    uploadedFile = file;
-    const fileInfo = document.getElementById('fileInfo');
-    const fileName = document.getElementById('fileName');
-    const fileSize = document.getElementById('fileSize');
-    
-    fileName.textContent = `File: ${file.name}`;
-    fileSize.textContent = `Size: ${(file.size / 1024 / 1024).toFixed(2)} MB`;
-    fileInfo.style.display = 'block';
-    
-    // Create a downloadable link for the file
-    createFileDownloadLink(file);
-  }
-}
-
-function createFileDownloadLink(file) {
-  // Create a blob URL for the file
-  const blob = new Blob([file], { type: file.type });
-  uploadedFile.downloadUrl = URL.createObjectURL(blob);
-  uploadedFile.fileType = file.type;
-}
-
 function generateQR() {
   let content = '';
   
@@ -208,29 +166,19 @@ function generateQR() {
       return;
     }
   } else {
-    if (!uploadedFile) {
-      alert('Please upload a file first.');
+    content = document.getElementById('fileUrl').value.trim();
+    if (!content) {
+      if (selectedType === 'pdf') {
+        alert('Please enter a PDF URL.');
+      } else if (selectedType === 'image') {
+        alert('Please enter an Image URL.');
+      } else if (selectedType === 'video') {
+        alert('Please enter a Video URL.');
+      }
       return;
     }
-    
-    // For files, create different content based on size
-    if (uploadedFile.size > 1024 * 1024) { // If file is larger than 1MB
-      // For large files, create a file information QR
-      content = `📁 File Information\n\nName: ${uploadedFile.name}\nSize: ${(uploadedFile.size / 1024 / 1024).toFixed(2)} MB\nType: ${uploadedFile.fileType}\n\n💡 Tip: For file sharing, upload to Google Drive, Dropbox, or similar service and use the sharing link instead.`;
-    } else {
-      // For small files, try to create a data URL
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        const dataUrl = e.target.result;
-        generateQRCodeWithContent(dataUrl);
-      };
-      reader.onerror = function() {
-        // Fallback to file info if data URL fails
-        const fallbackContent = `📁 File Information\n\nName: ${uploadedFile.name}\nSize: ${(uploadedFile.size / 1024 / 1024).toFixed(2)} MB\nType: ${uploadedFile.fileType}\n\n💡 Tip: For file sharing, upload to Google Drive, Dropbox, or similar service and use the sharing link instead.`;
-        generateQRCodeWithContent(fallbackContent);
-      };
-      reader.readAsDataURL(uploadedFile);
-      return; // Exit early, will be handled by reader.onload
+    if (!content.startsWith('http://') && !content.startsWith('https://')) {
+      content = 'https://' + content;
     }
   }
   
@@ -359,44 +307,10 @@ function downloadQR() {
 
 // Event listeners
 document.addEventListener('DOMContentLoaded', function() {
-  // File upload handling
-  const fileUploadArea = document.getElementById('fileUploadArea');
-  const fileInput = document.getElementById('fileInput');
-  
-  fileUploadArea.addEventListener('click', function() {
-    fileInput.click();
-  });
-  
-  fileInput.addEventListener('change', handleFileUpload);
-  
-  // Drag and drop functionality
-  fileUploadArea.addEventListener('dragover', function(e) {
-    e.preventDefault();
-    fileUploadArea.style.borderColor = '#1976d2';
-    fileUploadArea.style.backgroundColor = '#f0f8ff';
-  });
-  
-  fileUploadArea.addEventListener('dragleave', function(e) {
-    e.preventDefault();
-    fileUploadArea.style.borderColor = '#b2ebf2';
-    fileUploadArea.style.backgroundColor = '#fafdff';
-  });
-  
-  fileUploadArea.addEventListener('drop', function(e) {
-    e.preventDefault();
-    fileUploadArea.style.borderColor = '#b2ebf2';
-    fileUploadArea.style.backgroundColor = '#fafdff';
-    
-    const files = e.dataTransfer.files;
-    if (files.length > 0) {
-      fileInput.files = files;
-      handleFileUpload({ target: { files: files } });
-    }
-  });
-  
   // Enter key handling
   const websiteUrl = document.getElementById('websiteUrl');
   const textContent = document.getElementById('textContent');
+  const fileUrl = document.getElementById('fileUrl');
   
   if (websiteUrl) {
     websiteUrl.addEventListener('keypress', function(e) {
@@ -409,6 +323,14 @@ document.addEventListener('DOMContentLoaded', function() {
   if (textContent) {
     textContent.addEventListener('keypress', function(e) {
       if (e.key === 'Enter' && e.ctrlKey) {
+        generateQR();
+      }
+    });
+  }
+  
+  if (fileUrl) {
+    fileUrl.addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
         generateQR();
       }
     });
