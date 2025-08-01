@@ -1,168 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>Words & Characters Counter | Blue-Green UI</title>
-<link rel="stylesheet" href="common.css">
-<style>
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body {
-  background: linear-gradient(135deg, #fafdff 0%, #e8f6ef 100%);
-  color: #1a2a32;
-  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-h1 {
-  margin-top: 110px;
-  text-align: center;
-  font-size: 2.2em;
-  color: #2196f3;
-  font-weight: 600;
-  margin-bottom: 18px;
-}
-.container {
-  background: linear-gradient(120deg, #e3f6fc 0%, #e8f6ef 100%);
-  border-radius: 18px;
-  padding: 32px;
-  max-width: 800px;
-  width: 90%;
-  box-shadow: 0 4px 16px rgba(33, 150, 243, 0.10);
-  margin: 24px auto;
-  border: 1px solid #e0f2f1;
-}
-.search-bar {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 18px;
-}
-.search-input {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  background: #fafdff;
-  border-radius: 8px;
-  border: 1px solid #b2ebf2;
-  overflow: hidden;
-}
-.search-input input {
-  flex: 1;
-  padding: 10px;
-  border: none;
-  background: transparent;
-  color: #1a2a32;
-  outline: none;
-  font-size: 1em;
-}
-.search-controls {
-  display: flex;
-  align-items: center;
-  padding: 0 8px;
-  gap: 5px;
-  font-size: 14px;
-  color: #2196f3;
-}
-.search-controls button {
-  background: transparent;
-  border: none;
-  color: #2196f3;
-  cursor: pointer;
-  font-size: 16px;
-  padding: 2px 6px;
-  border-radius: 4px;
-  transition: background 0.2s;
-}
-.search-controls button:hover {
-  background: #e3f6fc;
-}
-#textInput {
-  width: 100%;
-  height: 350px;
-  max-height: 600px;
-  overflow-y: auto;
-  background: #fafdff;
-  color: #1a2a32;
-  border: 1px solid #b2ebf2;
-  border-radius: 8px;
-  padding: 15px;
-  resize: vertical;
-  margin-bottom: 18px;
-  white-space: pre-wrap;
-  font-size: 1em;
-}
-.highlight {
-  background-color: #e3f6fc;
-  color: #2196f3;
-  border-radius: 3px;
-  padding: 0 2px;
-}
-.active-highlight {
-  background-color: #43e97b !important;
-  border: 2px solid #2196f3;
-  border-radius: 4px;
-  padding: 0 2px;
-}
-.stats {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 18px;
-}
-.stat {
-  flex: 1 1 120px;
-  background: #e8f6ef;
-  padding: 15px;
-  border-radius: 8px;
-  text-align: center;
-  border: 1px solid #e0f2f1;
-  color: #2196f3;
-}
-.button-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 14px;
-}
-button {
-  flex: 1 1 45%;
-  padding: 14px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: 0.2s;
-  background: #e8f6ef;
-  color: #2196f3;
-  font-weight: 500;
-  box-shadow: 0 1px 4px rgba(33, 150, 243, 0.07);
-}
-.primary-btn {
-  background: #2196f3;
-  color: #fff;
-}
-.primary-btn:hover {
-  background: #43e97b;
-  color: #fff;
-}
-.unique-download {
-  background: #e8f6ef;
-  color: #2196f3;
-  font-weight: 600;
-  border: 1px solid #b2ebf2;
-}
-.unique-download:hover {
-  background: #e3f6fc;
-}
-</style>
-</head>
-<body>
+---
+layout: default
+title: Words and Characters Counter
+description: Check your words and characters count here 
+permalink: /wcc.html
+---
 
 <!-- TOOLBAR: remains as per your working common.css -->
 <div class="navbar">
-  <img src="images/logo.png" alt="Logo">
-  <a href="index.html">HOME</a>
+  <img src="/images/logo.png" alt="Logo">
+  <a href="/index.html">HOME</a>
   <a href="/article/">ARTICLES</a>
 </div>
 
@@ -308,6 +154,3 @@ function resetText() {
   currentIndex = 0;
 }
 </script>
-
-</body>
-</html>
