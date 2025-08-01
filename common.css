@@ -10555,6 +10555,56 @@ body {
   background: #fafdff;
   color: #222;
 }
+
+.qr-textarea {
+  width: 100%;
+  padding: 18px;
+  border-radius: 10px;
+  border: 1.5px solid #b2ebf2;
+  font-size: 1.13em;
+  margin-bottom: 8px;
+  background: #fafdff;
+  color: #222;
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+  resize: vertical;
+  min-height: 120px;
+}
+
+.file-upload-area {
+  width: 100%;
+  padding: 40px 20px;
+  border: 2px dashed #b2ebf2;
+  border-radius: 10px;
+  background: #fafdff;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.2s, background-color 0.2s;
+  margin-bottom: 8px;
+}
+
+.file-upload-area:hover {
+  border-color: #1976d2;
+  background: #f0f8ff;
+}
+
+.file-upload-area i {
+  font-size: 3em;
+  color: #1976d2;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.file-upload-area p {
+  font-size: 1.1em;
+  color: #666;
+  margin: 10px 0;
+}
+
+.file-upload-area span {
+  font-size: 0.9em;
+  color: #999;
+  display: block;
+}
 .qr-tabs {
   display: flex;
   gap: 0;
@@ -10764,6 +10814,23 @@ body {
     font-size: 1em;
     padding: 14px 0;
   }
+  
+  .qr-textarea {
+    min-height: 100px;
+    padding: 14px;
+  }
+  
+  .file-upload-area {
+    padding: 30px 15px;
+  }
+  
+  .file-upload-area i {
+    font-size: 2.5em;
+  }
+  
+  .file-upload-area p {
+    font-size: 1em;
+  }
 }
 
 @media (max-width: 480px) {
@@ -10818,6 +10885,23 @@ body {
   .qr-generate-btn, .qr-download-btn {
     font-size: 0.95em;
     padding: 12px 0;
+  }
+  
+  .qr-textarea {
+    min-height: 80px;
+    padding: 12px;
+  }
+  
+  .file-upload-area {
+    padding: 25px 12px;
+  }
+  
+  .file-upload-area i {
+    font-size: 2em;
+  }
+  
+  .file-upload-area p {
+    font-size: 0.9em;
   }
 }
 

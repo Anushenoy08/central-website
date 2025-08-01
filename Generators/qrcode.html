@@ -18,23 +18,23 @@ permalink: /Generators/qrcode.html
     <div style="margin-bottom: 18px;">
       <div style="font-size:1.13em;font-weight:700;margin-bottom:10px;">QR code can be generated for the following :</div>
       <div class="qr-selector-bar">
-        <div class="qr-selector" style="cursor:default;">
+        <div class="qr-selector selected" data-type="website" onclick="selectType(this)">
           <i class="fa-solid fa-globe"></i>
           <span class="qr-selector-label">Website</span>
         </div>
-        <div class="qr-selector" style="cursor:default;">
+        <div class="qr-selector" data-type="text" onclick="selectType(this)">
           <i class="fa-solid fa-file-lines"></i>
           <span class="qr-selector-label">Text</span>
         </div>
-        <div class="qr-selector" style="cursor:default;">
+        <div class="qr-selector" data-type="pdf" onclick="selectType(this)">
           <i class="fa-regular fa-file-pdf"></i>
           <span class="qr-selector-label">PDF</span>
         </div>
-        <div class="qr-selector" style="cursor:default;">
+        <div class="qr-selector" data-type="image" onclick="selectType(this)">
           <i class="fa-regular fa-image"></i>
           <span class="qr-selector-label">Images</span>
         </div>
-        <div class="qr-selector" style="cursor:default;">
+        <div class="qr-selector" data-type="video" onclick="selectType(this)">
           <i class="fa-regular fa-circle-play"></i>
           <span class="qr-selector-label">Video</span>
         </div>
@@ -42,7 +42,30 @@ permalink: /Generators/qrcode.html
     </div>
     <div>
       <div class="qr-step-title"><span class="step-num">1</span>Complete the content</div>
-      <input class="qr-input" id="qrText" type="text" placeholder="Enter the content for your QR code..." />
+      
+      <!-- Website Input -->
+      <div id="website-input" class="qr-input-container">
+        <input class="qr-input" id="websiteUrl" type="url" placeholder="Enter website URL (e.g., https://example.com)" />
+      </div>
+      
+      <!-- Text Input -->
+      <div id="text-input" class="qr-input-container" style="display: none;">
+        <textarea class="qr-textarea" id="textContent" placeholder="Enter your text content here..." rows="4"></textarea>
+      </div>
+      
+      <!-- File Upload Inputs -->
+      <div id="file-input" class="qr-input-container" style="display: none;">
+        <div class="file-upload-area" id="fileUploadArea">
+          <i class="fa-solid fa-cloud-upload-alt"></i>
+          <p>Click to upload or drag and drop</p>
+          <span id="fileTypeLabel">PDF file</span>
+          <input type="file" id="fileInput" accept="" style="display: none;" />
+        </div>
+        <div id="fileInfo" style="display: none; margin-top: 10px; padding: 10px; background: #f0f8ff; border-radius: 8px;">
+          <p id="fileName"></p>
+          <p id="fileSize"></p>
+        </div>
+      </div>
     </div>
     <div>
       <div class="qr-step-title"><span class="step-num">2</span>Design your QR</div>
@@ -80,7 +103,41 @@ permalink: /Generators/qrcode.html
 
 <script>
 let selectedLogo = 'none';
+let selectedType = 'website';
 let qrGenerated = false;
+let uploadedFile = null;
+
+function selectType(el) {
+  document.querySelectorAll('.qr-selector').forEach(opt => opt.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedType = el.getAttribute('data-type');
+  
+  // Show/hide appropriate input containers
+  document.querySelectorAll('.qr-input-container').forEach(container => {
+    container.style.display = 'none';
+  });
+  
+  if (selectedType === 'website') {
+    document.getElementById('website-input').style.display = 'block';
+  } else if (selectedType === 'text') {
+    document.getElementById('text-input').style.display = 'block';
+  } else {
+    document.getElementById('file-input').style.display = 'block';
+    const fileInput = document.getElementById('fileInput');
+    const fileTypeLabel = document.getElementById('fileTypeLabel');
+    
+    if (selectedType === 'pdf') {
+      fileInput.accept = '.pdf';
+      fileTypeLabel.textContent = 'PDF file';
+    } else if (selectedType === 'image') {
+      fileInput.accept = 'image/*';
+      fileTypeLabel.textContent = 'Image file (JPG, PNG, GIF, etc.)';
+    } else if (selectedType === 'video') {
+      fileInput.accept = 'video/*';
+      fileTypeLabel.textContent = 'Video file (MP4, AVI, MOV, etc.)';
+    }
+  }
+}
 
 function selectLogo(el) {
   document.querySelectorAll('.qr-logo-option').forEach(opt => opt.classList.remove('selected'));
@@ -103,8 +160,47 @@ function getLogoUrl(logo) {
   return icons[logo] || '';
 }
 
+function handleFileUpload(event) {
+  const file = event.target.files[0];
+  if (file) {
+    uploadedFile = file;
+    const fileInfo = document.getElementById('fileInfo');
+    const fileName = document.getElementById('fileName');
+    const fileSize = document.getElementById('fileSize');
+    
+    fileName.textContent = `File: ${file.name}`;
+    fileSize.textContent = `Size: ${(file.size / 1024 / 1024).toFixed(2)} MB`;
+    fileInfo.style.display = 'block';
+  }
+}
+
 function generateQR() {
-  let text = document.getElementById('qrText').value.trim();
+  let content = '';
+  
+  // Get content based on selected type
+  if (selectedType === 'website') {
+    content = document.getElementById('websiteUrl').value.trim();
+    if (!content) {
+      alert('Please enter a website URL.');
+      return;
+    }
+    if (!content.startsWith('http://') && !content.startsWith('https://')) {
+      content = 'https://' + content;
+    }
+  } else if (selectedType === 'text') {
+    content = document.getElementById('textContent').value.trim();
+    if (!content) {
+      alert('Please enter some text content.');
+      return;
+    }
+  } else {
+    if (!uploadedFile) {
+      alert('Please upload a file first.');
+      return;
+    }
+    content = `File: ${uploadedFile.name} (${(uploadedFile.size / 1024 / 1024).toFixed(2)} MB)`;
+  }
+  
   const qrBox = document.getElementById('qrcode-hidden');
   const previewCanvas = document.getElementById('qrcode-preview');
   const placeholder = document.getElementById('qr-placeholder');
@@ -113,11 +209,6 @@ function generateQR() {
   
   if (!qrBox || !previewCanvas) {
     console.error('QR elements not found');
-    return;
-  }
-  
-  if (!text) {
-    alert('Please enter some content for the QR code.');
     return;
   }
   
@@ -136,7 +227,7 @@ function generateQR() {
     
     // Generate QR code
     new QRCode(qrBox, {
-      text: text,
+      text: content,
       width: 220,
       height: 220,
       colorDark: '#222',
@@ -231,10 +322,56 @@ function downloadQR() {
 
 // Event listeners
 document.addEventListener('DOMContentLoaded', function() {
-  const qrTextInput = document.getElementById('qrText');
-  if (qrTextInput) {
-    qrTextInput.addEventListener('keypress', function(e) {
+  // File upload handling
+  const fileUploadArea = document.getElementById('fileUploadArea');
+  const fileInput = document.getElementById('fileInput');
+  
+  fileUploadArea.addEventListener('click', function() {
+    fileInput.click();
+  });
+  
+  fileInput.addEventListener('change', handleFileUpload);
+  
+  // Drag and drop functionality
+  fileUploadArea.addEventListener('dragover', function(e) {
+    e.preventDefault();
+    fileUploadArea.style.borderColor = '#1976d2';
+    fileUploadArea.style.backgroundColor = '#f0f8ff';
+  });
+  
+  fileUploadArea.addEventListener('dragleave', function(e) {
+    e.preventDefault();
+    fileUploadArea.style.borderColor = '#b2ebf2';
+    fileUploadArea.style.backgroundColor = '#fafdff';
+  });
+  
+  fileUploadArea.addEventListener('drop', function(e) {
+    e.preventDefault();
+    fileUploadArea.style.borderColor = '#b2ebf2';
+    fileUploadArea.style.backgroundColor = '#fafdff';
+    
+    const files = e.dataTransfer.files;
+    if (files.length > 0) {
+      fileInput.files = files;
+      handleFileUpload({ target: { files: files } });
+    }
+  });
+  
+  // Enter key handling
+  const websiteUrl = document.getElementById('websiteUrl');
+  const textContent = document.getElementById('textContent');
+  
+  if (websiteUrl) {
+    websiteUrl.addEventListener('keypress', function(e) {
       if (e.key === 'Enter') {
+        generateQR();
+      }
+    });
+  }
+  
+  if (textContent) {
+    textContent.addEventListener('keypress', function(e) {
+      if (e.key === 'Enter' && e.ctrlKey) {
         generateQR();
       }
     });
