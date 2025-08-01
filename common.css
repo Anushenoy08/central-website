@@ -10651,6 +10651,122 @@ body {
   background: linear-gradient(90deg, #43e97b 0%, #2196f3 100%);
 }
 
+/* Mobile responsive styles for QR code generator */
+@media (max-width: 768px) {
+  .qr-main-container {
+    flex-direction: column;
+    gap: 32px;
+    padding: 0 16px;
+  }
+  
+  .qr-left {
+    min-width: auto;
+    max-width: none;
+    padding: 32px 24px;
+  }
+  
+  .qr-right {
+    min-width: auto;
+    max-width: none;
+    padding: 32px 24px;
+  }
+  
+  .qr-title {
+    font-size: 1.8em;
+    margin-top: 24px;
+    margin-bottom: 24px;
+    padding: 0 16px;
+  }
+  
+  .qr-selector-bar {
+    gap: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .qr-selector {
+    padding: 6px 16px;
+    min-width: 80px;
+  }
+  
+  .qr-selector i {
+    font-size: 1.5em;
+  }
+  
+  .qr-selector-label {
+    font-size: 0.9em;
+  }
+  
+  .qr-logo-options {
+    gap: 16px;
+    justify-content: center;
+  }
+  
+  .qr-logo-option {
+    width: 48px;
+    height: 48px;
+  }
+  
+  .qr-code-box {
+    padding: 24px;
+  }
+  
+  #qrcode-preview {
+    width: 180px !important;
+    height: 180px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .qr-main-container {
+    padding: 0 12px;
+  }
+  
+  .qr-left, .qr-right {
+    padding: 24px 20px;
+  }
+  
+  .qr-title {
+    font-size: 1.6em;
+    padding: 0 12px;
+  }
+  
+  .qr-selector-bar {
+    gap: 12px;
+  }
+  
+  .qr-selector {
+    padding: 4px 12px;
+    min-width: 70px;
+  }
+  
+  .qr-selector i {
+    font-size: 1.3em;
+  }
+  
+  .qr-selector-label {
+    font-size: 0.8em;
+  }
+  
+  .qr-logo-options {
+    gap: 12px;
+  }
+  
+  .qr-logo-option {
+    width: 44px;
+    height: 44px;
+  }
+  
+  .qr-code-box {
+    padding: 20px;
+  }
+  
+  #qrcode-preview {
+    width: 160px !important;
+    height: 160px !important;
+  }
+}
+
 /* Regex Generator Page Styling */
 body {
   min-height: 100vh;
