@@ -15,7 +15,7 @@ permalink: /Generators/qrcode.html
   <div class="qr-left">
     <div style="margin-bottom: 18px;">
       <div style="font-size:1.13em;font-weight:700;margin-bottom:10px;">QR code can be generated for the following :</div>
-      <div class="qr-selector-bar" style="pointer-events:none;gap:28px;">
+      <div class="qr-selector-bar">
         <div class="qr-selector" style="cursor:default;">
           <i class="fa-solid fa-globe"></i>
           <span class="qr-selector-label">Website</span>
@@ -69,19 +69,23 @@ permalink: /Generators/qrcode.html
     <div class="qr-code-box" id="qrCodeBox">
       <div id="qrcode-hidden" style="display:none"></div>
       <canvas id="qrcode-preview" width="220" height="220"></canvas>
+      <div id="qr-placeholder" style="text-align: center; color: #999; font-size: 14px; margin-top: 10px;">
+        Enter content and click Generate to create QR code
+      </div>
     </div>
-    <button class="qr-download-btn" onclick="downloadQR()">Download QR</button>
+    <button class="qr-generate-btn" onclick="generateQR()">Generate QR Code</button>
+    <button class="qr-download-btn" onclick="downloadQR()" style="display: none;">Download QR</button>
   </div>
 </div>
 
 <script>
 let selectedLogo = 'none';
+let qrGenerated = false;
 
 function selectLogo(el) {
   document.querySelectorAll('.qr-logo-option').forEach(opt => opt.classList.remove('selected'));
   el.classList.add('selected');
   selectedLogo = el.getAttribute('data-logo');
-  updateQRCodePreview();
 }
 
 function getLogoUrl(logo) {
@@ -99,25 +103,32 @@ function getLogoUrl(logo) {
   return icons[logo] || '';
 }
 
-function updateQRCodePreview() {
+function generateQR() {
   let text = document.getElementById('qrText').value.trim();
   const qrBox = document.getElementById('qrcode-hidden');
   const previewCanvas = document.getElementById('qrcode-preview');
+  const placeholder = document.getElementById('qr-placeholder');
+  const downloadBtn = document.querySelector('.qr-download-btn');
+  const generateBtn = document.querySelector('.qr-generate-btn');
   
   if (!qrBox || !previewCanvas) {
     console.error('QR elements not found');
     return;
   }
   
+  if (!text) {
+    alert('Please enter some content for the QR code.');
+    return;
+  }
+  
   // Clear previous QR code
   qrBox.innerHTML = '';
   
-  // Show placeholder QR if input is empty
-  if (!text) {
-    text = 'https://example.com';
-  }
-  
   try {
+    // Show loading state
+    generateBtn.textContent = 'Generating...';
+    generateBtn.disabled = true;
+    
     // Generate QR code
     new QRCode(qrBox, {
       text: text,
@@ -166,19 +177,37 @@ function updateQRCodePreview() {
           };
           img.src = getLogoUrl(selectedLogo) + '?cb=' + new Date().getTime();
         }
+        
+        // Show success state
+        placeholder.style.display = 'none';
+        downloadBtn.style.display = 'block';
+        generateBtn.textContent = 'Generate QR Code';
+        generateBtn.disabled = false;
+        qrGenerated = true;
+        
       } else {
         console.error('QR canvas not found');
+        generateBtn.textContent = 'Generate QR Code';
+        generateBtn.disabled = false;
       }
     }, 100);
   } catch (error) {
     console.error('Error generating QR code:', error);
+    generateBtn.textContent = 'Generate QR Code';
+    generateBtn.disabled = false;
+    alert('Error generating QR code. Please try again.');
   }
 }
 
 function downloadQR() {
+  if (!qrGenerated) {
+    alert('Please generate a QR code first.');
+    return;
+  }
+  
   const previewCanvas = document.getElementById('qrcode-preview');
   if (!previewCanvas) {
-    alert('Please generate a QR code first.');
+    alert('QR code not found.');
     return;
   }
   
@@ -195,15 +224,15 @@ function downloadQR() {
   }
 }
 
-// Event listeners for live preview
+// Event listeners
 document.addEventListener('DOMContentLoaded', function() {
   const qrTextInput = document.getElementById('qrText');
   if (qrTextInput) {
-    qrTextInput.addEventListener('input', updateQRCodePreview);
-    qrTextInput.addEventListener('keyup', updateQRCodePreview);
+    qrTextInput.addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        generateQR();
+      }
+    });
   }
-  
-  // Initial preview
-  setTimeout(updateQRCodePreview, 500);
 });
 </script>
