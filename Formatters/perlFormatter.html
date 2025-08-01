@@ -1,1407 +1,521 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perl Formatter | Developer Tools</title>
-    <link rel="stylesheet" href="../common.css">
-    <style>
-        /* Copy all CSS from jsonFormatter.html for identical UI */
-        * { box-sizing: border-box; }
-        body {
-            background: linear-gradient(135deg, #fafdff 0%, #e8f6ef 100%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            padding: 0;
-        }
-        .container {
-            padding: 1rem;
-        }
-        textarea {
-            width: 100%;
-            height: 300px;
-            padding: 1rem;
-            background: #1e1e1e;
-            border: 1px solid #555;
-            color: #fff;
-            font-family: monospace;
-            font-size: 1rem;
-            border-radius: 5px;
-            resize: vertical;
-        }
-        pre {
-            width: 100%;
-            background: #1e1e1e;
-            padding: 1rem;
-            margin-top: 1rem;
-            border: 1px solid #555;
-            border-radius: 5px;
-            overflow-x: auto;
-            white-space: pre-wrap;
-            word-break: break-word;
-        }
-        .json-formatter-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 32px;
-            margin-top: 120px;
-            padding: 32px 0;
-            max-width: 1800px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        .json-box-row {
-            display: flex;
-            flex-direction: row;
-            gap: 32px;
-            width: 100%;
-            justify-content: center;
-            margin-bottom: 18px;
-        }
-        .json-box {
-            background: #f4fbfa;
-            border-radius: 16px;
-            box-shadow: 0 4px 16px rgba(33, 150, 243, 0.10);
-            border: 1px solid #e0f2f1;
-            padding: 0 18px 0 18px;
-            width: 90vw;
-            max-width: 700px;
-            min-width: 260px;
-            min-height: 350px;
-            max-height: 1000px;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            box-sizing: border-box;
-        }
-        .box-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: #111;
-            border-top-left-radius: 14px;
-            border-top-right-radius: 14px;
-            padding: 0 12px 0 0;
-            height: 44px;
-            margin-bottom: 8px;
-        }
-        .box-header .box-label {
-            color: #fff;
-            font-weight: bold;
-            font-size: 1.08em;
-            margin-left: 18px;
-            letter-spacing: 0.03em;
-        }
-        .box-options {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            gap: 18px;
-            margin-bottom: 0;
-            margin-top: 0;
-            justify-content: flex-end;
-        }
-        .box-options label {
-            cursor: pointer;
-            color: #2196f3;
-            font-size: 1.1em;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            position: relative;
-        }
-        .box-options input[type='file'] {
-            display: none;
-        }
-        .box-options .icon-btn {
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 1.3em;
-            color: #2196f3;
-            padding: 4px 8px;
-            border-radius: 6px;
-            transition: background 0.2s;
-            display: flex;
-            align-items: center;
-            position: relative;
-        }
-        .box-options .icon-btn:hover {
-            background: #e0f7fa;
-        }
-        .box-options .icon-btn .tooltip {
-            display: none;
-            position: absolute;
-            bottom: 120%;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #222;
-            color: #fff;
-            padding: 5px 12px;
-            border-radius: 6px;
-            font-size: 0.95em;
-            white-space: nowrap;
-            z-index: 10;
-            pointer-events: none;
-            opacity: 0.95;
-        }
-        .box-options .icon-btn:hover .tooltip {
-            display: block;
-        }
-        .code-area-wrapper {
-            display: flex;
-            flex: 1 1 auto;
-            min-height: 320px;
-            max-height: 900px;
-            background: #fafdff;
-            border-radius: 8px;
-            border: 1px solid #b2ebf2;
-            overflow: hidden;
-            box-sizing: border-box;
-            margin-bottom: 8px;
-            height: 100%;
-            width: 100%;
-            max-width: 700px;
-            min-width: 260px;
-        }
-        .line-numbers {
-            user-select: none;
-            background: #e0f7fa;
-            color: #90a4ae;
-            text-align: right;
-            padding: 22px 8px 22px 0;
-            font-family: 'Fira Mono', 'Consolas', monospace;
-            font-size: 1.18em;
-            border-right: 1px solid #b2ebf2;
-            min-width: 38px;
-            line-height: 1.5;
-            overflow: hidden;
-            height: 100%;
-            box-sizing: border-box;
-        }
-        .code-scroll {
-            overflow: auto;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            min-width: 0;
-            min-height: 320px;
-            max-height: 900px;
-        }
-        .json-textarea {
-            width: 100%;
-            min-height: 300px;
-            max-height: 900px;
-            height: 100%;
-            resize: none;
-            border: none;
-            outline: none;
-            padding: 16px 16px 16px 0;
-            font-size: 1.08em;
-            font-family: 'Fira Mono', 'Consolas', monospace;
-            background: transparent;
-            color: #1a2a32;
-            box-sizing: border-box;
-            z-index: 2;
-            background: transparent;
-        }
-        .json-textarea[readonly] {
-            background: transparent;
-            color: #388e3c;
-        }
-        .button-panel {
-            display: flex;
-            flex-direction: row;
-            gap: 14px;
-            align-items: center;
-            justify-content: center;
-            margin: 0 0 24px 0;
-            width: 100%;
-        }
-        .button-panel button {
-            min-width: 180px;
-            padding: 16px 0;
-            border: none;
-            border-radius: 8px;
-            font-size: 1.08em;
-            font-weight: 500;
-            background: linear-gradient(90deg, #2196f3 0%, #43e97b 100%);
-            color: #fff;
-            box-shadow: 0 2px 8px rgba(33, 150, 243, 0.07);
-            cursor: pointer;
-            transition: background 0.2s, box-shadow 0.2s;
-        }
-        .button-panel button:hover {
-            background: linear-gradient(90deg, #43e97b 0%, #2196f3 100%);
-            box-shadow: 0 4px 16px rgba(67, 233, 123, 0.12);
-        }
-        .json-title {
-            text-align: center;
-            font-size: 2.2em;
-            font-weight: bold;
-            color: #2196f3;
-            margin-top: 90px;
-            margin-bottom: 10px;
-            letter-spacing: 0.03em;
-        }
-        .error-message {
-            color: #d32f2f;
-            background: #fff3f3;
-            border: 1px solid #ffcdd2;
-            border-radius: 6px;
-            padding: 8px 12px;
-            margin-top: 8px;
-            font-size: 1em;
-            font-weight: 500;
-        }
-        .copied-message {
-            color: #43e97b;
-            background: #e8f6ef;
-            border: 1px solid #b2f7cc;
-            border-radius: 6px;
-            padding: 8px 12px;
-            margin-top: 8px;
-            font-size: 1em;
-            font-weight: 500;
-            text-align: center;
-            display: none;
-        }
-        .popup {
-            position: fixed;
-            top: 40px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #fff;
-            color: #111;
-            border: 1.5px solid #b2ebf2;
-            border-radius: 10px;
-            box-shadow: 0 4px 24px rgba(33, 150, 243, 0.13);
-            padding: 22px 36px 22px 24px;
-            font-size: 1.15em;
-            font-weight: 500;
-            z-index: 9999;
-            display: flex;
-            align-items: center;
-            gap: 18px;
-            min-width: 220px;
-            max-width: 90vw;
-            animation: fadeIn 0.2s;
-        }
-        .popup .close-btn {
-            background: none;
-            border: none;
-            color: #111;
-            font-size: 1.3em;
-            font-weight: bold;
-            cursor: pointer;
-            margin-left: 10px;
-            transition: color 0.2s;
-        }
-        .popup .close-btn:hover {
-            color: #d32f2f;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-20px) translateX(-50%); }
-            to { opacity: 1; transform: translateY(0) translateX(-50%); }
-        }
-        @media (max-width: 1800px) {
-            .json-formatter-container {
-                max-width: 100vw;
-            }
-            .json-box {
-                width: 60vw;
-                min-width: 320px;
-            }
-        }
-        @media (max-width: 1100px) {
-            .json-formatter-container {
-                flex-direction: column;
-                align-items: center;
-                gap: 24px;
-            }
-            .button-panel {
-                flex-direction: row;
-                gap: 10px;
-                margin: 20px 0;
-                min-width: 0;
-            }
-            .json-box {
-                width: 90vw;
-                min-width: 0;
-                padding: 10px;
-                min-height: 400px;
-            }
-            .json-box textarea {
-                min-height: 200px;
-                padding: 12px;
-                font-size: 1em;
-            }
-        }
-        @media (max-width: 600px) {
-            .json-box {
-                width: 98vw;
-                min-width: 0;
-                padding: 6px;
-            }
-            .button-panel button {
-                width: 100px;
-                font-size: 0.95em;
-                padding: 10px 0;
-            }
-            .json-title {
-                font-size: 1.3em;
-            }
-        }
-        .json-box:fullscreen, .json-box:-webkit-full-screen, .json-box:-ms-fullscreen {
-            width: 100vw !important;
-            max-width: 100vw !important;
-            min-width: 0 !important;
-            height: 100vh !important;
-            max-height: 100vh !important;
-            min-height: 0 !important;
-            position: fixed !important;
-            top: 0; left: 0; right: 0; bottom: 0;
-            z-index: 99999;
-            background: #fafdff !important;
-            border-radius: 0 !important;
-            box-shadow: none !important;
-            padding: 0 !important;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            align-items: stretch;
-        }
-        .json-box:fullscreen .code-area-wrapper,
-        .json-box:-webkit-full-screen .code-area-wrapper,
-        .json-box:-ms-fullscreen .code-area-wrapper {
-            flex: 1 1 auto;
-            min-height: 0;
-            max-height: none;
-            width: 100vw;
-            max-width: 100vw;
-            min-width: 0;
-            margin-bottom: 0;
-            border-radius: 0;
-            border: none;
-        }
-        .json-box:fullscreen .code-scroll,
-        .json-box:-webkit-full-screen .code-scroll,
-        .json-box:-ms-fullscreen .code-scroll {
-            width: 100vw;
-            height: 100%;
-            min-width: 0;
-            min-height: 0;
-            max-width: 100vw;
-            max-height: 100vh;
-        }
-        .json-box:fullscreen .json-textarea,
-        .json-box:-webkit-full-screen .json-textarea,
-        .json-box:-ms-fullscreen .json-textarea {
-            width: 100vw;
-            height: 100vh;
-            min-height: 0;
-            max-height: none;
-            font-size: 1.2em;
-            padding: 24px;
-            background: #fafdff;
-        }
-        .json-box:fullscreen .box-header,
-        .json-box:-webkit-full-screen .box-header,
-        .json-box:-ms-fullscreen .box-header {
-            border-radius: 0;
-            height: 54px;
-            font-size: 1.2em;
-        }
-        .json-box:fullscreen .box-options .icon-btn,
-        .json-box:-webkit-full-screen .box-options .icon-btn,
-        .json-box:-ms-fullscreen .box-options .icon-btn {
-            font-size: 1.5em;
-        }
-        .json-box:fullscreen .line-numbers,
-        .json-box:-webkit-full-screen .line-numbers,
-        .json-box:-ms-fullscreen .line-numbers {
-            font-size: 1.1em;
-            min-width: 48px;
-            background: #e0f7fa;
-        }
-        .close-fullscreen-btn {
-            position: absolute;
-            top: 10px;
-            right: 18px;
-            z-index: 100000;
-            background: #fff;
-            color: #111;
-            border: 1px solid #b2ebf2;
-            border-radius: 6px;
-            font-size: 1.5em;
-            font-weight: bold;
-            cursor: pointer;
-            padding: 2px 12px;
-            box-shadow: 0 2px 8px rgba(33, 150, 243, 0.07);
-            display: none;
-        }
-        .json-box:fullscreen         .close-fullscreen-btn,
-        .json-box:-webkit-full-screen .close-fullscreen-btn,
-        .json-box:-ms-fullscreen .close-fullscreen-btn {
-            display: block;
-        }
-        
-        /* Action buttons container base styles */
-        .action-buttons-container {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-            justify-content: center;
-            margin-top: 20px;
-            padding: 0 8px;
-            width: 100%;
-            box-sizing: border-box;
-        }
-        
-        .action-buttons-container button {
-            padding: 12px 24px;
-            font-size: 1.1em;
-            font-weight: 500;
-            cursor: pointer;
-            border: none;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(33,150,243,0.07);
-            transition: background 0.2s, box-shadow 0.2s;
-            flex: 0 1 auto;
-            min-width: 120px;
-            white-space: nowrap;
-        }
-        
-        /* Mobile styles */
-        @media (max-width: 768px) {
-            .json-formatter-container {
-                margin-top: 100px;
-                padding: 16px;
-                gap: 20px;
-            }
-            
-            .json-title {
-                font-size: 1.8em;
-                margin-top: 60px;
-            }
-            
-            .json-box-row {
-                flex-direction: column;
-                gap: 20px;
-                width: 100%;
-            }
-            
-            .json-box {
-                width: 100%;
-                max-width: 100%;
-                min-width: 0;
-                padding: 0 12px 0 12px;
-                min-height: 300px;
-                flex: none;
-                box-sizing: border-box;
-            }
-            
-            .box-header {
-                height: 40px;
-                padding: 0 8px 0 0;
-            }
-            
-            .box-header .box-label {
-                font-size: 1em;
-                margin-left: 12px;
-            }
-            
-            .box-options {
-                gap: 8px;
-                flex-wrap: wrap;
-            }
-            
-            .box-options .icon-btn {
-                font-size: 1.1em;
-                padding: 3px 6px;
-                min-width: 32px;
-                height: 32px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-            
-            .box-options label {
-                font-size: 0.9em;
-                padding: 4px 8px;
-                white-space: nowrap;
-            }
-            
-            .code-area-wrapper {
-                min-height: 250px;
-                max-height: 600px;
-                width: 100%;
-                box-sizing: border-box;
-            }
-            
-            .perl-textarea {
-                min-height: 250px;
-                font-size: 1em;
-                padding: 12px 12px 12px 0;
-                width: 100%;
-                box-sizing: border-box;
-            }
-            
-            .line-numbers {
-                font-size: 1em;
-                padding: 12px 6px 12px 0;
-                min-width: 32px;
-            }
-            
-            /* Action buttons container */
-            .action-buttons-container {
-                display: flex !important;
-                gap: 12px !important;
-                flex-wrap: wrap !important;
-                justify-content: center !important;
-                margin-top: 20px !important;
-                padding: 0 8px !important;
-                width: 100% !important;
-                box-sizing: border-box !important;
-            }
-            
-            .action-buttons-container button {
-                padding: 10px 16px !important;
-                font-size: 0.95em !important;
-                min-width: 80px !important;
-                flex: 0 1 auto !important;
-                white-space: nowrap !important;
-                border-radius: 8px !important;
-                box-shadow: 0 2px 8px rgba(33,150,243,0.07) !important;
-                transition: background 0.2s, box-shadow 0.2s !important;
-            }
-        }
-        
-        /* Extra small mobile styles */
-        @media (max-width: 480px) {
-            .json-formatter-container {
-                padding: 12px;
-                gap: 16px;
-            }
-            
-            .json-title {
-                font-size: 1.6em;
-                margin-top: 50px;
-            }
-            
-            .json-box {
-                padding: 0 8px 0 8px;
-                min-height: 250px;
-            }
-            
-            .box-header {
-                height: 36px;
-                padding: 0 6px 0 0;
-            }
-            
-            .box-header .box-label {
-                font-size: 0.9em;
-                margin-left: 8px;
-            }
-            
-            .box-options {
-                gap: 6px;
-            }
-            
-            .box-options .icon-btn {
-                font-size: 1em;
-                padding: 2px 4px;
-                min-width: 28px;
-                height: 28px;
-            }
-            
-            .code-area-wrapper {
-                min-height: 200px;
-                max-height: 500px;
-            }
-            
-            .perl-textarea {
-                min-height: 200px;
-                font-size: 0.9em;
-                padding: 10px 10px 10px 0;
-            }
-            
-            .line-numbers {
-                font-size: 0.9em;
-                padding: 10px 4px 10px 0;
-                min-width: 28px;
-            }
-            
-            .action-buttons-container {
-                gap: 8px !important;
-                margin-top: 16px !important;
-                padding: 0 4px !important;
-            }
-            
-            .action-buttons-container button {
-                padding: 8px 12px !important;
-                font-size: 0.9em !important;
-                min-width: 70px !important;
-                flex: 0 1 auto !important;
-                border-radius: 6px !important;
-                box-shadow: 0 1px 4px rgba(33,150,243,0.07) !important;
-            }
-        }
-        
-        /* Tablet styles */
-        @media (min-width: 769px) and (max-width: 1024px) {
-            .json-formatter-container {
-                margin-top: 110px;
-                padding: 24px;
-            }
-            
-            .json-title {
-                font-size: 2em;
-            }
-            
-            .json-box {
-                padding: 0 16px 0 16px;
-            }
-            
-            .code-area-wrapper {
-                min-height: 280px;
-            }
-            
-            .perl-textarea {
-                min-height: 280px;
-                font-size: 1.1em;
-            }
-        }
-        
-        /* Large desktop styles */
-        @media (min-width: 1200px) {
-            .json-formatter-container {
-                margin-top: 130px;
-                padding: 40px;
-            }
-            
-            .json-title {
-                font-size: 2.4em;
-            }
-            
-            .json-box {
-                padding: 0 24px 0 24px;
-            }
-            
-            .code-area-wrapper {
-                min-height: 350px;
-            }
-            
-            .perl-textarea {
-                min-height: 350px;
-                font-size: 1.2em;
-            }
-        }
-        
-        /* Extra large screens */
-        @media (min-width: 1600px) {
-            .json-box {
-                max-width: 800px;
-            }
-        }
-        
-        /* Mobile Fullscreen Overlay */
-        .mobile-fullscreen-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: #fafdff;
-            z-index: 99999;
-            flex-direction: column;
-            padding: 0;
-            margin: 0;
-            border-radius: 0;
-            box-shadow: none;
-            border: none;
-        }
-        
-        .mobile-fullscreen-overlay.active {
-            display: flex;
-        }
-        
-        .mobile-fullscreen-header {
-            background: #111;
-            color: #fff;
-            padding: 12px 16px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-shrink: 0;
-        }
-        
-        .mobile-fullscreen-title {
-            font-weight: bold;
-            font-size: 1.1em;
-        }
-        
-        .mobile-fullscreen-close {
-            background: none;
-            border: none;
-            color: #fff;
-            font-size: 1.5em;
-            cursor: pointer;
-            padding: 4px 8px;
-            border-radius: 4px;
-        }
-        
-        .mobile-fullscreen-content {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            padding: 16px;
-        }
-        
-        .mobile-fullscreen-textarea {
-            flex: 1;
-            width: 100%;
-            border: 1px solid #b2ebf2;
-            border-radius: 8px;
-            padding: 16px;
-            font-family: 'Fira Mono', 'Consolas', monospace;
-            font-size: 1em;
-            line-height: 1.5;
-            color: #1a2a32;
-            background: #fafdff;
-            resize: none;
-            outline: none;
-        }
-        
-        .mobile-fullscreen-textarea:focus {
-            border-color: #2196f3;
-        }
-        
-        /* Desktop fullscreen styles */
-        .json-box:fullscreen, .json-box:-webkit-full-screen, .json-box:-ms-fullscreen {
-            width: 100vw !important;
-            max-width: 100vw !important;
-            min-width: 0 !important;
-            height: 100vh !important;
-            max-height: 100vh !important;
-            min-height: 0 !important;
-            position: fixed !important;
-            top: 0; left: 0; right: 0; bottom: 0;
-            z-index: 99999;
-            background: #fafdff !important;
-            border-radius: 0 !important;
-            box-shadow: none !important;
-            padding: 0 !important;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            align-items: stretch;
-        }
-        
-        .json-box:fullscreen .code-area-wrapper,
-        .json-box:-webkit-full-screen .code-area-wrapper,
-        .json-box:-ms-fullscreen .code-area-wrapper {
-            flex: 1 1 auto;
-            min-height: 0;
-            max-height: none;
-            width: 100vw;
-            max-width: 100vw;
-            min-width: 0;
-            margin-bottom: 0;
-            border-radius: 0;
-            border: none;
-        }
-        
-        .json-box:fullscreen .code-scroll,
-        .json-box:-webkit-full-screen .code-scroll,
-        .json-box:-ms-fullscreen .code-scroll {
-            width: 100vw;
-            height: 100%;
-            min-width: 0;
-            min-height: 0;
-            max-width: 100vw;
-            max-height: 100vh;
-        }
-        
-        .json-box:fullscreen .json-textarea,
-        .json-box:-webkit-full-screen .json-textarea,
-        .json-box:-ms-fullscreen .json-textarea {
-            width: 100vw;
-            height: 100vh;
-            min-height: 0;
-            max-height: none;
-            font-size: 1.2em;
-            padding: 24px;
-            background: #fafdff;
-        }
-        
-        .json-box:fullscreen .box-header,
-        .json-box:-webkit-full-screen .box-header,
-        .json-box:-ms-fullscreen .box-header {
-            border-radius: 0;
-            height: 54px;
-            font-size: 1.2em;
-        }
-        
-        .json-box:fullscreen .box-options .icon-btn,
-        .json-box:-webkit-full-screen .box-options .icon-btn,
-        .json-box:-ms-fullscreen .box-options .icon-btn {
-            font-size: 1.5em;
-        }
-        
-        .json-box:fullscreen .line-numbers,
-        .json-box:-webkit-full-screen .line-numbers,
-        .json-box:-ms-fullscreen .line-numbers {
-            font-size: 1.1em;
-            min-width: 48px;
-            background: #e0f7fa;
-        }
-        
-        .close-fullscreen-btn {
-            position: absolute;
-            top: 10px;
-            right: 18px;
-            z-index: 100000;
-            background: #fff;
-            color: #111;
-            border: 1px solid #b2ebf2;
-            border-radius: 6px;
-            font-size: 1.5em;
-            font-weight: bold;
-            cursor: pointer;
-            padding: 2px 12px;
-            box-shadow: 0 2px 8px rgba(33, 150, 243, 0.07);
-            display: none;
-        }
-        
-        .json-box:fullscreen .close-fullscreen-btn,
-        .json-box:-webkit-full-screen .close-fullscreen-btn,
-        .json-box:-ms-fullscreen .close-fullscreen-btn {
-            display: block;
-        }
-    </style>
-</head>
-<body>
+---
+layout: default
+title: Best Online Perl Formatter for FREE
+description: Format, beautify, validate, and convert Perl for FREE
+permalink: /Formatters/perlFormatter.html
+---
 
 <!-- TOOLBAR: remains as per your working common.css -->
 <div class="navbar">
   <img src="../images/logo.png" alt="Logo">
   <a href="../index.html">HOME</a>
-                      <a href="/article/">ARTICLES</a>
+  <a href="/article/">ARTICLES</a>
 </div>
 
 <div class="json-formatter-container">
-    <div class="json-title">PERL FORMATTER</div>
-    <div class="action-buttons-container">
-        <button onclick="formatPerl()" style="background: linear-gradient(90deg, #2196f3 0%, #43e97b 100%); color: #fff; border: none; border-radius: 8px; padding: 12px 24px; font-size: 1.1em; font-weight: 500; cursor: pointer; box-shadow: 0 2px 8px rgba(33,150,243,0.07); transition: background 0.2s, box-shadow 0.2s;">Format</button>
-        <button onclick="beautifyPerl()" style="background: linear-gradient(90deg, #43e97b 0%, #2196f3 100%); color: #fff; border: none; border-radius: 8px; padding: 12px 24px; font-size: 1.1em; font-weight: 500; cursor: pointer; box-shadow: 0 2px 8px rgba(67, 233, 123, 0.07); transition: background 0.2s, box-shadow 0.2s;">Beautify</button>
-        <button onclick="validatePerl()" style="background: linear-gradient(90deg, #9c27b0 0%, #e91e63 100%); color: #fff; border: none; border-radius: 8px; padding: 12px 24px; font-size: 1.1em; font-weight: 500; cursor: pointer; box-shadow: 0 2px 8px rgba(156, 39, 176, 0.07); transition: background 0.2s, box-shadow 0.2s;">Validate</button>
-        <button onclick="copyPerl()" style="background: linear-gradient(90deg, #ff9800 0%, #f44336 100%); color: #fff; border: none; border-radius: 8px; padding: 12px 24px; font-size: 1.1em; font-weight: 500; cursor: pointer; box-shadow: 0 2px 8px rgba(255, 152, 0, 0.07); transition: background 0.2s, box-shadow 0.2s;">Copy Perl</button>
-        <button onclick="downloadPerl()" style="background: linear-gradient(90deg, #607d8b 0%, #9e9e9e 100%); color: #fff; border: none; border-radius: 8px; padding: 12px 24px; font-size: 1.1em; font-weight: 500; cursor: pointer; box-shadow: 0 2px 8px rgba(96, 125, 139, 0.07); transition: background 0.2s, box-shadow 0.2s;">Download Perl</button>
-    </div>
-    <div class="json-box-row">
-        <div class="json-box">
-            <div class="box-header">
-                <span class="box-label">Input</span>
-                <div class="box-options">
-                    <label title="Upload a file">
-                        <input type="file" accept=".pl,.txt" onchange="uploadPerlFile('input', event)">
-                        <span>📁<span class="tooltip">Upload a file</span></span>
-                    </label>
-                    <button class="icon-btn" title="Full Screen" onclick="toggleFullScreen(this)">⛶<span class="tooltip">Full Screen</span></button>
-                    <button class="icon-btn" title="Clear" onclick="clearPerl('input')">🗑️<span class="tooltip">Clear</span></button>
-                </div>
-            </div>
-            <div class="code-area-wrapper">
-                <div class="code-scroll" id="inputScroll">
-                    <div class="line-numbers" id="inputLineNumbers"></div>
-                    <textarea class="json-textarea" id="perlInput" placeholder="Paste or type your Perl script here..." oninput="updateInputLineNumbers()" onscroll="syncScroll('input')"></textarea>
-                </div>
-            </div>
-            <div id="errorMsg" class="error-message" style="display:none;"></div>
-            <button class="close-fullscreen-btn" onclick="exitFullScreen()">✕</button>
-        </div>
-        <div class="json-box">
-            <div class="box-header">
-                <span class="box-label">Output</span>
-                <div class="box-options">
-                    <button class="icon-btn" title="Full Screen" onclick="toggleFullScreen(this)">⛶<span class="tooltip">Full Screen</span></button>
-                    <button class="icon-btn" title="Clear" onclick="clearPerl('output')">🗑️<span class="tooltip">Clear</span></button>
-                </div>
-            </div>
-            <div class="code-area-wrapper">
-                <div class="code-scroll" id="outputScroll">
-                    <div class="line-numbers" id="outputLineNumbers"></div>
-                    <textarea class="json-textarea" id="perlOutput" placeholder="Formatted/Beautified Perl will appear here..." readonly oninput="updateOutputLineNumbers()" onscroll="syncScroll('output')"></textarea>
-                </div>
-            </div>
-            <button class="close-fullscreen-btn" onclick="exitFullScreen()">✕</button>
-        </div>
-    </div>
-    <div id="popupMsg" class="popup" style="display:none;"><span id="popupText"></span><button class="close-btn" onclick="closePopup()">✕</button></div>
+<div class="json-title">PERL FORMATTER</div>
+<div class="action-buttons-container">
+    <button onclick="formatPerl()" style="background: linear-gradient(90deg, #2196f3 0%, #43e97b 100%); color: #fff; border: none; border-radius: 8px; padding: 12px 24px; font-size: 1.1em; font-weight: 500; cursor: pointer; box-shadow: 0 2px 8px rgba(33,150,243,0.07); transition: background 0.2s, box-shadow 0.2s;">Format</button>
+    <button onclick="beautifyPerl()" style="background: linear-gradient(90deg, #43e97b 0%, #2196f3 100%); color: #fff; border: none; border-radius: 8px; padding: 12px 24px; font-size: 1.1em; font-weight: 500; cursor: pointer; box-shadow: 0 2px 8px rgba(67, 233, 123, 0.07); transition: background 0.2s, box-shadow 0.2s;">Beautify</button>
+    <button onclick="validatePerl()" style="background: linear-gradient(90deg, #9c27b0 0%, #e91e63 100%); color: #fff; border: none; border-radius: 8px; padding: 12px 24px; font-size: 1.1em; font-weight: 500; cursor: pointer; box-shadow: 0 2px 8px rgba(156, 39, 176, 0.07); transition: background 0.2s, box-shadow 0.2s;">Validate</button>
+    <button onclick="copyPerl()" style="background: linear-gradient(90deg, #ff9800 0%, #f44336 100%); color: #fff; border: none; border-radius: 8px; padding: 12px 24px; font-size: 1.1em; font-weight: 500; cursor: pointer; box-shadow: 0 2px 8px rgba(255, 152, 0, 0.07); transition: background 0.2s, box-shadow 0.2s;">Copy Perl</button>
+    <button onclick="downloadPerl()" style="background: linear-gradient(90deg, #607d8b 0%, #9e9e9e 100%); color: #fff; border: none; border-radius: 8px; padding: 12px 24px; font-size: 1.1em; font-weight: 500; cursor: pointer; box-shadow: 0 2px 8px rgba(96, 125, 139, 0.07); transition: background 0.2s, box-shadow 0.2s;">Download Perl</button>
 </div>
-    
-    <!-- Mobile Fullscreen Overlays -->
-    <div id="mobileFullscreenInput" class="mobile-fullscreen-overlay">
-        <div class="mobile-fullscreen-header">
-            <div class="mobile-fullscreen-title">Input - Fullscreen</div>
-            <button class="mobile-fullscreen-close" onclick="exitMobileFullscreen('input')">✕</button>
+<div class="json-box-row">
+    <div class="json-box">
+        <div class="box-header">
+            <span class="box-label">Input</span>
+            <div class="box-options">
+                <label title="Upload a file">
+                    <input type="file" accept=".pl,.txt" onchange="uploadPerlFile('input', event)">
+                    <span>📁<span class="tooltip">Upload a file</span></span>
+                </label>
+                <button class="icon-btn" title="Full Screen" onclick="toggleFullScreen(this)">⛶<span class="tooltip">Full Screen</span></button>
+                <button class="icon-btn" title="Clear" onclick="clearPerl('input')">🗑️<span class="tooltip">Clear</span></button>
+            </div>
         </div>
-        <div class="mobile-fullscreen-content">
-            <textarea id="mobileInputTextarea" class="mobile-fullscreen-textarea" placeholder="Enter Perl code here..."></textarea>
+        <div class="code-area-wrapper">
+            <div class="code-scroll" id="inputScroll">
+                <div class="line-numbers" id="inputLineNumbers"></div>
+                <textarea class="json-textarea" id="perlInput" placeholder="Paste or type your Perl script here..." oninput="updateInputLineNumbers()" onscroll="syncScroll('input')"></textarea>
+            </div>
         </div>
+        <div id="errorMsg" class="error-message" style="display:none;"></div>
+        <button class="close-fullscreen-btn" onclick="exitFullScreen()">✕</button>
     </div>
-    
-    <div id="mobileFullscreenOutput" class="mobile-fullscreen-overlay">
-        <div class="mobile-fullscreen-header">
-            <div class="mobile-fullscreen-title">Output - Fullscreen</div>
-            <button class="mobile-fullscreen-close" onclick="exitMobileFullscreen('output')">✕</button>
+    <div class="json-box">
+        <div class="box-header">
+            <span class="box-label">Output</span>
+            <div class="box-options">
+                <button class="icon-btn" title="Full Screen" onclick="toggleFullScreen(this)">⛶<span class="tooltip">Full Screen</span></button>
+                <button class="icon-btn" title="Clear" onclick="clearPerl('output')">🗑️<span class="tooltip">Clear</span></button>
+            </div>
         </div>
-        <div class="mobile-fullscreen-content">
-            <textarea id="mobileOutputTextarea" class="mobile-fullscreen-textarea" readonly></textarea>
+        <div class="code-area-wrapper">
+            <div class="code-scroll" id="outputScroll">
+                <div class="line-numbers" id="outputLineNumbers"></div>
+                <textarea class="json-textarea" id="perlOutput" placeholder="Formatted/Beautified Perl will appear here..." readonly oninput="updateOutputLineNumbers()" onscroll="syncScroll('output')"></textarea>
+            </div>
         </div>
+        <button class="close-fullscreen-btn" onclick="exitFullScreen()">✕</button>
     </div>
-    
-    <script>
-    // --- UI helpers (copied from jsonFormatter.html) ---
-    function showError(msg) {
-        const errorDiv = document.getElementById('errorMsg');
-        errorDiv.innerText = msg;
-        errorDiv.style.display = 'block';
-    }
-    function clearError() {
-        const errorDiv = document.getElementById('errorMsg');
-        errorDiv.innerText = '';
-        errorDiv.style.display = 'none';
-    }
-    function showPopup(msg) {
-        const popup = document.getElementById('popupMsg');
-        document.getElementById('popupText').innerText = msg;
-        popup.style.display = 'flex';
-    }
-    function closePopup() {
-        document.getElementById('popupMsg').style.display = 'none';
-    }
-    function updateInputLineNumbers() {
+</div>
+<div id="popupMsg" class="popup" style="display:none;"><span id="popupText"></span><button class="close-btn" onclick="closePopup()">✕</button></div>
+</div>
+
+<!-- Mobile Fullscreen Overlays -->
+<div id="mobileFullscreenInput" class="mobile-fullscreen-overlay">
+    <div class="mobile-fullscreen-header">
+        <div class="mobile-fullscreen-title">Input - Fullscreen</div>
+        <button class="mobile-fullscreen-close" onclick="exitMobileFullscreen('input')">✕</button>
+    </div>
+    <div class="mobile-fullscreen-content">
+        <textarea id="mobileInputTextarea" class="mobile-fullscreen-textarea" placeholder="Enter Perl code here..."></textarea>
+    </div>
+</div>
+
+<div id="mobileFullscreenOutput" class="mobile-fullscreen-overlay">
+    <div class="mobile-fullscreen-header">
+        <div class="mobile-fullscreen-title">Output - Fullscreen</div>
+        <button class="mobile-fullscreen-close" onclick="exitMobileFullscreen('output')">✕</button>
+    </div>
+    <div class="mobile-fullscreen-content">
+        <textarea id="mobileOutputTextarea" class="mobile-fullscreen-textarea" readonly></textarea>
+    </div>
+</div>
+
+<script>
+// --- UI helpers (copied from jsonFormatter.html) ---
+function showError(msg) {
+    const errorDiv = document.getElementById('errorMsg');
+    errorDiv.innerText = msg;
+    errorDiv.style.display = 'block';
+}
+function clearError() {
+    const errorDiv = document.getElementById('errorMsg');
+    errorDiv.innerText = '';
+    errorDiv.style.display = 'none';
+}
+function showPopup(msg) {
+    const popup = document.getElementById('popupMsg');
+    document.getElementById('popupText').innerText = msg;
+    popup.style.display = 'flex';
+}
+function closePopup() {
+    document.getElementById('popupMsg').style.display = 'none';
+}
+function updateInputLineNumbers() {
+    const textarea = document.getElementById('perlInput');
+    const lineNumbers = document.getElementById('inputLineNumbers');
+    const lines = textarea.value.split('\n').length || 1;
+    let html = '';
+    for (let i = 1; i <= lines; i++) html += i + '<br>';
+    lineNumbers.innerHTML = html;
+}
+function updateOutputLineNumbers() {
+    const textarea = document.getElementById('perlOutput');
+    const lineNumbers = document.getElementById('outputLineNumbers');
+    const lines = textarea.value.split('\n').length || 1;
+    let html = '';
+    for (let i = 1; i <= lines; i++) html += i + '<br>';
+    lineNumbers.innerHTML = html;
+}
+function syncScroll(which) {
+    if (which === 'input') {
         const textarea = document.getElementById('perlInput');
         const lineNumbers = document.getElementById('inputLineNumbers');
-        const lines = textarea.value.split('\n').length || 1;
-        let html = '';
-        for (let i = 1; i <= lines; i++) html += i + '<br>';
-        lineNumbers.innerHTML = html;
-    }
-    function updateOutputLineNumbers() {
+        lineNumbers.scrollTop = textarea.scrollTop;
+    } else {
         const textarea = document.getElementById('perlOutput');
         const lineNumbers = document.getElementById('outputLineNumbers');
-        const lines = textarea.value.split('\n').length || 1;
-        let html = '';
-        for (let i = 1; i <= lines; i++) html += i + '<br>';
-        lineNumbers.innerHTML = html;
+        lineNumbers.scrollTop = textarea.scrollTop;
     }
-    function syncScroll(which) {
-        if (which === 'input') {
-            const textarea = document.getElementById('perlInput');
-            const lineNumbers = document.getElementById('inputLineNumbers');
-            lineNumbers.scrollTop = textarea.scrollTop;
-        } else {
-            const textarea = document.getElementById('perlOutput');
-            const lineNumbers = document.getElementById('outputLineNumbers');
-            lineNumbers.scrollTop = textarea.scrollTop;
-        }
+}
+// --- Perl formatting/beautifying/validation (best effort) ---
+function isPerlCodeValid(input) {
+    if (!input.trim()) return false;
+    if (!areBracketsBalanced(input)) return false;
+    // Check for unclosed strings (single or double quotes)
+    let inSingle = false, inDouble = false;
+    for (let i = 0; i < input.length; ++i) {
+        let c = input[i];
+        if (c === "'" && !inDouble) inSingle = !inSingle;
+        if (c === '"' && !inSingle) inDouble = !inDouble;
     }
-    // --- Perl formatting/beautifying/validation (best effort) ---
-    function isPerlCodeValid(input) {
-        if (!input.trim()) return false;
-        if (!areBracketsBalanced(input)) return false;
-        // Check for unclosed strings (single or double quotes)
-        let inSingle = false, inDouble = false;
-        for (let i = 0; i < input.length; ++i) {
-            let c = input[i];
-            if (c === "'" && !inDouble) inSingle = !inSingle;
-            if (c === '"' && !inSingle) inDouble = !inDouble;
-        }
-        if (inSingle || inDouble) return false;
-        // Check for missing semicolons at end of statements
-        const lines = input.split('\n');
-        for (let i = 0; i < lines.length; ++i) {
-            let line = lines[i].trim();
-            if (!line || line.startsWith('#') || line.startsWith('=') || line.startsWith('}') || line.startsWith('{')) continue;
-            if (line.endsWith('{') || line.endsWith('}') || line.endsWith(':')) continue;
-            if (/^(if|else|elsif|while|for|foreach|unless|until|sub)\b/.test(line) && line.endsWith(')')) continue;
-            if (/\b(do|then|else|elsif)$/.test(line)) continue;
-            if (/^=\w+/.test(line) || /^__END__/.test(line)) continue;
-            if (/^print\b/.test(line) && line.endsWith(',')) continue;
-            if (!line.endsWith(';')) return false;
-        }
-        return true;
+    if (inSingle || inDouble) return false;
+    // Check for missing semicolons at end of statements
+    const lines = input.split('\n');
+    for (let i = 0; i < lines.length; ++i) {
+        let line = lines[i].trim();
+        if (!line || line.startsWith('#') || line.startsWith('=') || line.startsWith('}') || line.startsWith('{')) continue;
+        if (line.endsWith('{') || line.endsWith('}') || line.endsWith(':')) continue;
+        if (/^(if|else|elsif|while|for|foreach|unless|until|sub)\b/.test(line) && line.endsWith(')')) continue;
+        if (/\b(do|then|else|elsif)$/.test(line)) continue;
+        if (/^=\w+/.test(line) || /^__END__/.test(line)) continue;
+        if (/^print\b/.test(line) && line.endsWith(',')) continue;
+        if (!line.endsWith(';')) return false;
     }
+    return true;
+}
 
-    function formatPerl() {
-        clearError();
-        const input = document.getElementById('perlInput').value;
-        if (!isPerlCodeValid(input)) {
-            showPopup('Invalid Perl code. Cannot format.');
-            return;
-        }
-        try {
-            const formatted = beautifyPerlCode(input, 2); // 2 spaces indent
-            document.getElementById('perlOutput').value = formatted;
-            updateOutputLineNumbers();
-        } catch (e) {
-            showError('Could not format Perl: ' + e.message);
-            document.getElementById('perlOutput').value = '';
-            updateOutputLineNumbers();
-        }
+function formatPerl() {
+    clearError();
+    const input = document.getElementById('perlInput').value;
+    if (!isPerlCodeValid(input)) {
+        showPopup('Invalid Perl code. Cannot format.');
+        return;
     }
-    function beautifyPerl() {
-        clearError();
-        const input = document.getElementById('perlInput').value;
-        if (!isPerlCodeValid(input)) {
-            showPopup('Invalid Perl code. Cannot beautify.');
-            return;
-        }
-        try {
-            const beautified = beautifyPerlCode(input, 4); // 4 spaces indent
-            document.getElementById('perlOutput').value = beautified;
-            updateOutputLineNumbers();
-        } catch (e) {
-            showError('Could not beautify Perl: ' + e.message);
-            document.getElementById('perlOutput').value = '';
-            updateOutputLineNumbers();
-        }
+    try {
+        const formatted = beautifyPerlCode(input, 2); // 2 spaces indent
+        document.getElementById('perlOutput').value = formatted;
+        updateOutputLineNumbers();
+    } catch (e) {
+        showError('Could not format Perl: ' + e.message);
+        document.getElementById('perlOutput').value = '';
+        updateOutputLineNumbers();
     }
-    function validatePerl() {
-        clearError();
-        const input = document.getElementById('perlInput').value;
-        if (!input.trim()) {
+}
+function beautifyPerl() {
+    clearError();
+    const input = document.getElementById('perlInput').value;
+    if (!isPerlCodeValid(input)) {
+        showPopup('Invalid Perl code. Cannot beautify.');
+        return;
+    }
+    try {
+        const beautified = beautifyPerlCode(input, 4); // 4 spaces indent
+        document.getElementById('perlOutput').value = beautified;
+        updateOutputLineNumbers();
+    } catch (e) {
+        showError('Could not beautify Perl: ' + e.message);
+        document.getElementById('perlOutput').value = '';
+        updateOutputLineNumbers();
+    }
+}
+function validatePerl() {
+    clearError();
+    const input = document.getElementById('perlInput').value;
+    if (!input.trim()) {
+        showPopup('Invalid Perl code.');
+        return;
+    }
+    // Check for unbalanced brackets
+    if (!areBracketsBalanced(input)) {
+        showPopup('Invalid Perl code.');
+        return;
+    }
+    // Check for unclosed strings (single or double quotes)
+    let singleQuotes = 0, doubleQuotes = 0;
+    let inSingle = false, inDouble = false;
+    for (let i = 0; i < input.length; ++i) {
+        let c = input[i];
+        if (c === "'" && !inDouble) inSingle = !inSingle;
+        if (c === '"' && !inSingle) inDouble = !inDouble;
+    }
+    if (inSingle || inDouble) {
+        showPopup('Invalid Perl code.');
+        return;
+    }
+    // Check for missing semicolons at end of statements
+    const lines = input.split('\n');
+    for (let i = 0; i < lines.length; ++i) {
+        let line = lines[i].trim();
+        if (!line || line.startsWith('#') || line.startsWith('=') || line.startsWith('}') || line.startsWith('{')) continue;
+        // Allow lines ending with {, }, :, or blank
+        if (line.endsWith('{') || line.endsWith('}') || line.endsWith(':')) continue;
+        // Allow control structures (if, else, elsif, while, for, foreach, unless, until, sub) without semicolon if followed by {
+        if (/^(if|else|elsif|while|for|foreach|unless|until|sub)\b/.test(line) && line.endsWith(')')) continue;
+        // Allow lines ending with do, then, else, elsif
+        if (/\b(do|then|else|elsif)$/.test(line)) continue;
+        // Allow POD and __END__
+        if (/^=\w+/.test(line) || /^__END__/.test(line)) continue;
+        // Allow print with trailing comma (print ...,)
+        if (/^print\b/.test(line) && line.endsWith(',')) continue;
+        // If line does not end with semicolon, flag as invalid
+        if (!line.endsWith(';')) {
             showPopup('Invalid Perl code.');
             return;
         }
-        // Check for unbalanced brackets
-        if (!areBracketsBalanced(input)) {
-            showPopup('Invalid Perl code.');
-            return;
-        }
-        // Check for unclosed strings (single or double quotes)
-        let singleQuotes = 0, doubleQuotes = 0;
-        let inSingle = false, inDouble = false;
-        for (let i = 0; i < input.length; ++i) {
-            let c = input[i];
-            if (c === "'" && !inDouble) inSingle = !inSingle;
-            if (c === '"' && !inSingle) inDouble = !inDouble;
-        }
-        if (inSingle || inDouble) {
-            showPopup('Invalid Perl code.');
-            return;
-        }
-        // Check for missing semicolons at end of statements
-        const lines = input.split('\n');
-        for (let i = 0; i < lines.length; ++i) {
-            let line = lines[i].trim();
-            if (!line || line.startsWith('#') || line.startsWith('=') || line.startsWith('}') || line.startsWith('{')) continue;
-            // Allow lines ending with {, }, :, or blank
-            if (line.endsWith('{') || line.endsWith('}') || line.endsWith(':')) continue;
-            // Allow control structures (if, else, elsif, while, for, foreach, unless, until, sub) without semicolon if followed by {
-            if (/^(if|else|elsif|while|for|foreach|unless|until|sub)\b/.test(line) && line.endsWith(')')) continue;
-            // Allow lines ending with do, then, else, elsif
-            if (/\b(do|then|else|elsif)$/.test(line)) continue;
-            // Allow POD and __END__
-            if (/^=\w+/.test(line) || /^__END__/.test(line)) continue;
-            // Allow print with trailing comma (print ...,)
-            if (/^print\b/.test(line) && line.endsWith(',')) continue;
-            // If line does not end with semicolon, flag as invalid
-            if (!line.endsWith(';')) {
-                showPopup('Invalid Perl code.');
-                return;
-            }
-        }
-        // If all checks pass
-        showPopup('Valid Perl code.');
     }
-    // --- Perl code beautifier (robust: splits on semicolons/braces, handles shebang/comments) ---
-    function beautifyPerlCode(code, indentSize) {
-        // Split into tokens: semicolons, braces, and newlines, but preserve shebang and comments
-        let lines = [];
-        let buffer = '';
-        let inString = false;
-        let stringChar = '';
-        let inRegex = false;
-        let inComment = false;
-        let i = 0;
-        code = code.replace(/\r\n?/g, '\n'); // Normalize newlines
-        while (i < code.length) {
-            let c = code[i];
-            let next = code[i+1];
-            // Shebang
-            if (i === 0 && code.startsWith('#!')) {
-                let shebangEnd = code.indexOf('\n');
-                if (shebangEnd === -1) shebangEnd = code.length;
-                lines.push(code.slice(0, shebangEnd));
-                i = shebangEnd;
-                buffer = '';
-                continue;
-            }
-            // Comment
-            if (!inString && !inRegex && c === '#') {
-                let commentEnd = code.indexOf('\n', i);
-                if (commentEnd === -1) commentEnd = code.length;
-                buffer += code.slice(i, commentEnd);
-                lines.push(buffer.trim());
-                buffer = '';
-                i = commentEnd;
-                continue;
-            }
-            // String start/end
-            if (!inString && (c === '"' || c === "'")) {
-                inString = true;
-                stringChar = c;
-                buffer += c;
-                i++;
-                continue;
-            } else if (inString && c === stringChar) {
-                inString = false;
-                stringChar = '';
-                buffer += c;
-                i++;
-                continue;
-            }
-            // Regex start/end (simple heuristic: after = or =~)
-            if (!inString && !inRegex && (c === '/' && /([=~]\s*)$/.test(buffer))) {
-                inRegex = true;
-                buffer += c;
-                i++;
-                continue;
-            } else if (inRegex && c === '/') {
-                inRegex = false;
-                buffer += c;
-                i++;
-                continue;
-            }
-            // Statement/brace splitting
-            if (!inString && !inRegex && (c === ';' || c === '{' || c === '}')) {
-                buffer += c;
-                lines.push(buffer.trim());
-                buffer = '';
-                i++;
-                // Add blank line after closing brace
-                if (c === '}') lines.push('');
-                continue;
-            }
-            // Newline
-            if (!inString && !inRegex && c === '\n') {
-                if (buffer.trim() !== '') {
-                    lines.push(buffer.trim());
-                    buffer = '';
-                }
-                i++;
-                continue;
-            }
+    // If all checks pass
+    showPopup('Valid Perl code.');
+}
+// --- Perl code beautifier (robust: splits on semicolons/braces, handles shebang/comments) ---
+function beautifyPerlCode(code, indentSize) {
+    // Split into tokens: semicolons, braces, and newlines, but preserve shebang and comments
+    let lines = [];
+    let buffer = '';
+    let inString = false;
+    let stringChar = '';
+    let inRegex = false;
+    let inComment = false;
+    let i = 0;
+    code = code.replace(/\r\n?/g, '\n'); // Normalize newlines
+    while (i < code.length) {
+        let c = code[i];
+        let next = code[i+1];
+        // Shebang
+        if (i === 0 && code.startsWith('#!')) {
+            let shebangEnd = code.indexOf('\n');
+            if (shebangEnd === -1) shebangEnd = code.length;
+            lines.push(code.slice(0, shebangEnd));
+            i = shebangEnd;
+            buffer = '';
+            continue;
+        }
+        // Comment
+        if (!inString && !inRegex && c === '#') {
+            let commentEnd = code.indexOf('\n', i);
+            if (commentEnd === -1) commentEnd = code.length;
+            buffer += code.slice(i, commentEnd);
+            lines.push(buffer.trim());
+            buffer = '';
+            i = commentEnd;
+            continue;
+        }
+        // String start/end
+        if (!inString && (c === '"' || c === "'")) {
+            inString = true;
+            stringChar = c;
             buffer += c;
             i++;
+            continue;
+        } else if (inString && c === stringChar) {
+            inString = false;
+            stringChar = '';
+            buffer += c;
+            i++;
+            continue;
         }
-        if (buffer.trim() !== '') lines.push(buffer.trim());
-        // Now process lines for indentation and spacing
-        let indent = 0;
-        let beautified = [];
-        for (let idx = 0; idx < lines.length; ++idx) {
-            let line = lines[idx];
-            if (line === '') {
-                // Only add blank line if previous wasn't blank
-                if (beautified.length && beautified[beautified.length-1] !== '') beautified.push('');
-                continue;
-            }
-            // Shebang or comment
-            if (line.startsWith('#!') || line.startsWith('#')) {
-                beautified.push(line);
-                continue;
-            }
-            // Decrease indent if line is closing brace
-            if (line === '}') {
-                indent = Math.max(0, indent - 1);
-            }
-            // Add spaces after keywords (simple heuristic)
-            line = line.replace(/\b(if|elsif|else|while|for|foreach|unless|until|sub|return|print|my|our|local|state)\s*\(/g, '$1 (');
-            // Add spaces around =, +=, -=, etc. (not inside regex)
-            line = line.replace(/([^!<>])=([^=])/g, '$1 = $2');
-            line = line.replace(/\+=/g, ' += ');
-            line = line.replace(/-=/g, ' -= ');
-            line = line.replace(/\*= /g, ' *= ');
-            line = line.replace(/\/= /g, ' /= ');
-            line = line.replace(/\s*([<>!]=|==|!=|<=|>=|<|>)\s*/g, ' $1 ');
-            // Add space after commas
-            line = line.replace(/,\s*/g, ', ');
-            // Remove double spaces
-            line = line.replace(/\s{2,}/g, ' ');
-            // Indent line
-            beautified.push(' '.repeat(indent * indentSize) + line);
-            // Increase indent if line is opening brace
-            if (line.endsWith('{')) {
-                indent++;
-            }
+        // Regex start/end (simple heuristic: after = or =~)
+        if (!inString && !inRegex && (c === '/' && /([=~]\s*)$/.test(buffer))) {
+            inRegex = true;
+            buffer += c;
+            i++;
+            continue;
+        } else if (inRegex && c === '/') {
+            inRegex = false;
+            buffer += c;
+            i++;
+            continue;
         }
-        // Remove extra blank lines at start/end
-        while (beautified.length && beautified[0] === '') beautified.shift();
-        while (beautified.length && beautified[beautified.length-1] === '') beautified.pop();
-        // Remove consecutive blank lines
-        let final = [];
-        for (let i = 0; i < beautified.length; ++i) {
-            if (beautified[i] === '' && beautified[i-1] === '') continue;
-            final.push(beautified[i]);
+        // Statement/brace splitting
+        if (!inString && !inRegex && (c === ';' || c === '{' || c === '}')) {
+            buffer += c;
+            lines.push(buffer.trim());
+            buffer = '';
+            i++;
+            // Add blank line after closing brace
+            if (c === '}') lines.push('');
+            continue;
         }
-        return final.join('\n');
-    }
-    // --- Bracket balance check ---
-    function areBracketsBalanced(str) {
-        const stack = [];
-        const pairs = { '{': '}', '(': ')', '[': ']' };
-        for (let c of str) {
-            if (c === '{' || c === '(' || c === '[') stack.push(c);
-            else if (c === '}' || c === ')' || c === ']') {
-                if (!stack.length) return false;
-                const last = stack.pop();
-                if (pairs[last] !== c) return false;
+        // Newline
+        if (!inString && !inRegex && c === '\n') {
+            if (buffer.trim() !== '') {
+                lines.push(buffer.trim());
+                buffer = '';
             }
+            i++;
+            continue;
         }
-        return stack.length === 0;
+        buffer += c;
+        i++;
     }
-    // --- Copy/Download/Clear/Upload/Fullscreen ---
-    function copyPerl() {
-        const output = document.getElementById('perlOutput').value;
-        if (!output) return;
-        navigator.clipboard.writeText(output);
-        showPopup('Copied to clipboard!');
+    if (buffer.trim() !== '') lines.push(buffer.trim());
+    // Now process lines for indentation and spacing
+    let indent = 0;
+    let beautified = [];
+    for (let idx = 0; idx < lines.length; ++idx) {
+        let line = lines[idx];
+        if (line === '') {
+            // Only add blank line if previous wasn't blank
+            if (beautified.length && beautified[beautified.length-1] !== '') beautified.push('');
+            continue;
+        }
+        // Shebang or comment
+        if (line.startsWith('#!') || line.startsWith('#')) {
+            beautified.push(line);
+            continue;
+        }
+        // Decrease indent if line is closing brace
+        if (line === '}') {
+            indent = Math.max(0, indent - 1);
+        }
+        // Add spaces after keywords (simple heuristic)
+        line = line.replace(/\b(if|elsif|else|while|for|foreach|unless|until|sub|return|print|my|our|local|state)\s*\(/g, '$1 (');
+        // Add spaces around =, +=, -=, etc. (not inside regex)
+        line = line.replace(/([^!<>])=([^=])/g, '$1 = $2');
+        line = line.replace(/\+=/g, ' += ');
+        line = line.replace(/-=/g, ' -= ');
+        line = line.replace(/\*= /g, ' *= ');
+        line = line.replace(/\/= /g, ' /= ');
+        line = line.replace(/\s*([<>!]=|==|!=|<=|>=|<|>)\s*/g, ' $1 ');
+        // Add space after commas
+        line = line.replace(/,\s*/g, ', ');
+        // Remove double spaces
+        line = line.replace(/\s{2,}/g, ' ');
+        // Indent line
+        beautified.push(' '.repeat(indent * indentSize) + line);
+        // Increase indent if line is opening brace
+        if (line.endsWith('{')) {
+            indent++;
+        }
     }
-    function downloadPerl() {
-        const output = document.getElementById('perlOutput').value;
-        if (!output) return;
-        const blob = new Blob([output], { type: 'text/plain' });
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(blob);
-        link.download = 'formatted.pl';
-        link.click();
+    // Remove extra blank lines at start/end
+    while (beautified.length && beautified[0] === '') beautified.shift();
+    while (beautified.length && beautified[beautified.length-1] === '') beautified.pop();
+    // Remove consecutive blank lines
+    let final = [];
+    for (let i = 0; i < beautified.length; ++i) {
+        if (beautified[i] === '' && beautified[i-1] === '') continue;
+        final.push(beautified[i]);
     }
-    function uploadPerlFile(which, event) {
-        const file = event.target.files[0];
-        if (!file) return;
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            const text = e.target.result;
-            if (which === 'input') {
-                document.getElementById('perlInput').value = text;
-                updateInputLineNumbers();
-            } else {
-                document.getElementById('perlOutput').value = text;
-                updateOutputLineNumbers();
-            }
-        };
-        reader.readAsText(file);
+    return final.join('\n');
+}
+// --- Bracket balance check ---
+function areBracketsBalanced(str) {
+    const stack = [];
+    const pairs = { '{': '}', '(': ')', '[': ']' };
+    for (let c of str) {
+        if (c === '{' || c === '(' || c === '[') stack.push(c);
+        else if (c === '}' || c === ')' || c === ']') {
+            if (!stack.length) return false;
+            const last = stack.pop();
+            if (pairs[last] !== c) return false;
+        }
     }
-    function clearPerl(which) {
+    return stack.length === 0;
+}
+// --- Copy/Download/Clear/Upload/Fullscreen ---
+function copyPerl() {
+    const output = document.getElementById('perlOutput').value;
+    if (!output) return;
+    navigator.clipboard.writeText(output);
+    showPopup('Copied to clipboard!');
+}
+function downloadPerl() {
+    const output = document.getElementById('perlOutput').value;
+    if (!output) return;
+    const blob = new Blob([output], { type: 'text/plain' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'formatted.pl';
+    link.click();
+}
+function uploadPerlFile(which, event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        const text = e.target.result;
         if (which === 'input') {
-            document.getElementById('perlInput').value = '';
+            document.getElementById('perlInput').value = text;
             updateInputLineNumbers();
         } else {
-            document.getElementById('perlOutput').value = '';
+            document.getElementById('perlOutput').value = text;
             updateOutputLineNumbers();
         }
-    }
-    function toggleFullScreen(btn) {
-        // Check if we're on mobile/tablet
-        if (window.innerWidth <= 1024) {
-            // Mobile/Tablet fullscreen
-            const which = btn.closest('.json-box').querySelector('.box-label').textContent.toLowerCase();
-            enterMobileFullscreen(which);
-        } else {
-            // Desktop fullscreen
-            const box = btn.closest('.json-box');
-            if (!document.fullscreenElement) {
-                if (box.requestFullscreen) box.requestFullscreen();
-                else if (box.webkitRequestFullscreen) box.webkitRequestFullscreen();
-                else if (box.msRequestFullscreen) box.msRequestFullscreen();
-            } else {
-                exitFullScreen();
-            }
-        }
-    }
-    
-    function enterMobileFullscreen(which) {
-        const overlay = document.getElementById('mobileFullscreen' + which.charAt(0).toUpperCase() + which.slice(1));
-        const textarea = document.getElementById('perl' + which.charAt(0).toUpperCase() + which.slice(1));
-        const mobileTextarea = document.getElementById('mobile' + which.charAt(0).toUpperCase() + which.slice(1) + 'Textarea');
-        
-        // Copy content to mobile textarea
-        mobileTextarea.value = textarea.value;
-        
-        // Show overlay
-        overlay.classList.add('active');
-        
-        // Focus on mobile textarea
-        setTimeout(() => {
-            mobileTextarea.focus();
-        }, 100);
-        
-        // Sync content changes back to original textarea
-        mobileTextarea.addEventListener('input', function() {
-            textarea.value = this.value;
-            if (which === 'input') {
-                updateInputLineNumbers();
-            } else {
-                updateOutputLineNumbers();
-            }
-        });
-    }
-    
-    function exitMobileFullscreen(which) {
-        const overlay = document.getElementById('mobileFullscreen' + which.charAt(0).toUpperCase() + which.slice(1));
-        const textarea = document.getElementById('perl' + which.charAt(0).toUpperCase() + which.slice(1));
-        const mobileTextarea = document.getElementById('mobile' + which.charAt(0).toUpperCase() + which.slice(1) + 'Textarea');
-        
-        // Copy content back to original textarea
-        textarea.value = mobileTextarea.value;
-        
-        // Hide overlay
-        overlay.classList.remove('active');
-        
-        // Update line numbers
-        if (which === 'input') {
-            updateInputLineNumbers();
-        } else {
-            updateOutputLineNumbers();
-        }
-    }
-    function exitFullScreen() {
-        if (document.exitFullscreen) document.exitFullscreen();
-        else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
-        else if (document.msExitFullscreen) document.msExitFullscreen();
-    }
-    // Update line numbers on load
-    window.onload = function() {
-        updateInputLineNumbers();
-        updateOutputLineNumbers();
     };
-    document.getElementById('perlOutput').addEventListener('input', updateOutputLineNumbers);
-    document.getElementById('perlInput').addEventListener('input', updateInputLineNumbers);
+    reader.readAsText(file);
+}
+function clearPerl(which) {
+    if (which === 'input') {
+        document.getElementById('perlInput').value = '';
+        updateInputLineNumbers();
+    } else {
+        document.getElementById('perlOutput').value = '';
+        updateOutputLineNumbers();
+    }
+}
+function toggleFullScreen(btn) {
+    // Check if we're on mobile/tablet
+    if (window.innerWidth <= 1024) {
+        // Mobile/Tablet fullscreen
+        const which = btn.closest('.json-box').querySelector('.box-label').textContent.toLowerCase();
+        enterMobileFullscreen(which);
+    } else {
+        // Desktop fullscreen
+        const box = btn.closest('.json-box');
+        if (!document.fullscreenElement) {
+            if (box.requestFullscreen) box.requestFullscreen();
+            else if (box.webkitRequestFullscreen) box.webkitRequestFullscreen();
+            else if (box.msRequestFullscreen) box.msRequestFullscreen();
+        } else {
+            exitFullScreen();
+        }
+    }
+}
 
-    // Handle escape key for mobile fullscreen
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') {
-            const inputOverlay = document.getElementById('mobileFullscreenInput');
-            const outputOverlay = document.getElementById('mobileFullscreenOutput');
-            
-            if (inputOverlay.classList.contains('active')) {
-                exitMobileFullscreen('input');
-            } else if (outputOverlay.classList.contains('active')) {
-                exitMobileFullscreen('output');
-            }
+function enterMobileFullscreen(which) {
+    const overlay = document.getElementById('mobileFullscreen' + which.charAt(0).toUpperCase() + which.slice(1));
+    const textarea = document.getElementById('perl' + which.charAt(0).toUpperCase() + which.slice(1));
+    const mobileTextarea = document.getElementById('mobile' + which.charAt(0).toUpperCase() + which.slice(1) + 'Textarea');
+    
+    // Copy content to mobile textarea
+    mobileTextarea.value = textarea.value;
+    
+    // Show overlay
+    overlay.classList.add('active');
+    
+    // Focus on mobile textarea
+    setTimeout(() => {
+        mobileTextarea.focus();
+    }, 100);
+    
+    // Sync content changes back to original textarea
+    mobileTextarea.addEventListener('input', function() {
+        textarea.value = this.value;
+        if (which === 'input') {
+            updateInputLineNumbers();
+        } else {
+            updateOutputLineNumbers();
         }
     });
-    </script>
-</body>
-</html>
+}
+
+function exitMobileFullscreen(which) {
+    const overlay = document.getElementById('mobileFullscreen' + which.charAt(0).toUpperCase() + which.slice(1));
+    const textarea = document.getElementById('perl' + which.charAt(0).toUpperCase() + which.slice(1));
+    const mobileTextarea = document.getElementById('mobile' + which.charAt(0).toUpperCase() + which.slice(1) + 'Textarea');
+    
+    // Copy content back to original textarea
+    textarea.value = mobileTextarea.value;
+    
+    // Hide overlay
+    overlay.classList.remove('active');
+    
+    // Update line numbers
+    if (which === 'input') {
+        updateInputLineNumbers();
+    } else {
+        updateOutputLineNumbers();
+    }
+}
+function exitFullScreen() {
+    if (document.exitFullscreen) document.exitFullscreen();
+    else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+    else if (document.msExitFullscreen) document.msExitFullscreen();
+}
+// Update line numbers on load
+window.onload = function() {
+    updateInputLineNumbers();
+    updateOutputLineNumbers();
+};
+document.getElementById('perlOutput').addEventListener('input', updateOutputLineNumbers);
+document.getElementById('perlInput').addEventListener('input', updateInputLineNumbers);
+
+// Handle escape key for mobile fullscreen
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        const inputOverlay = document.getElementById('mobileFullscreenInput');
+        const outputOverlay = document.getElementById('mobileFullscreenOutput');
+        
+        if (inputOverlay.classList.contains('active')) {
+            exitMobileFullscreen('input');
+        } else if (outputOverlay.classList.contains('active')) {
+            exitMobileFullscreen('output');
+        }
+    }
+});
+</script>
+
