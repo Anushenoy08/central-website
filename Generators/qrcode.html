@@ -65,6 +65,10 @@ permalink: /Generators/qrcode.html
           <p id="fileName"></p>
           <p id="fileSize"></p>
         </div>
+        <div class="file-note" style="margin-top: 10px; padding: 10px; background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 8px; font-size: 0.9em; color: #856404;">
+          <i class="fa-solid fa-info-circle"></i>
+          <strong>Note:</strong> File QR codes work best for small files (&lt;1MB). For larger files, consider uploading to a cloud service first and using the sharing link.
+        </div>
       </div>
     </div>
     <div>
@@ -171,7 +175,17 @@ function handleFileUpload(event) {
     fileName.textContent = `File: ${file.name}`;
     fileSize.textContent = `Size: ${(file.size / 1024 / 1024).toFixed(2)} MB`;
     fileInfo.style.display = 'block';
+    
+    // Create a downloadable link for the file
+    createFileDownloadLink(file);
   }
+}
+
+function createFileDownloadLink(file) {
+  // Create a blob URL for the file
+  const blob = new Blob([file], { type: file.type });
+  uploadedFile.downloadUrl = URL.createObjectURL(blob);
+  uploadedFile.fileType = file.type;
 }
 
 function generateQR() {
@@ -198,9 +212,32 @@ function generateQR() {
       alert('Please upload a file first.');
       return;
     }
-    content = `File: ${uploadedFile.name} (${(uploadedFile.size / 1024 / 1024).toFixed(2)} MB)`;
+    
+    // For files, create different content based on size
+    if (uploadedFile.size > 1024 * 1024) { // If file is larger than 1MB
+      // For large files, create a file information QR
+      content = `📁 File Information\n\nName: ${uploadedFile.name}\nSize: ${(uploadedFile.size / 1024 / 1024).toFixed(2)} MB\nType: ${uploadedFile.fileType}\n\n💡 Tip: For file sharing, upload to Google Drive, Dropbox, or similar service and use the sharing link instead.`;
+    } else {
+      // For small files, try to create a data URL
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const dataUrl = e.target.result;
+        generateQRCodeWithContent(dataUrl);
+      };
+      reader.onerror = function() {
+        // Fallback to file info if data URL fails
+        const fallbackContent = `📁 File Information\n\nName: ${uploadedFile.name}\nSize: ${(uploadedFile.size / 1024 / 1024).toFixed(2)} MB\nType: ${uploadedFile.fileType}\n\n💡 Tip: For file sharing, upload to Google Drive, Dropbox, or similar service and use the sharing link instead.`;
+        generateQRCodeWithContent(fallbackContent);
+      };
+      reader.readAsDataURL(uploadedFile);
+      return; // Exit early, will be handled by reader.onload
+    }
   }
   
+  generateQRCodeWithContent(content);
+}
+
+function generateQRCodeWithContent(content) {
   const qrBox = document.getElementById('qrcode-hidden');
   const previewCanvas = document.getElementById('qrcode-preview');
   const placeholder = document.getElementById('qr-placeholder');
