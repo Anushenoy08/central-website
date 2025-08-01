@@ -1,0 +1,292 @@
+---
+layout: default
+title: File URL Generator - Upload and Get Shareable Links
+permalink: /Generators/url.html
+---
+
+<div class="navbar">
+  <img src="../images/logo.png" alt="Logo">
+  <a href="../index.html">HOME</a>
+  <a href="/article/">ARTICLES</a>
+</div>
+
+<div class="url-generator-container">
+  <div class="url-generator-title">File URL Generator</div>
+  <div class="url-generator-subtitle">Upload your files and get shareable URLs for QR codes</div>
+  
+  <div class="url-generator-main">
+    <div class="url-generator-left">
+      <div class="upload-section">
+        <div class="upload-title">Upload Your File</div>
+        <div class="file-type-selector">
+          <div class="file-type-option selected" data-type="all" onclick="selectFileType(this)">
+            <i class="fa-solid fa-file"></i>
+            <span>All Files</span>
+          </div>
+          <div class="file-type-option" data-type="pdf" onclick="selectFileType(this)">
+            <i class="fa-regular fa-file-pdf"></i>
+            <span>PDF</span>
+          </div>
+          <div class="file-type-option" data-type="image" onclick="selectFileType(this)">
+            <i class="fa-regular fa-image"></i>
+            <span>Images</span>
+          </div>
+          <div class="file-type-option" data-type="video" onclick="selectFileType(this)">
+            <i class="fa-regular fa-circle-play"></i>
+            <span>Videos</span>
+          </div>
+        </div>
+        
+        <div class="upload-area" id="uploadArea">
+          <div class="upload-content">
+            <i class="fa-solid fa-cloud-upload-alt"></i>
+            <h3>Drag & Drop your file here</h3>
+            <p>or</p>
+            <button class="upload-btn" onclick="triggerFileUpload()">Choose File</button>
+            <input type="file" id="fileInput" accept="" style="display: none;" />
+          </div>
+        </div>
+        
+        <div id="fileInfo" class="file-info" style="display: none;">
+          <div class="file-details">
+            <i class="fa-solid fa-file"></i>
+            <div class="file-text">
+              <div class="file-name" id="fileName"></div>
+              <div class="file-size" id="fileSize"></div>
+            </div>
+            <button class="remove-file-btn" onclick="removeFile()">
+              <i class="fa-solid fa-times"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <button class="generate-url-btn" id="generateUrlBtn" onclick="generateURL()" disabled>
+        Generate URL
+      </button>
+    </div>
+    
+    <div class="url-generator-right">
+      <div class="output-section">
+        <div class="output-title">Generated URL</div>
+        <div class="url-output-container">
+          <input type="text" id="generatedUrl" class="url-output" placeholder="Upload a file and click Generate URL to get a shareable link" readonly />
+          <button class="copy-url-btn" id="copyUrlBtn" onclick="copyURL()" disabled>
+            <i class="fa-solid fa-copy"></i>
+            Copy
+          </button>
+        </div>
+        <div class="url-info">
+          <p><i class="fa-solid fa-info-circle"></i> This URL can be used with the QR Code Generator</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+let selectedFileType = 'all';
+let uploadedFile = null;
+let generatedUrl = '';
+
+function selectFileType(el) {
+  document.querySelectorAll('.file-type-option').forEach(opt => opt.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedFileType = el.getAttribute('data-type');
+  
+  const fileInput = document.getElementById('fileInput');
+  
+  // Update file input accept attribute
+  switch(selectedFileType) {
+    case 'pdf':
+      fileInput.accept = '.pdf';
+      break;
+    case 'image':
+      fileInput.accept = 'image/*';
+      break;
+    case 'video':
+      fileInput.accept = 'video/*';
+      break;
+    default:
+      fileInput.accept = '.pdf,image/*,video/*';
+  }
+}
+
+function triggerFileUpload() {
+  document.getElementById('fileInput').click();
+}
+
+function handleFileUpload(event) {
+  const file = event.target.files[0];
+  if (file) {
+    // Validate file type
+    if (!isValidFileType(file)) {
+      alert('Please select a valid file type (PDF, Image, or Video).');
+      return;
+    }
+    
+    uploadedFile = file;
+    displayFileInfo(file);
+    document.getElementById('generateUrlBtn').disabled = false;
+  }
+}
+
+function isValidFileType(file) {
+  const validTypes = {
+    'pdf': ['application/pdf'],
+    'image': ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp', 'image/bmp'],
+    'video': ['video/mp4', 'video/avi', 'video/mov', 'video/wmv', 'video/flv', 'video/webm']
+  };
+  
+  if (selectedFileType === 'all') {
+    return Object.values(validTypes).flat().includes(file.type) || file.type === 'application/pdf';
+  }
+  
+  return validTypes[selectedFileType].includes(file.type);
+}
+
+function displayFileInfo(file) {
+  const fileInfo = document.getElementById('fileInfo');
+  const fileName = document.getElementById('fileName');
+  const fileSize = document.getElementById('fileSize');
+  
+  fileName.textContent = file.name;
+  fileSize.textContent = formatFileSize(file.size);
+  fileInfo.style.display = 'block';
+  
+  // Clear any previously generated URL
+  document.getElementById('generatedUrl').value = '';
+  document.getElementById('copyUrlBtn').disabled = true;
+  generatedUrl = '';
+}
+
+function formatFileSize(bytes) {
+  if (bytes === 0) return '0 Bytes';
+  const k = 1024;
+  const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+}
+
+function removeFile() {
+  uploadedFile = null;
+  document.getElementById('fileInfo').style.display = 'none';
+  document.getElementById('generateUrlBtn').disabled = true;
+  document.getElementById('generatedUrl').value = '';
+  document.getElementById('copyUrlBtn').disabled = true;
+  document.getElementById('fileInput').value = '';
+  generatedUrl = '';
+}
+
+function generateURL() {
+  if (!uploadedFile) {
+    alert('Please upload a file first.');
+    return;
+  }
+  
+  const generateBtn = document.getElementById('generateUrlBtn');
+  const copyBtn = document.getElementById('copyUrlBtn');
+  
+  // Show loading state
+  generateBtn.textContent = 'Generating...';
+  generateBtn.disabled = true;
+  
+  // Simulate URL generation (in a real app, this would upload to a server)
+  setTimeout(() => {
+    // Create a blob URL for the file
+    const blob = new Blob([uploadedFile], { type: uploadedFile.type });
+    generatedUrl = URL.createObjectURL(blob);
+    
+    // Display the URL
+    document.getElementById('generatedUrl').value = generatedUrl;
+    
+    // Enable copy button
+    copyBtn.disabled = false;
+    
+    // Reset generate button
+    generateBtn.textContent = 'Generate URL';
+    generateBtn.disabled = false;
+    
+    // Show success message
+    showNotification('URL generated successfully!', 'success');
+  }, 1500);
+}
+
+function copyURL() {
+  const urlInput = document.getElementById('generatedUrl');
+  const copyBtn = document.getElementById('copyUrlBtn');
+  
+  if (generatedUrl) {
+    urlInput.select();
+    urlInput.setSelectionRange(0, 99999); // For mobile devices
+    
+    try {
+      document.execCommand('copy');
+      copyBtn.innerHTML = '<i class="fa-solid fa-check"></i> Copied!';
+      showNotification('URL copied to clipboard!', 'success');
+      
+      setTimeout(() => {
+        copyBtn.innerHTML = '<i class="fa-solid fa-copy"></i> Copy';
+      }, 2000);
+    } catch (err) {
+      // Fallback for modern browsers
+      navigator.clipboard.writeText(generatedUrl).then(() => {
+        copyBtn.innerHTML = '<i class="fa-solid fa-check"></i> Copied!';
+        showNotification('URL copied to clipboard!', 'success');
+        
+        setTimeout(() => {
+          copyBtn.innerHTML = '<i class="fa-solid fa-copy"></i> Copy';
+        }, 2000);
+      }).catch(() => {
+        showNotification('Failed to copy URL', 'error');
+      });
+    }
+  }
+}
+
+function showNotification(message, type) {
+  // Create notification element
+  const notification = document.createElement('div');
+  notification.className = `notification ${type}`;
+  notification.textContent = message;
+  
+  // Add to page
+  document.body.appendChild(notification);
+  
+  // Remove after 3 seconds
+  setTimeout(() => {
+    notification.remove();
+  }, 3000);
+}
+
+// Event listeners
+document.addEventListener('DOMContentLoaded', function() {
+  const fileInput = document.getElementById('fileInput');
+  const uploadArea = document.getElementById('uploadArea');
+  
+  // File input change
+  fileInput.addEventListener('change', handleFileUpload);
+  
+  // Drag and drop functionality
+  uploadArea.addEventListener('dragover', function(e) {
+    e.preventDefault();
+    uploadArea.classList.add('dragover');
+  });
+  
+  uploadArea.addEventListener('dragleave', function(e) {
+    e.preventDefault();
+    uploadArea.classList.remove('dragover');
+  });
+  
+  uploadArea.addEventListener('drop', function(e) {
+    e.preventDefault();
+    uploadArea.classList.remove('dragover');
+    
+    const files = e.dataTransfer.files;
+    if (files.length > 0) {
+      fileInput.files = files;
+      handleFileUpload({ target: { files: files } });
+    }
+  });
+});
+</script>

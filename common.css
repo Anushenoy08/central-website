@@ -10905,6 +10905,396 @@ body {
   }
 }
 
+/* URL Generator Tool Styling */
+.url-generator-container {
+  max-width: 1200px;
+  margin: 110px auto 32px auto;
+  padding: 0 20px;
+}
+
+.url-generator-title {
+  font-size: 2.2em;
+  font-weight: 800;
+  color: #1976d2;
+  margin-bottom: 8px;
+  text-align: center;
+  letter-spacing: 0.5px;
+}
+
+.url-generator-subtitle {
+  font-size: 1.1em;
+  color: #666;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.url-generator-main {
+  display: flex;
+  gap: 48px;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.url-generator-left {
+  flex: 1;
+  max-width: 500px;
+  background: #fff;
+  border-radius: 22px;
+  box-shadow: 0 6px 24px rgba(33, 150, 243, 0.10);
+  padding: 40px;
+}
+
+.url-generator-right {
+  flex: 1;
+  max-width: 500px;
+  background: #fff;
+  border-radius: 22px;
+  box-shadow: 0 6px 24px rgba(33, 150, 243, 0.10);
+  padding: 40px;
+}
+
+.upload-title, .output-title {
+  font-size: 1.3em;
+  font-weight: 700;
+  color: #2d223c;
+  margin-bottom: 24px;
+}
+
+.file-type-selector {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.file-type-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px 20px;
+  border-radius: 12px;
+  background: #fafdff;
+  border: 2px solid #b2ebf2;
+  cursor: pointer;
+  transition: all 0.2s;
+  min-width: 80px;
+}
+
+.file-type-option:hover {
+  border-color: #1976d2;
+  background: #f0f8ff;
+}
+
+.file-type-option.selected {
+  background: #e3f2fd;
+  border-color: #1976d2;
+  color: #1976d2;
+}
+
+.file-type-option i {
+  font-size: 1.5em;
+  margin-bottom: 4px;
+}
+
+.file-type-option span {
+  font-size: 0.9em;
+  font-weight: 500;
+}
+
+.upload-area {
+  border: 2px dashed #b2ebf2;
+  border-radius: 16px;
+  padding: 40px 20px;
+  text-align: center;
+  background: #fafdff;
+  transition: all 0.2s;
+  margin-bottom: 24px;
+}
+
+.upload-area.dragover {
+  border-color: #1976d2;
+  background: #e3f2fd;
+}
+
+.upload-content i {
+  font-size: 3em;
+  color: #1976d2;
+  margin-bottom: 16px;
+  display: block;
+}
+
+.upload-content h3 {
+  font-size: 1.2em;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.upload-content p {
+  color: #666;
+  margin-bottom: 16px;
+}
+
+.upload-btn {
+  background: linear-gradient(90deg, #1976d2 0%, #42a5f5 100%);
+  color: #fff;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 1em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.upload-btn:hover {
+  background: linear-gradient(90deg, #1565c0 0%, #1976d2 100%);
+}
+
+.file-info {
+  background: #f0f8ff;
+  border: 1px solid #b2ebf2;
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.file-details {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.file-details i {
+  font-size: 1.5em;
+  color: #1976d2;
+}
+
+.file-text {
+  flex: 1;
+}
+
+.file-name {
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 4px;
+}
+
+.file-size {
+  font-size: 0.9em;
+  color: #666;
+}
+
+.remove-file-btn {
+  background: #ffebee;
+  color: #d32f2f;
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+.remove-file-btn:hover {
+  background: #ffcdd2;
+}
+
+.generate-url-btn {
+  width: 100%;
+  background: linear-gradient(90deg, #2196f3 0%, #43e97b 100%);
+  color: #fff;
+  border: none;
+  padding: 16px;
+  border-radius: 12px;
+  font-size: 1.1em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.generate-url-btn:hover:not(:disabled) {
+  background: linear-gradient(90deg, #43e97b 0%, #2196f3 100%);
+}
+
+.generate-url-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.url-output-container {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.url-output {
+  flex: 1;
+  padding: 14px;
+  border: 1.5px solid #b2ebf2;
+  border-radius: 8px;
+  font-size: 1em;
+  background: #fafdff;
+  color: #333;
+}
+
+.url-output:focus {
+  outline: none;
+  border-color: #1976d2;
+}
+
+.copy-url-btn {
+  background: #1976d2;
+  color: #fff;
+  border: none;
+  padding: 14px 20px;
+  border-radius: 8px;
+  font-size: 1em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+
+.copy-url-btn:hover:not(:disabled) {
+  background: #1565c0;
+}
+
+.copy-url-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.url-info {
+  background: #e8f5e8;
+  border: 1px solid #c8e6c9;
+  border-radius: 8px;
+  padding: 12px;
+}
+
+.url-info p {
+  margin: 0;
+  font-size: 0.9em;
+  color: #2e7d32;
+}
+
+.url-info i {
+  margin-right: 6px;
+}
+
+.notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 12px 20px;
+  border-radius: 8px;
+  color: #fff;
+  font-weight: 500;
+  z-index: 1000;
+  animation: slideIn 0.3s ease;
+}
+
+.notification.success {
+  background: #4caf50;
+}
+
+.notification.error {
+  background: #f44336;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Mobile responsive styles for URL generator */
+@media (max-width: 768px) {
+  .url-generator-main {
+    flex-direction: column;
+    gap: 32px;
+  }
+  
+  .url-generator-left, .url-generator-right {
+    max-width: none;
+    padding: 24px;
+  }
+  
+  .url-generator-title {
+    font-size: 1.8em;
+  }
+  
+  .file-type-selector {
+    gap: 12px;
+  }
+  
+  .file-type-option {
+    padding: 8px 16px;
+    min-width: 70px;
+  }
+  
+  .file-type-option i {
+    font-size: 1.3em;
+  }
+  
+  .upload-area {
+    padding: 30px 16px;
+  }
+  
+  .upload-content i {
+    font-size: 2.5em;
+  }
+  
+  .url-output-container {
+    flex-direction: column;
+  }
+  
+  .copy-url-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .url-generator-container {
+    padding: 0 16px;
+  }
+  
+  .url-generator-left, .url-generator-right {
+    padding: 20px;
+  }
+  
+  .url-generator-title {
+    font-size: 1.6em;
+  }
+  
+  .file-type-selector {
+    gap: 8px;
+  }
+  
+  .file-type-option {
+    padding: 6px 12px;
+    min-width: 60px;
+  }
+  
+  .file-type-option i {
+    font-size: 1.2em;
+  }
+  
+  .upload-area {
+    padding: 24px 12px;
+  }
+  
+  .upload-content i {
+    font-size: 2em;
+  }
+}
+
 /* Regex Generator Page Styling */
 body {
   min-height: 100vh;
