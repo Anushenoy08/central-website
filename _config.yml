@@ -9,3 +9,11 @@ defaults:
       type: "posts"
     values:
       layout: "post"
+
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+
+title: All In One Tools
+description: Free online tools like JSON to XML, formatters, converters & more.
+url: "https://allin1tools.netlify.app"
