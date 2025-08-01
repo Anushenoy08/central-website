@@ -13,6 +13,7 @@ defaults:
 plugins:
   - jekyll-feed
   - jekyll-seo-tag
+  - jekyll-sitemap
 
 title: All In One Tools
 description: Free online tools like JSON to XML, formatters, converters & more.
