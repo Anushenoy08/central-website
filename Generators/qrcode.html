@@ -4,6 +4,9 @@ title: Best Online QR Code Generator for FREE
 permalink: /Generators/qrcode.html
 ---
 
+<!-- Additional QRCode library fallback -->
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+
 <div class="navbar">
   <img src="../images/logo.png" alt="Logo">
   <a href="../index.html">HOME</a>
@@ -49,7 +52,6 @@ permalink: /Generators/qrcode.html
       <div class="qr-tab-content" id="tab-logo">
         <div style="font-weight: 500; margin-bottom: 10px;">Select a logo</div>
         <div class="qr-logo-options" id="logoOptions">
-          <div class="qr-logo-option selected" data-logo="none" onclick="selectLogo(this)">No Logo</div>
           <div class="qr-logo-option" data-logo="whatsapp" onclick="selectLogo(this)"><img src="../images/whatsapp.png" alt="whatsapp" style="width:32px;height:32px;"></div>
           <div class="qr-logo-option" data-logo="instagram" onclick="selectLogo(this)"><img src="../images/instagram.png" alt="instagram" style="width:32px;height:32px;"></div>
           <div class="qr-logo-option" data-logo="facebook" onclick="selectLogo(this)"><img src="../images/facebook.png" alt="facebook" style="width:32px;height:32px;"></div>
@@ -129,7 +131,7 @@ function generateQR() {
     
     // Check if QRCode library is available
     if (typeof QRCode === 'undefined') {
-      throw new Error('QRCode library not loaded');
+      throw new Error('QRCode library not loaded. Please refresh the page and try again.');
     }
     
     // Generate QR code
@@ -239,10 +241,13 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   
   // Check if QRCode library is loaded
-  if (typeof QRCode === 'undefined') {
-    console.error('QRCode library not loaded');
-  } else {
-    console.log('QRCode library loaded successfully');
-  }
+  setTimeout(function() {
+    if (typeof QRCode === 'undefined') {
+      console.error('QRCode library not loaded');
+      alert('QRCode library failed to load. Please refresh the page.');
+    } else {
+      console.log('QRCode library loaded successfully');
+    }
+  }, 1000);
 });
 </script>

@@ -10641,6 +10641,7 @@ body {
   justify-content: center;
   margin-bottom: 18px;
   position: relative;
+  min-height: 284px;
 }
 .qr-download-btn {
   padding: 16px 0;
@@ -10681,12 +10682,13 @@ body {
   text-align: center;
   color: #999;
   font-size: 14px;
-  margin-top: 10px;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   pointer-events: none;
+  width: 100%;
+  padding: 0 20px;
 }
 
 .qr-download-btn:hover {
