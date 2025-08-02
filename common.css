@@ -12129,25 +12129,25 @@ button {
 }
 
 .quick-btn {
+  width: 40px;
+  height: 40px;
   padding: 0;
   margin: 4px;
   background: #f0f8ff;
   border: 1px solid #b2ebf2;
   border-radius: 4px;
-  font-size: 10px;
+  font-size: 12px;
   color: #1976d2;
   cursor: pointer;
   transition: all 0.2s ease;
   white-space: normal;
   font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
-  width: 40px;
-  height: 40px;
-  display: inline-block;
+  display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
-  line-height: 40px;
 }
+
 
 .quick-btn:hover {
   background: #e3f2fd;
