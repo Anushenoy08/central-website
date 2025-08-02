@@ -11827,6 +11827,112 @@ button {
   color: #1a2a32;
 }
 
+/* Regex Generator Container */
+.regex-generator-container {
+  max-width: 900px;
+  margin: 32px auto 48px auto;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 6px 24px rgba(33, 150, 243, 0.10);
+  padding: 32px;
+  border: 1.5px solid #b2ebf2;
+}
+
+.regex-generator-container .container-title {
+  font-size: 1.8em;
+  font-weight: 700;
+  color: #1976d2;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.regex-generator-container .container-subtitle {
+  font-size: 1.1em;
+  color: #2196f3;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.generator-input-section {
+  display: flex;
+  gap: 16px;
+  align-items: flex-end;
+  margin-bottom: 24px;
+}
+
+.generator-input-section .input-field {
+  flex: 1;
+  padding: 14px 18px;
+  border: 1.5px solid #b2ebf2;
+  border-radius: 12px;
+  font-size: 1.1em;
+  background: #fafdff;
+  color: #333;
+  font-family: 'Fira Mono', 'Consolas', monospace;
+}
+
+.generator-input-section .input-field:focus {
+  outline: none;
+  border-color: #2196f3;
+  box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
+}
+
+.generator-input-section .primary-btn {
+  padding: 14px 24px;
+  background: linear-gradient(135deg, #2196f3 0%, #43e97b 100%);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  font-size: 1.1em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.generator-input-section .primary-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(33, 150, 243, 0.3);
+}
+
+.generator-output {
+  background: #f8f9fa;
+  border: 1.5px solid #e9ecef;
+  border-radius: 12px;
+  padding: 16px 20px;
+  font-family: 'Fira Mono', 'Consolas', monospace;
+  font-size: 1.1em;
+  color: #e94391;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* Regex Tester Container */
+.regex-tester-container {
+  max-width: 1400px;
+  margin: 0 auto 48px auto;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 6px 24px rgba(33, 150, 243, 0.10);
+  padding: 32px;
+  border: 1.5px solid #b2ebf2;
+}
+
+.regex-tester-container .container-title {
+  font-size: 1.8em;
+  font-weight: 700;
+  color: #1976d2;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.regex-tester-container .container-subtitle {
+  font-size: 1.1em;
+  color: #2196f3;
+  margin-bottom: 32px;
+  text-align: center;
+}
+
 /* New Regex Layout Styles */
 .regex-main-layout {
   max-width: 1400px;
@@ -12141,11 +12247,28 @@ button {
 
 /* Mobile Responsive */
 @media (max-width: 900px) {
+  .regex-generator-container {
+    margin: 24px 16px 32px 16px;
+    padding: 24px 20px;
+  }
+  
+  .generator-input-section {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .generator-input-section .primary-btn {
+    width: 100%;
+  }
+  
+  .regex-tester-container {
+    margin: 0 16px 32px 16px;
+    padding: 24px 20px;
+  }
+  
   .regex-main-layout {
     flex-direction: column;
-    margin: 90px auto 24px auto;
     gap: 24px;
-    padding: 0 16px;
   }
   
   .regex-input-container,
