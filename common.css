@@ -12012,19 +12012,35 @@ button {
 /* Flags group styling */
 .flags-group {
   display: flex;
-  gap: 12px;
+  gap: 8px;
   margin-bottom: 8px;
   flex-wrap: nowrap;
   align-items: center;
 }
 
+.flag-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 14px;
+  color: #1976d2;
+  min-width: auto;
+}
+
+.flag-checkbox input[type="checkbox"] {
+  margin: 0;
+  width: 16px;
+  height: 16px;
+  accent-color: #2196f3;
+}
+
 /* Test input styling */
 .test-input {
   width: 100%;
-  padding: 16px 20px;
+  padding: 12px 16px;
   border: 2px solid #e0e0e0;
   border-radius: 8px;
-  font-size: 16px;
+  font-size: 14px;
   transition: border-color 0.3s ease;
   box-sizing: border-box;
   font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
@@ -12033,6 +12049,24 @@ button {
 }
 
 .test-input:focus {
+  outline: none;
+  border-color: #2196f3;
+  box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
+}
+
+/* Replacement input styling */
+.replace-input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: border-color 0.3s ease;
+  box-sizing: border-box;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+}
+
+.replace-input:focus {
   outline: none;
   border-color: #2196f3;
   box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
@@ -12206,6 +12240,28 @@ button {
   word-wrap: break-word;
 }
 
+/* Match results box styling */
+.match-results {
+  background: #f8f9fa;
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  padding: 16px;
+  min-height: 100px;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #333;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.match-results:empty::before {
+  content: "No results to display";
+  color: #999;
+  font-style: italic;
+}
+
 /* How to Use Section */
 .how-to-use-section {
   max-width: 1400px;
@@ -12319,7 +12375,16 @@ button {
   
   .flags-group {
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 6px;
+  }
+  
+  .flag-checkbox {
+    font-size: 12px;
+  }
+  
+  .flag-checkbox input[type="checkbox"] {
+    width: 14px;
+    height: 14px;
   }
   
   #preset {
