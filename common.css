@@ -11462,9 +11462,10 @@ label {
 }
 
 
-/* Desktop Layout Styles */
+/* Desktop Layout Styles for Regex Page */
 @media (min-width: 901px) {
-  .main-container {
+  /* Specific rules for regex page */
+  .regex-page-container {
     max-width: 1400px !important;
     margin: 110px auto 32px auto !important;
     background: #fff !important;
