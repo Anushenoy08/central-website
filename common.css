@@ -12075,6 +12075,8 @@ button {
   transition: border-color 0.3s ease;
   box-sizing: border-box;
   font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  min-height: 80px;
+  resize: vertical;
 }
 
 .test-input:focus {
@@ -12093,6 +12095,8 @@ button {
   transition: border-color 0.3s ease;
   box-sizing: border-box;
   font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  min-height: 60px;
+  resize: vertical;
 }
 
 .replace-input:focus {
@@ -12127,6 +12131,7 @@ button {
   grid-template-columns: repeat(auto-fill, 40px);
   gap: 8px;
   max-width: 280px; /* 40px * 6 buttons + 5 gaps of 8px */
+  margin-bottom: 16px;
 }
 
 .quick-btn {
@@ -12145,8 +12150,6 @@ button {
   padding: 0;
   text-align: center;
 }
-
-
 
 .quick-btn:hover {
   background: #e3f2fd;
@@ -12285,7 +12288,7 @@ button {
   border: 2px solid #e9ecef;
   border-radius: 8px;
   padding: 16px;
-  min-height: 100px;
+  min-height: 120px;
   font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
   font-size: 14px;
   line-height: 1.5;
