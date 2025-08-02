@@ -12402,8 +12402,8 @@ button {
 /* Mobile Responsive */
 @media (max-width: 900px) {
   .regex-generator-container {
-    margin: 24px 16px 32px 16px;
-    padding: 24px 20px;
+    margin: 24px 8px 32px 8px;
+    padding: 20px 16px;
   }
   
   .generator-input-section {
@@ -12440,6 +12440,7 @@ button {
   
   .quick-insert {
     gap: 6px;
+    max-width: 100%;
   }
   
   .quick-btn {
@@ -12451,8 +12452,8 @@ button {
   }
   
   .regex-tester-container {
-    margin: 0 16px 32px 16px;
-    padding: 24px 20px;
+    margin: 0 8px 32px 8px;
+    padding: 20px 16px;
   }
   
   .regex-main-layout {
@@ -12462,7 +12463,7 @@ button {
   
   .regex-input-container,
   .regex-output-container {
-    padding: 24px 20px;
+    padding: 20px 16px;
   }
   
   .usage-grid {
@@ -12475,8 +12476,8 @@ button {
   }
   
   .how-to-use-section {
-    margin: 32px auto 24px auto;
-    padding: 32px 20px;
+    margin: 32px 8px 24px 8px;
+    padding: 32px 16px;
   }
   
   .flags-container {
@@ -12485,6 +12486,61 @@ button {
   
   .action-buttons {
     flex-direction: column;
+  }
+}
+
+/* Extra small mobile devices */
+@media (max-width: 480px) {
+  .regex-generator-container {
+    margin: 16px 4px 24px 4px;
+    padding: 16px 12px;
+  }
+  
+  .regex-tester-container {
+    margin: 0 4px 24px 4px;
+    padding: 16px 12px;
+  }
+  
+  .regex-input-container,
+  .regex-output-container {
+    padding: 16px 12px;
+  }
+  
+  .how-to-use-section {
+    margin: 24px 4px 16px 4px;
+    padding: 24px 12px;
+  }
+  
+  .preset-options {
+    gap: 4px;
+  }
+  
+  .preset-option {
+    padding: 4px 8px;
+    font-size: 10px;
+  }
+  
+  .quick-insert {
+    gap: 4px;
+    grid-template-columns: repeat(auto-fill, 32px);
+  }
+  
+  .quick-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 8px;
+  }
+  
+  .section-label {
+    font-size: 14px;
+  }
+  
+  .input-field,
+  .regex-input,
+  .test-input,
+  .replace-input {
+    font-size: 13px;
+    padding: 10px 12px;
   }
 }
 
