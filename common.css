@@ -12122,23 +12122,23 @@ button {
   font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
 }
 
-.quick-insert-buttons {
+.quick-insert {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
-  margin-top: 8px;
+  gap: 8px;
+  margin-bottom: 16px;
 }
 
 .quick-btn {
-  padding: 6px 12px;
+  padding: 8px 12px;
   background: #f0f8ff;
   border: 1px solid #b2ebf2;
   border-radius: 6px;
   font-size: 12px;
-  font-weight: 600;
-  color: #0769cb;
+  color: #1976d2;
   cursor: pointer;
   transition: all 0.2s ease;
+  white-space: nowrap;
   font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
 }
 
@@ -12146,6 +12146,10 @@ button {
   background: #e3f2fd;
   border-color: #2196f3;
   transform: translateY(-1px);
+}
+
+.quick-btn:active {
+  transform: translateY(0);
 }
 
 .flags-container {
@@ -12421,6 +12425,15 @@ button {
   }
   
   .preset-option {
+    padding: 6px 10px;
+    font-size: 11px;
+  }
+  
+  .quick-insert {
+    gap: 6px;
+  }
+  
+  .quick-btn {
     padding: 6px 10px;
     font-size: 11px;
   }
