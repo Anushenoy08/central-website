@@ -12130,16 +12130,17 @@ button {
 }
 
 .quick-btn {
-  padding: 8px 12px;
+  padding: 6px 8px;
   background: #f0f8ff;
   border: 1px solid #b2ebf2;
   border-radius: 6px;
-  font-size: 12px;
+  font-size: 11px;
   color: #1976d2;
   cursor: pointer;
   transition: all 0.2s ease;
   white-space: nowrap;
   font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  min-width: auto;
 }
 
 .quick-btn:hover {
@@ -12434,8 +12435,8 @@ button {
   }
   
   .quick-btn {
-    padding: 6px 10px;
-    font-size: 11px;
+    padding: 4px 6px;
+    font-size: 10px;
   }
   
   .regex-tester-container {
