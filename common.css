@@ -12126,11 +12126,11 @@ button {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  margin-bottom: 16px;
 }
 
 .quick-btn {
-  padding: 6px;
+  padding: 0;
+  margin: 4px;
   background: #f0f8ff;
   border: 1px solid #b2ebf2;
   border-radius: 4px;
@@ -12140,13 +12140,13 @@ button {
   transition: all 0.2s ease;
   white-space: normal;
   font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
-  width: 32px;
-  height: 32px;
-  display: flex;
+  width: 40px;
+  height: 40px;
+  display: inline-block;
   align-items: center;
   justify-content: center;
   text-align: center;
-  line-height: 1;
+  line-height: 40px;
 }
 
 .quick-btn:hover {
