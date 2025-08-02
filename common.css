@@ -11311,26 +11311,6 @@ body {
   background: linear-gradient(135deg, #fafdff 0%, #e8f6ef 100%);
   font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
 }
-.main-container {
-  max-width: 1200px;
-  margin: 110px auto 32px auto;
-  background: #fff;
-  border-radius: 18px;
-  box-shadow: 0 6px 24px rgba(33, 150, 243, 0.10);
-  padding: 40px 32px 32px 32px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 48px;
-  justify-content: space-between;
-}
-.regex-left, .regex-right {
-  flex: 1 1 420px;
-  min-width: 340px;
-  max-width: 540px;
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
-}
 .regex-title {
   font-size: 2.1em;
   font-weight: 800;
@@ -11480,17 +11460,7 @@ label {
   margin: 0 0 0 18px;
   color: #1a2a32;
 }
-@media (max-width: 900px) {
-  .main-container {
-    flex-direction: column;
-    gap: 32px;
-    padding: 24px 6vw;
-  }
-  .regex-left, .regex-right {
-    max-width: 100%;
-    min-width: 0;
-  }
-}
+
 
 /* Desktop Layout Styles */
 @media (min-width: 901px) {
