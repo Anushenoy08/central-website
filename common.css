@@ -11984,10 +11984,41 @@ button {
   box-sizing: border-box;
 }
 
-/* Preset select with auto width */
+/* Preset select with horizontal layout */
 #preset {
   width: auto;
   min-width: 200px;
+  display: inline-block;
+}
+
+.preset-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.preset-option {
+  padding: 8px 12px;
+  background: #f0f8ff;
+  border: 1px solid #b2ebf2;
+  border-radius: 6px;
+  font-size: 12px;
+  color: #1976d2;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.preset-option:hover {
+  background: #e3f2fd;
+  border-color: #2196f3;
+}
+
+.preset-option.selected {
+  background: #2196f3;
+  color: white;
+  border-color: #2196f3;
 }
 
 /* Regex input styling */
@@ -12044,8 +12075,6 @@ button {
   transition: border-color 0.3s ease;
   box-sizing: border-box;
   font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
-  resize: vertical;
-  min-height: 50px;
 }
 
 .test-input:focus {
@@ -12387,9 +12416,13 @@ button {
     height: 14px;
   }
   
-  #preset {
-    width: 100%;
-    min-width: auto;
+  .preset-options {
+    gap: 6px;
+  }
+  
+  .preset-option {
+    padding: 6px 10px;
+    font-size: 11px;
   }
   
   .regex-tester-container {
