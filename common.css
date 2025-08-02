@@ -11495,31 +11495,34 @@ label {
 /* Desktop Layout Styles */
 @media (min-width: 901px) {
   .main-container {
-    max-width: 1400px;
-    margin: 110px auto 32px auto;
-    background: #fff;
-    border-radius: 18px;
-    box-shadow: 0 6px 24px rgba(33, 150, 243, 0.10);
-    padding: 40px 32px 32px 32px;
-    display: flex;
-    gap: 48px;
-    justify-content: space-between;
+    max-width: 1400px !important;
+    margin: 110px auto 32px auto !important;
+    background: #fff !important;
+    border-radius: 18px !important;
+    box-shadow: 0 6px 24px rgba(33, 150, 243, 0.10) !important;
+    padding: 40px 32px 32px 32px !important;
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    gap: 48px !important;
+    justify-content: space-between !important;
   }
   
   .regex-left {
-    flex: 0 0 45%;
-    max-width: 600px;
-    display: flex;
-    flex-direction: column;
-    gap: 32px;
+    flex: 0 0 45% !important;
+    max-width: 600px !important;
+    min-width: auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 32px !important;
   }
   
   .regex-right {
-    flex: 0 0 45%;
-    max-width: 600px;
-    display: flex;
-    flex-direction: column;
-    gap: 32px;
+    flex: 0 0 45% !important;
+    max-width: 600px !important;
+    min-width: auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 32px !important;
   }
   
   .mobile-container {
