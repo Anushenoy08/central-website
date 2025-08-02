@@ -11855,13 +11855,13 @@ button {
 
 .generator-input-section {
   display: flex;
+  flex-direction: column;
   gap: 16px;
-  align-items: flex-end;
   margin-bottom: 24px;
 }
 
 .generator-input-section .input-field {
-  flex: 1;
+  width: 100%;
   padding: 14px 18px;
   border: 1.5px solid #b2ebf2;
   border-radius: 12px;
@@ -11878,6 +11878,7 @@ button {
 }
 
 .generator-input-section .primary-btn {
+  width: fit-content;
   padding: 14px 24px;
   background: linear-gradient(135deg, #2196f3 0%, #43e97b 100%);
   color: #fff;
@@ -11888,6 +11889,7 @@ button {
   cursor: pointer;
   transition: all 0.3s ease;
   white-space: nowrap;
+  align-self: flex-start;
 }
 
 .generator-input-section .primary-btn:hover {
@@ -11980,6 +11982,60 @@ button {
   font-size: 14px;
   transition: border-color 0.3s ease;
   box-sizing: border-box;
+}
+
+/* Preset select with auto width */
+#preset {
+  width: auto;
+  min-width: 200px;
+}
+
+/* Regex input styling */
+.regex-input {
+  width: 100%;
+  padding: 16px 20px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: border-color 0.3s ease;
+  box-sizing: border-box;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  min-height: 50px;
+}
+
+.regex-input:focus {
+  outline: none;
+  border-color: #2196f3;
+  box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
+}
+
+/* Flags group styling */
+.flags-group {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 8px;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+/* Test input styling */
+.test-input {
+  width: 100%;
+  padding: 16px 20px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: border-color 0.3s ease;
+  box-sizing: border-box;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  resize: vertical;
+  min-height: 50px;
+}
+
+.test-input:focus {
+  outline: none;
+  border-color: #2196f3;
+  box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
 }
 
 .input-field:focus {
@@ -12259,6 +12315,16 @@ button {
   
   .generator-input-section .primary-btn {
     width: 100%;
+  }
+  
+  .flags-group {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  
+  #preset {
+    width: 100%;
+    min-width: auto;
   }
   
   .regex-tester-container {
