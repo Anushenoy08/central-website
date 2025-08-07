@@ -1332,7 +1332,7 @@ body {
   font-size: 1.13em;
   cursor: pointer;
   transition: border 0.2s, background 0.2s;
-  margin-bottom: 0;
+  margin: 0 auto 0 auto;
   width: 100%;
   max-width: 500px;
 }
