@@ -1393,7 +1393,7 @@ body {
   text-align: center;
 }
 .download-btn {
-  background: #43e97b;
+  background: linear-gradient(90deg, #2196f3 0%, #43e97b 100%);
   color: #fff;
   border: none;
   border-radius: 8px;
@@ -1401,7 +1401,7 @@ body {
   font-size: 1.08em;
   font-weight: 600;
   cursor: pointer;
-  margin-top: 8px;
+  margin-top: 6px;
   transition: background 0.18s;
 }
 .download-btn:hover {
