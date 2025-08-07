@@ -1405,7 +1405,7 @@ body {
   transition: background 0.18s;
 }
 .download-btn:hover {
-  background: #2196f3;
+  background: linear-gradient(90deg, #43e97b 0%, #2196f3 100%);
 }
 @media (max-width: 600px) {
   .container { padding: 18px 2vw; }
@@ -1490,7 +1490,7 @@ body {
   text-align: center;
 }
 .download-btn {
-  background: #43e97b;
+  background: linear-gradient(90deg, #2196f3 0%, #43e97b 100%);
   color: #fff;
   border: none;
   border-radius: 8px;
@@ -1502,7 +1502,7 @@ body {
   transition: background 0.18s;
 }
 .download-btn:hover {
-  background: #2196f3;
+  background: linear-gradient(90deg, #43e97b 0%, #2196f3 100%);
 }
 .file-list {
   margin-top: 10px;
