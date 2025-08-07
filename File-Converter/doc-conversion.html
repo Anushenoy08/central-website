@@ -627,7 +627,7 @@ permalink: /File-Converter/doc-conversion.html
       downloadLinks.forEach(({url, outName}, idx) => {
         const btn = document.createElement('button');
         btn.className = 'download-btn';
-        btn.textContent = `Download: ${outName}`;
+        btn.textContent = `Download ${outName}`;
         btn.onclick = () => {
           const a = document.createElement('a');
           a.href = url;
