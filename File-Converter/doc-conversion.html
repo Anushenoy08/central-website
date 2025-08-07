@@ -207,8 +207,7 @@ permalink: /File-Converter/doc-conversion.html
             if (completed === total) {
               outputMessage.textContent = `Conversion successful: ${total} file(s) converted.`;
               previewBox.style.display = 'none';
-              downloadBtn.style.display = 'none';
-              showDownloadLinks();
+              handleDownloadDisplay();
               resetBtn.style.display = 'inline-block';
               resetBtn.onclick = resetAll;
             }
@@ -236,8 +235,7 @@ permalink: /File-Converter/doc-conversion.html
           if (completed === total) {
             outputMessage.textContent = `Conversion successful: ${total} file(s) converted.`;
             previewBox.style.display = 'none';
-            downloadBtn.style.display = 'none';
-            showDownloadLinks();
+            handleDownloadDisplay();
             resetBtn.style.display = 'inline-block';
             resetBtn.onclick = resetAll;
           }
@@ -636,6 +634,24 @@ permalink: /File-Converter/doc-conversion.html
         };
         downloadList.appendChild(btn);
       });
+    }
+    
+    function handleDownloadDisplay() {
+      if (downloadLinks.length === 1) {
+        // Single file - show main download button
+        downloadBtn.style.display = 'inline-block';
+        downloadBtn.textContent = `Download ${downloadLinks[0].outName}`;
+        downloadBtn.onclick = () => {
+          const a = document.createElement('a');
+          a.href = downloadLinks[0].url;
+          a.download = downloadLinks[0].outName;
+          a.click();
+        };
+      } else {
+        // Multiple files - show download list
+        downloadBtn.style.display = 'none';
+        showDownloadLinks();
+      }
     }
     function resetAll() {
       outputArea.style.display = 'none';
