@@ -1,7 +1,6 @@
 ---
 layout: default
 title: Best Online Cron Job Generator for FREE
-description: Generate a cron job expression here 
 permalink: /Generators/cronjob.html
 ---
 
@@ -20,8 +19,8 @@ permalink: /Generators/cronjob.html
                 <button class="cron-btn" onclick="explainCron()">Explain</button>
             </div>
             <div class="cron-output" id="cronOutput">Enter a cron expression and click Explain.</div>
-            <div class="cron-examples">
-                <div class="cron-examples-title">Examples (click to use):</div>
+            <div class="cron-examples" style="text-align:left;">
+                <div class="cron-examples-title" style="text-align:left;">Examples (click to use):</div>
                 <ul class="cron-example-list">
                     <li><span>0 0 12 * * ? *</span> <button class="cron-example-btn" onclick="setExample('0 0 12 * * ? *')">Every day at noon</button></li>
                     <li><span>0 0/5 14 * * ? *</span> <button class="cron-example-btn" onclick="setExample('0 0/5 14 * * ? *')">Every 5 minutes, 2pm-2:55pm</button></li>
