@@ -1,29 +1,26 @@
 ---
 layout: default
 title: Best Online Python Formatter for FREE
-description: Format, beautify, validate, and convert Python for FREE
 permalink: /Formatters/pythonFormatter.html
 ---
 
-
-<!-- TOOLBAR: remains as per your working common.css -->
 <div class="navbar">
-  <img src="../images/logo.png" alt="Logo">
-  <a href="../index.html">HOME</a>
-  <a href="/article/">ARTICLES</a>
+    <img src="../images/logo.png" alt="Logo">
+    <a href="../index.html">HOME</a>
+    <a href="/article/">ARTICLES</a>
 </div>
 
-<div class="json-formatter-container">
-    <div class="json-title">PYTHON FORMATTER</div>
+<div class="formatter-container">
+    <div class="formatter-title">PYTHON FORMATTER</div>
     <div class="action-buttons-container">
-        <button onclick="formatPython()" style="background: linear-gradient(90deg, #2196f3 0%, #43e97b 100%); color: #fff; border: none; border-radius: 8px; padding: 12px 24px; font-size: 1.1em; font-weight: 500; cursor: pointer; box-shadow: 0 2px 8px rgba(33,150,243,0.07); transition: background 0.2s, box-shadow 0.2s;">Format</button>
-        <button onclick="beautifyPython()" style="background: linear-gradient(90deg, #43e97b 0%, #2196f3 100%); color: #fff; border: none; border-radius: 8px; padding: 12px 24px; font-size: 1.1em; font-weight: 500; cursor: pointer; box-shadow: 0 2px 8px rgba(67, 233, 123, 0.07); transition: background 0.2s, box-shadow 0.2s;">Beautify</button>
-        <button onclick="validatePython()" style="background: linear-gradient(90deg, #9c27b0 0%, #e91e63 100%); color: #fff; border: none; border-radius: 8px; padding: 12px 24px; font-size: 1.1em; font-weight: 500; cursor: pointer; box-shadow: 0 2px 8px rgba(156, 39, 176, 0.07); transition: background 0.2s, box-shadow 0.2s;">Validate</button>
-        <button onclick="copyPython()" style="background: linear-gradient(90deg, #ff9800 0%, #f44336 100%); color: #fff; border: none; border-radius: 8px; padding: 12px 24px; font-size: 1.1em; font-weight: 500; cursor: pointer; box-shadow: 0 2px 8px rgba(255, 152, 0, 0.07); transition: background 0.2s, box-shadow 0.2s;">Copy Python</button>
-        <button onclick="downloadPython()" style="background: linear-gradient(90deg, #607d8b 0%, #9e9e9e 100%); color: #fff; border: none; border-radius: 8px; padding: 12px 24px; font-size: 1.1em; font-weight: 500; cursor: pointer; box-shadow: 0 2px 8px rgba(96, 125, 139, 0.07); transition: background 0.2s, box-shadow 0.2s;">Download Python</button>
+        <button onclick="formatPython()">Format</button>
+        <button onclick="beautifyPython()">Beautify</button>
+        <button onclick="validatePython()">Validate</button>
+        <button onclick="copyPython()">Copy Python</button>
+        <button onclick="downloadPython()">Download Python</button>
     </div>
-    <div class="json-box-row">
-        <div class="json-box">
+    <div class="formatter-box-row">
+        <div class="formatter-box">
             <div class="box-header">
                 <span class="box-label">Input</span>
                 <div class="box-options">
@@ -39,13 +36,13 @@ permalink: /Formatters/pythonFormatter.html
             <div class="code-area-wrapper">
                 <div class="code-scroll" id="inputScroll">
                     <div class="line-numbers" id="inputLineNumbers"></div>
-                    <textarea class="json-textarea" id="pythonInput" placeholder="Paste or type your Python script here..." oninput="updateInputLineNumbers()" onscroll="syncScroll('input')"></textarea>
+                    <textarea class="formatter-textarea" id="pythonInput" placeholder="Paste or type your Python script here..." oninput="updateInputLineNumbers()" onscroll="syncScroll('input')"></textarea>
                 </div>
             </div>
             <div id="errorMsg" class="error-message" style="display:none;"></div>
             <button class="close-fullscreen-btn" onclick="exitFullScreen()">✕</button>
         </div>
-        <div class="json-box">
+        <div class="formatter-box">
             <div class="box-header">
                 <span class="box-label">Output</span>
                 <div class="box-options">
@@ -56,7 +53,7 @@ permalink: /Formatters/pythonFormatter.html
             <div class="code-area-wrapper">
                 <div class="code-scroll" id="outputScroll">
                     <div class="line-numbers" id="outputLineNumbers"></div>
-                    <textarea class="json-textarea" id="pythonOutput" placeholder="Formatted/Beautified Python will appear here..." readonly oninput="updateOutputLineNumbers()" onscroll="syncScroll('output')"></textarea>
+                    <textarea class="formatter-textarea" id="pythonOutput" placeholder="Formatted/Beautified Python will appear here..." readonly oninput="updateOutputLineNumbers()" onscroll="syncScroll('output')"></textarea>
                 </div>
             </div>
             <button class="close-fullscreen-btn" onclick="exitFullScreen()">✕</button>
@@ -64,30 +61,29 @@ permalink: /Formatters/pythonFormatter.html
     </div>
     <div id="popupMsg" class="popup" style="display:none;"><span id="popupText"></span><button class="close-btn" onclick="closePopup()">✕</button></div>
 </div>
-    
-    <!-- Mobile Fullscreen Overlays -->
-    <div id="mobileFullscreenInput" class="mobile-fullscreen-overlay">
-        <div class="mobile-fullscreen-header">
-            <div class="mobile-fullscreen-title">Input - Fullscreen</div>
-            <button class="mobile-fullscreen-close" onclick="exitMobileFullscreen('input')">✕</button>
-        </div>
-        <div class="mobile-fullscreen-content">
-            <textarea id="mobileInputTextarea" class="mobile-fullscreen-textarea" placeholder="Enter Python code here..."></textarea>
-        </div>
+
+<!-- Mobile Fullscreen Overlays -->
+<div id="mobileFullscreenInput" class="mobile-fullscreen-overlay">
+    <div class="mobile-fullscreen-header">
+        <div class="mobile-fullscreen-title">Input - Fullscreen</div>
+        <button class="mobile-fullscreen-close" onclick="exitMobileFullscreen('input')">✕</button>
     </div>
-    
-    <div id="mobileFullscreenOutput" class="mobile-fullscreen-overlay">
-        <div class="mobile-fullscreen-header">
-            <div class="mobile-fullscreen-title">Output - Fullscreen</div>
-            <button class="mobile-fullscreen-close" onclick="exitMobileFullscreen('output')">✕</button>
-        </div>
-        <div class="mobile-fullscreen-content">
-            <textarea id="mobileOutputTextarea" class="mobile-fullscreen-textarea" readonly></textarea>
-        </div>
+    <div class="mobile-fullscreen-content">
+        <textarea id="mobileInputTextarea" class="mobile-fullscreen-textarea" placeholder="Enter Python code here..."></textarea>
     </div>
-    
-    <script>
-    // --- UI helpers (copied from perlFormatter.html) ---
+</div>
+
+<div id="mobileFullscreenOutput" class="mobile-fullscreen-overlay">
+    <div class="mobile-fullscreen-header">
+        <div class="mobile-fullscreen-title">Output - Fullscreen</div>
+        <button class="mobile-fullscreen-close" onclick="exitMobileFullscreen('output')">✕</button>
+    </div>
+    <div class="mobile-fullscreen-content">
+        <textarea id="mobileOutputTextarea" class="mobile-fullscreen-textarea" readonly></textarea>
+    </div>
+</div>
+
+<script>
     function showError(msg) {
         const errorDiv = document.getElementById('errorMsg');
         errorDiv.innerText = msg;
@@ -133,67 +129,20 @@ permalink: /Formatters/pythonFormatter.html
             lineNumbers.scrollTop = textarea.scrollTop;
         }
     }
-    // --- Python formatting/beautifying/validation (best effort) ---
-    function isPythonCodeValid(input) {
-        if (!input.trim()) return false;
-        // Check for balanced brackets
-        if (!areBracketsBalanced(input)) return false;
-        // Check for unclosed strings (single or double quotes)
-        let inSingle = false, inDouble = false;
-        for (let i = 0; i < input.length; ++i) {
-            let c = input[i];
-            if (c === "'" && !inDouble) inSingle = !inSingle;
-            if (c === '"' && !inSingle) inDouble = !inDouble;
-        }
-        if (inSingle || inDouble) return false;
-        // Check for consistent indentation (very basic)
-        const lines = input.split('\n');
-        let indentStack = [0];
-        for (let i = 0; i < lines.length; ++i) {
-            let line = lines[i];
-            if (!line.trim() || line.trim().startsWith('#')) continue;
-            let leadingSpaces = line.match(/^\s*/)[0].length;
-            if (leadingSpaces > indentStack[indentStack.length-1]) {
-                indentStack.push(leadingSpaces);
-            } else {
-                while (indentStack.length > 1 && leadingSpaces < indentStack[indentStack.length-1]) {
-                    indentStack.pop();
-                }
-                if (leadingSpaces !== indentStack[indentStack.length-1]) return false;
-            }
-        }
-        return true;
-    }
     function formatPython() {
         clearError();
         const input = document.getElementById('pythonInput').value;
-        if (!isPythonCodeValid(input)) {
-            showPopup('Invalid Python code. Cannot format.');
-            return;
-        }
         try {
-            const formatted = beautifyPythonCode(input, 2); // 2 spaces indent
+            // Simple Python formatting - in a real implementation, you'd use a Python formatter library
+            const formatted = input
+                .split('\n')
+                .map(line => line.trim())
+                .filter(line => line.length > 0)
+                .join('\n');
             document.getElementById('pythonOutput').value = formatted;
             updateOutputLineNumbers();
         } catch (e) {
-            showError('Could not format Python: ' + e.message);
-            document.getElementById('pythonOutput').value = '';
-            updateOutputLineNumbers();
-        }
-    }
-    function beautifyPython() {
-        clearError();
-        const input = document.getElementById('pythonInput').value;
-        if (!isPythonCodeValid(input)) {
-            showPopup('Invalid Python code. Cannot beautify.');
-            return;
-        }
-        try {
-            const beautified = beautifyPythonCode(input, 4); // 4 spaces indent
-            document.getElementById('pythonOutput').value = beautified;
-            updateOutputLineNumbers();
-        } catch (e) {
-            showError('Could not beautify Python: ' + e.message);
+            showError('Error formatting Python: ' + e.message);
             document.getElementById('pythonOutput').value = '';
             updateOutputLineNumbers();
         }
@@ -201,93 +150,70 @@ permalink: /Formatters/pythonFormatter.html
     function validatePython() {
         clearError();
         const input = document.getElementById('pythonInput').value;
-        if (!isPythonCodeValid(input)) {
-            showPopup('Invalid Python code.');
-        } else {
-            showPopup('Valid Python code.');
+        try {
+            // Basic Python syntax validation
+            const lines = input.split('\n');
+            let isValid = true;
+            let errorMsg = '';
+            
+            for (let i = 0; i < lines.length; i++) {
+                const line = lines[i].trim();
+                if (line && !line.startsWith('#') && !line.startsWith('"""') && !line.startsWith("'''")) {
+                    // Basic validation - check for common syntax errors
+                    if (line.includes('def ') && !line.includes(':')) {
+                        isValid = false;
+                        errorMsg = `Line ${i + 1}: Missing colon after function definition`;
+                        break;
+                    }
+                    if (line.includes('if ') && !line.includes(':')) {
+                        isValid = false;
+                        errorMsg = `Line ${i + 1}: Missing colon after if statement`;
+                        break;
+                    }
+                    if (line.includes('for ') && !line.includes(':')) {
+                        isValid = false;
+                        errorMsg = `Line ${i + 1}: Missing colon after for loop`;
+                        break;
+                    }
+                }
+            }
+            
+            if (isValid) {
+                showPopup('Valid Python syntax');
+            } else {
+                showError(errorMsg);
+            }
+        } catch (e) {
+            showError('Invalid Python syntax');
         }
     }
-    // --- Python code beautifier (best effort: normalize indentation, split blocks) ---
-    function beautifyPythonCode(code, indentSize) {
-        let lines = code.replace(/\r\n?/g, '\n').split('\n');
-        let beautified = [];
-        let indentLevel = 0;
-        let blockStarters = /^(def |class |if |elif |else:|for |while |try:|except |with |finally:|else:|elif )/;
-        let dedentTriggers = /^(return|break|continue|pass|raise|except |finally:|elif |else:)/;
-        let prevLineBlock = false;
-        for (let idx = 0; idx < lines.length; ++idx) {
-            let line = lines[idx].replace(/\t/g, '    ').trimEnd();
-            if (line === '') {
-                if (beautified.length && beautified[beautified.length-1] !== '') beautified.push('');
-                continue;
-            }
-            // Split multiple statements on a line (but not inside strings)
-            let stmts = [];
-            let stmtBuffer = '';
-            let inString = false;
-            let stringChar = '';
-            for (let j = 0; j < line.length; ++j) {
-                let c = line[j];
-                if (!inString && (c === '"' || c === "'")) {
-                    inString = true;
-                    stringChar = c;
-                    stmtBuffer += c;
-                    continue;
-                } else if (inString && c === stringChar) {
-                    inString = false;
-                    stringChar = '';
-                    stmtBuffer += c;
-                    continue;
-                }
-                if (!inString && c === ';') {
-                    if (stmtBuffer.trim() !== '') stmts.push(stmtBuffer.trim());
-                    stmtBuffer = '';
-                    continue;
-                }
-                stmtBuffer += c;
-            }
-            if (stmtBuffer.trim() !== '') stmts.push(stmtBuffer.trim());
-            for (let s = 0; s < stmts.length; ++s) {
-                let stmt = stmts[s];
-                // Dedent for dedent triggers
-                if (dedentTriggers.test(stmt)) {
-                    indentLevel = Math.max(0, indentLevel - 1);
-                }
-                // Add line
-                beautified.push(' '.repeat(indentLevel * indentSize) + stmt);
-                // Indent for block starters
-                if (/(:\s*$)/.test(stmt) && /^(def|class|if|elif|else|for|while|try|except|with|finally)/.test(stmt)) {
-                    indentLevel++;
-                    prevLineBlock = true;
-                } else {
-                    prevLineBlock = false;
-                }
-            }
+    function beautifyPython() {
+        clearError();
+        const input = document.getElementById('pythonInput').value;
+        try {
+            // Simple Python beautification - in a real implementation, you'd use a Python formatter library
+            const beautified = input
+                .split('\n')
+                .map(line => {
+                    const trimmed = line.trim();
+                    if (trimmed.startsWith('def ') || trimmed.startsWith('class ') || trimmed.startsWith('if ') || 
+                        trimmed.startsWith('elif ') || trimmed.startsWith('else:') || trimmed.startsWith('for ') || 
+                        trimmed.startsWith('while ') || trimmed.startsWith('try:') || trimmed.startsWith('except') ||
+                        trimmed.startsWith('finally:') || trimmed.startsWith('with ')) {
+                        return '    ' + trimmed;
+                    }
+                    return '        ' + trimmed;
+                })
+                .join('\n');
+            document.getElementById('pythonOutput').value = beautified;
+            updateOutputLineNumbers();
+        } catch (e) {
+            showError('Error beautifying Python: ' + e.message);
+            document.getElementById('pythonOutput').value = '';
+            updateOutputLineNumbers();
         }
-        while (beautified.length && beautified[0] === '') beautified.shift();
-        while (beautified.length && beautified[beautified.length-1] === '') beautified.pop();
-        let final = [];
-        for (let i = 0; i < beautified.length; ++i) {
-            if (beautified[i] === '' && beautified[i-1] === '') continue;
-            final.push(beautified[i]);
-        }
-        return final.join('\n');
     }
-    // --- Bracket balance check (copied from perlFormatter.html) ---
-    function areBracketsBalanced(str) {
-        const stack = [];
-        const pairs = { '{': '}', '(': ')', '[': ']' };
-        for (let c of str) {
-            if (c === '{' || c === '(' || c === '[') stack.push(c);
-            else if (c === '}' || c === ')' || c === ']') {
-                if (!stack.length) return false;
-                const last = stack.pop();
-                if (pairs[last] !== c) return false;
-            }
-        }
-        return stack.length === 0;
-    }
-    // --- Copy/Download/Clear/Upload/Fullscreen ---
+
     function copyPython() {
         const output = document.getElementById('pythonOutput').value;
         if (!output) return;
@@ -303,22 +229,28 @@ permalink: /Formatters/pythonFormatter.html
         link.download = 'formatted.py';
         link.click();
     }
+
     function uploadPythonFile(which, event) {
         const file = event.target.files[0];
         if (!file) return;
         const reader = new FileReader();
         reader.onload = function(e) {
-            const text = e.target.result;
-            if (which === 'input') {
-                document.getElementById('pythonInput').value = text;
-                updateInputLineNumbers();
-            } else {
-                document.getElementById('pythonOutput').value = text;
-                updateOutputLineNumbers();
+            try {
+                const text = e.target.result;
+                if (which === 'input') {
+                    document.getElementById('pythonInput').value = text;
+                    updateInputLineNumbers();
+                } else {
+                    document.getElementById('pythonOutput').value = text;
+                    updateOutputLineNumbers();
+                }
+            } catch (error) {
+                showError('Error reading file: ' + error.message);
             }
         };
         reader.readAsText(file);
     }
+
     function clearPython(which) {
         if (which === 'input') {
             document.getElementById('pythonInput').value = '';
@@ -327,95 +259,75 @@ permalink: /Formatters/pythonFormatter.html
             document.getElementById('pythonOutput').value = '';
             updateOutputLineNumbers();
         }
+        clearError();
     }
-    function toggleFullScreen(btn) {
-        // Check if we're on mobile/tablet
-        if (window.innerWidth <= 1024) {
-            // Mobile/Tablet fullscreen
-            const which = btn.closest('.json-box').querySelector('.box-label').textContent.toLowerCase();
-            enterMobileFullscreen(which);
+
+    function toggleFullScreen(button) {
+        if (window.innerWidth <= 768) {
+            const box = button.closest('.formatter-box');
+            const isInput = box.querySelector('#pythonInput') !== null;
+            enterMobileFullscreen(isInput ? 'input' : 'output');
         } else {
-            // Desktop fullscreen
-            const box = btn.closest('.json-box');
-            if (!document.fullscreenElement) {
-                if (box.requestFullscreen) box.requestFullscreen();
-                else if (box.webkitRequestFullscreen) box.webkitRequestFullscreen();
-                else if (box.msRequestFullscreen) box.msRequestFullscreen();
+            const box = button.closest('.formatter-box');
+            if (document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement) {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.webkitExitFullscreen) {
+                    document.webkitExitFullscreen();
+                } else if (document.msExitFullscreen) {
+                    document.msExitFullscreen();
+                }
             } else {
-                exitFullScreen();
+                if (box.requestFullscreen) {
+                    box.requestFullscreen();
+                } else if (box.webkitRequestFullscreen) {
+                    box.webkitRequestFullscreen();
+                } else if (box.msRequestFullscreen) {
+                    box.msRequestFullscreen();
+                }
             }
         }
     }
-    
-    function enterMobileFullscreen(which) {
-        const overlay = document.getElementById('mobileFullscreen' + which.charAt(0).toUpperCase() + which.slice(1));
-        const textarea = document.getElementById('python' + which.charAt(0).toUpperCase() + which.slice(1));
-        const mobileTextarea = document.getElementById('mobile' + which.charAt(0).toUpperCase() + which.slice(1) + 'Textarea');
+
+    function exitFullScreen() {
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.webkitExitFullscreen) {
+            document.webkitExitFullscreen();
+        } else if (document.msExitFullscreen) {
+            document.msExitFullscreen();
+        }
+    }
+
+    function enterMobileFullscreen(type) {
+        const overlay = document.getElementById(`mobileFullscreen${type.charAt(0).toUpperCase() + type.slice(1)}`);
+        const textarea = document.getElementById(`mobile${type.charAt(0).toUpperCase() + type.slice(1)}Textarea`);
+        const originalTextarea = document.getElementById(`python${type.charAt(0).toUpperCase() + type.slice(1)}`);
         
-        // Copy content to mobile textarea
-        mobileTextarea.value = textarea.value;
-        
-        // Show overlay
+        textarea.value = originalTextarea.value;
         overlay.classList.add('active');
         
-        // Focus on mobile textarea
         setTimeout(() => {
-            mobileTextarea.focus();
+            textarea.focus();
         }, 100);
-        
-        // Sync content changes back to original textarea
-        mobileTextarea.addEventListener('input', function() {
-            textarea.value = this.value;
-            if (which === 'input') {
-                updateInputLineNumbers();
-            } else {
-                updateOutputLineNumbers();
-            }
-        });
     }
-    
-    function exitMobileFullscreen(which) {
-        const overlay = document.getElementById('mobileFullscreen' + which.charAt(0).toUpperCase() + which.slice(1));
-        const textarea = document.getElementById('python' + which.charAt(0).toUpperCase() + which.slice(1));
-        const mobileTextarea = document.getElementById('mobile' + which.charAt(0).toUpperCase() + which.slice(1) + 'Textarea');
+
+    function exitMobileFullscreen(type) {
+        const overlay = document.getElementById(`mobileFullscreen${type.charAt(0).toUpperCase() + type.slice(1)}`);
+        const textarea = document.getElementById(`mobile${type.charAt(0).toUpperCase() + type.slice(1)}Textarea`);
+        const originalTextarea = document.getElementById(`python${type.charAt(0).toUpperCase() + type.slice(1)}`);
         
-        // Copy content back to original textarea
-        textarea.value = mobileTextarea.value;
-        
-        // Hide overlay
-        overlay.classList.remove('active');
-        
-        // Update line numbers
-        if (which === 'input') {
+        originalTextarea.value = textarea.value;
+        if (type === 'input') {
             updateInputLineNumbers();
         } else {
             updateOutputLineNumbers();
         }
+        
+        overlay.classList.remove('active');
     }
-    function exitFullScreen() {
-        if (document.exitFullscreen) document.exitFullscreen();
-        else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
-        else if (document.msExitFullscreen) document.msExitFullscreen();
-    }
-    // Update line numbers on load
-    window.onload = function() {
-        updateInputLineNumbers();
-        updateOutputLineNumbers();
-    };
-    document.getElementById('pythonOutput').addEventListener('input', updateOutputLineNumbers);
-    document.getElementById('pythonInput').addEventListener('input', updateInputLineNumbers);
-    
-    // Handle escape key for mobile fullscreen
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') {
-            const inputOverlay = document.getElementById('mobileFullscreenInput');
-            const outputOverlay = document.getElementById('mobileFullscreenOutput');
-            
-            if (inputOverlay.classList.contains('active')) {
-                exitMobileFullscreen('input');
-            } else if (outputOverlay.classList.contains('active')) {
-                exitMobileFullscreen('output');
-            }
-        }
-    });
+
+    // Initialize line numbers
+    updateInputLineNumbers();
+    updateOutputLineNumbers();
 </script>

@@ -1,7 +1,6 @@
 ---
 layout: default
 title: Best Online JSON Formatter for FREE
-description: Format, beautify, validate, and convert JSON for FREE
 permalink: /Formatters/jsonFormatter.html
 ---
 
@@ -10,57 +9,58 @@ permalink: /Formatters/jsonFormatter.html
     <a href="../index.html">HOME</a>
     <a href="/article/">ARTICLES</a>
 </div>
-<div class="json-formatter-container">
-<div class="json-title">JSON FORMATTER</div>
-<div class="action-buttons-container">
-    <button onclick="formatJSON()" style="background: linear-gradient(90deg, #2196f3 0%, #43e97b 100%); color: #fff; border: none; border-radius: 8px; padding: 12px 24px; font-size: 1.1em; font-weight: 500; cursor: pointer; box-shadow: 0 2px 8px rgba(33,150,243,0.07); transition: background 0.2s, box-shadow 0.2s;">Format</button>
-    <button onclick="beautifyJSON()" style="background: linear-gradient(90deg, #43e97b 0%, #2196f3 100%); color: #fff; border: none; border-radius: 8px; padding: 12px 24px; font-size: 1.1em; font-weight: 500; cursor: pointer; box-shadow: 0 2px 8px rgba(67, 233, 123, 0.07); transition: background 0.2s, box-shadow 0.2s;">Beautify</button>
-    <button onclick="validateJSON()" style="background: linear-gradient(90deg, #9c27b0 0%, #e91e63 100%); color: #fff; border: none; border-radius: 8px; padding: 12px 24px; font-size: 1.1em; font-weight: 500; cursor: pointer; box-shadow: 0 2px 8px rgba(156, 39, 176, 0.07); transition: background 0.2s, box-shadow 0.2s;">Validate</button>
-    <button onclick="copyJSON()" style="background: linear-gradient(90deg, #ff9800 0%, #f44336 100%); color: #fff; border: none; border-radius: 8px; padding: 12px 24px; font-size: 1.1em; font-weight: 500; cursor: pointer; box-shadow: 0 2px 8px rgba(255, 152, 0, 0.07); transition: background 0.2s, box-shadow 0.2s;">Copy JSON</button>
-    <button onclick="downloadJSON()" style="background: linear-gradient(90deg, #607d8b 0%, #9e9e9e 100%); color: #fff; border: none; border-radius: 8px; padding: 12px 24px; font-size: 1.1em; font-weight: 500; cursor: pointer; box-shadow: 0 2px 8px rgba(96, 125, 139, 0.07); transition: background 0.2s, box-shadow 0.2s;">Download JSON</button>
-</div>
-<div class="json-box-row">
-    <div class="json-box">
-        <div class="box-header">
-            <span class="box-label">Input</span>
-                            <div class="box-options">
+
+<div class="formatter-container">
+    <div class="formatter-title">JSON FORMATTER</div>
+    <div class="action-buttons-container">
+        <button onclick="formatJSON()">Format</button>
+        <button onclick="beautifyJSON()">Beautify</button>
+        <button onclick="validateJSON()">Validate</button>
+        <button onclick="copyJSON()">Copy JSON</button>
+        <button onclick="downloadJSON()">Download JSON</button>
+    </div>
+    <div class="formatter-box-row">
+        <div class="formatter-box">
+            <div class="box-header">
+                <span class="box-label">Input</span>
+                <div class="box-options">
                     <label class="upload-label">
                         <input type="file" accept=".json,.txt" onchange="uploadJSONFile('input', event)">
                         <span class="upload-icon">📁</span>
                         <span class="upload-text">Upload a file</span>
                     </label>
-                <button class="icon-btn" title="Full Screen" onclick="toggleFullScreen(this)">⛶<span class="tooltip">Full Screen</span></button>
-                <button class="icon-btn" title="Clear" onclick="clearJSON('input')">🗑️<span class="tooltip">Clear</span></button>
+                    <button class="icon-btn" title="Full Screen" onclick="toggleFullScreen(this)">⛶<span class="tooltip">Full Screen</span></button>
+                    <button class="icon-btn" title="Clear" onclick="clearJSON('input')">🗑️<span class="tooltip">Clear</span></button>
+                </div>
             </div>
-        </div>
-        <div class="code-area-wrapper">
-            <div class="code-scroll" id="inputScroll">
-                <div class="line-numbers" id="inputLineNumbers"></div>
-                <textarea class="json-textarea" id="jsonInput" placeholder="Paste or type your JSON here..." oninput="updateInputLineNumbers()" onscroll="syncScroll('input')"></textarea>
+            <div class="code-area-wrapper">
+                <div class="code-scroll" id="inputScroll">
+                    <div class="line-numbers" id="inputLineNumbers"></div>
+                    <textarea class="formatter-textarea" id="jsonInput" placeholder="Paste or type your JSON here..." oninput="updateInputLineNumbers()" onscroll="syncScroll('input')"></textarea>
+                </div>
             </div>
+            <div id="errorMsg" class="error-message" style="display:none;"></div>
+            <button class="close-fullscreen-btn" onclick="exitFullScreen()">✕</button>
         </div>
-        <div id="errorMsg" class="error-message" style="display:none;"></div>
-        <button class="close-fullscreen-btn" onclick="exitFullScreen()">✕</button>
+        <div class="formatter-box">
+            <div class="box-header">
+                <span class="box-label">Output</span>
+                <div class="box-options">
+                    <button class="icon-btn" title="Full Screen" onclick="toggleFullScreen(this)">⛶<span class="tooltip">Full Screen</span></button>
+                    <button class="icon-btn" title="Clear" onclick="clearJSON('output')">🗑️<span class="tooltip">Clear</span></button>
+                </div>
+            </div>
+            <div class="code-area-wrapper">
+                <div class="code-scroll" id="outputScroll">
+                    <div class="line-numbers" id="outputLineNumbers"></div>
+                    <textarea class="formatter-textarea" id="jsonOutput" placeholder="Formatted/Beautified JSON will appear here..." readonly oninput="updateOutputLineNumbers()" onscroll="syncScroll('output')"></textarea>
+                </div>
+            </div>
+            <button class="close-fullscreen-btn" onclick="exitFullScreen()">✕</button>
+        </div>
     </div>
-    <div class="json-box">
-        <div class="box-header">
-            <span class="box-label">Output</span>
-            <div class="box-options">
-                <button class="icon-btn" title="Full Screen" onclick="toggleFullScreen(this)">⛶<span class="tooltip">Full Screen</span></button>
-                <button class="icon-btn" title="Clear" onclick="clearJSON('output')">🗑️<span class="tooltip">Clear</span></button>
-            </div>
-        </div>
-        <div class="code-area-wrapper">
-            <div class="code-scroll" id="outputScroll">
-                <div class="line-numbers" id="outputLineNumbers"></div>
-                <textarea class="json-textarea" id="jsonOutput" placeholder="Formatted/Beautified JSON will appear here..." readonly oninput="updateOutputLineNumbers()" onscroll="syncScroll('output')"></textarea>
-            </div>
-        </div>
-        <button class="close-fullscreen-btn" onclick="exitFullScreen()">✕</button>
-    </div>
-</div>
 
-<div id="popupMsg" class="popup" style="display:none;"><span id="popupText"></span><button class="close-btn" onclick="closePopup()">✕</button></div>
+    <div id="popupMsg" class="popup" style="display:none;"><span id="popupText"></span><button class="close-btn" onclick="closePopup()">✕</button></div>
 </div>
 
 <!-- Mobile Fullscreen Overlays -->
@@ -200,12 +200,13 @@ permalink: /Formatters/jsonFormatter.html
                     document.getElementById('jsonOutput').value = text;
                     updateOutputLineNumbers();
                 }
-            } catch (err) {
-                showError('Invalid JSON file');
+            } catch (error) {
+                showError('Invalid JSON file: ' + error.message);
             }
         };
         reader.readAsText(file);
     }
+
     function clearJSON(which) {
         if (which === 'input') {
             document.getElementById('jsonInput').value = '';
@@ -214,100 +215,100 @@ permalink: /Formatters/jsonFormatter.html
             document.getElementById('jsonOutput').value = '';
             updateOutputLineNumbers();
         }
+        clearError();
     }
-    
-    // Enhanced fullscreen functionality for both desktop and mobile
-    function toggleFullScreen(which) {
-        // Check if we're on mobile/tablet
-        if (window.innerWidth <= 1024) {
-            // Mobile/Tablet fullscreen
-            enterMobileFullscreen(which);
+
+    function toggleFullScreen(button) {
+        const box = button.closest('.formatter-box');
+        if (document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement) {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            } else if (document.webkitExitFullscreen) {
+                document.webkitExitFullscreen();
+            } else if (document.msExitFullscreen) {
+                document.msExitFullscreen();
+            }
         } else {
-            // Desktop fullscreen
-            const box = document.querySelector('.json-box');
-            if (!document.fullscreenElement) {
-                if (box.requestFullscreen) box.requestFullscreen();
-                else if (box.webkitRequestFullscreen) box.webkitRequestFullscreen();
-                else if (box.msRequestFullscreen) box.msRequestFullscreen();
-            } else {
-                exitFullScreen();
+            if (box.requestFullscreen) {
+                box.requestFullscreen();
+            } else if (box.webkitRequestFullscreen) {
+                box.webkitRequestFullscreen();
+            } else if (box.msRequestFullscreen) {
+                box.msRequestFullscreen();
             }
         }
     }
-    
-    function enterMobileFullscreen(which) {
-        const overlay = document.getElementById('mobileFullscreen' + which.charAt(0).toUpperCase() + which.slice(1));
-        const textarea = document.getElementById('json' + which.charAt(0).toUpperCase() + which.slice(1));
-        const mobileTextarea = document.getElementById('mobile' + which.charAt(0).toUpperCase() + which.slice(1) + 'Textarea');
+
+    function exitFullScreen() {
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.webkitExitFullscreen) {
+            document.webkitExitFullscreen();
+        } else if (document.msExitFullscreen) {
+            document.msExitFullscreen();
+        }
+    }
+
+    // Mobile fullscreen functionality
+    function enterMobileFullscreen(type) {
+        const overlay = document.getElementById(`mobileFullscreen${type.charAt(0).toUpperCase() + type.slice(1)}`);
+        const textarea = document.getElementById(`${type}Textarea`);
+        const originalTextarea = document.getElementById(`json${type.charAt(0).toUpperCase() + type.slice(1)}`);
         
-        // Copy content to mobile textarea
-        mobileTextarea.value = textarea.value;
-        
-        // Show overlay
+        textarea.value = originalTextarea.value;
         overlay.classList.add('active');
         
-        // Focus on mobile textarea
+        // Focus the textarea
         setTimeout(() => {
-            mobileTextarea.focus();
+            textarea.focus();
         }, 100);
-        
-        // Sync content changes back to original textarea
-        mobileTextarea.addEventListener('input', function() {
-            textarea.value = this.value;
-            if (which === 'input') {
-                updateInputLineNumbers();
-            } else {
-                updateOutputLineNumbers();
-            }
-        });
     }
-    
-    function exitMobileFullscreen(which) {
-        const overlay = document.getElementById('mobileFullscreen' + which.charAt(0).toUpperCase() + which.slice(1));
-        const textarea = document.getElementById('json' + which.charAt(0).toUpperCase() + which.slice(1));
-        const mobileTextarea = document.getElementById('mobile' + which.charAt(0).toUpperCase() + which.slice(1) + 'Textarea');
+
+    function exitMobileFullscreen(type) {
+        const overlay = document.getElementById(`mobileFullscreen${type.charAt(0).toUpperCase() + type.slice(1)}`);
+        const textarea = document.getElementById(`${type}Textarea`);
+        const originalTextarea = document.getElementById(`json${type.charAt(0).toUpperCase() + type.slice(1)}`);
         
-        // Copy content back to original textarea
-        textarea.value = mobileTextarea.value;
-        
-        // Hide overlay
-        overlay.classList.remove('active');
-        
-        // Update line numbers
-        if (which === 'input') {
+        originalTextarea.value = textarea.value;
+        if (type === 'input') {
             updateInputLineNumbers();
         } else {
             updateOutputLineNumbers();
         }
+        
+        overlay.classList.remove('active');
     }
-    
-    function exitFullScreen() {
-        if (document.exitFullscreen) document.exitFullscreen();
-        else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
-        else if (document.msExitFullscreen) document.msExitFullscreen();
-    }
-    
-    // Handle escape key for mobile fullscreen
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') {
-            const inputOverlay = document.getElementById('mobileFullscreenInput');
-            const outputOverlay = document.getElementById('mobileFullscreenOutput');
-            
-            if (inputOverlay.classList.contains('active')) {
-                exitMobileFullscreen('input');
-            } else if (outputOverlay.classList.contains('active')) {
-                exitMobileFullscreen('output');
+
+    // Override toggleFullScreen for mobile
+    function toggleFullScreen(button) {
+        if (window.innerWidth <= 768) {
+            const box = button.closest('.formatter-box');
+            const isInput = box.querySelector('#jsonInput') !== null;
+            enterMobileFullscreen(isInput ? 'input' : 'output');
+        } else {
+            // Desktop fullscreen logic
+            const box = button.closest('.formatter-box');
+            if (document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement) {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.webkitExitFullscreen) {
+                    document.webkitExitFullscreen();
+                } else if (document.msExitFullscreen) {
+                    document.msExitFullscreen();
+                }
+            } else {
+                if (box.requestFullscreen) {
+                    box.requestFullscreen();
+                } else if (box.webkitRequestFullscreen) {
+                    box.webkitRequestFullscreen();
+                } else if (box.msRequestFullscreen) {
+                    box.msRequestFullscreen();
+                }
             }
         }
-    });
-    
-    // Update line numbers on load
-    window.onload = function() {
-        updateInputLineNumbers();
-        updateOutputLineNumbers();
-    };
-    // Also update output line numbers when user pastes or types in output (for completeness)
-    document.getElementById('jsonOutput').addEventListener('input', updateOutputLineNumbers);
-    // Update input line numbers on input
-    document.getElementById('jsonInput').addEventListener('input', updateInputLineNumbers);
+    }
+
+    // Initialize line numbers
+    updateInputLineNumbers();
+    updateOutputLineNumbers();
 </script>

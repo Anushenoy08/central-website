@@ -1,28 +1,26 @@
 ---
 layout: default
 title: Best Online PHP Formatter for FREE
-description: Format, beautify, validate, and convert PHP for FREE
 permalink: /Formatters/phpFormatter.html
 ---
 
-<!-- TOOLBAR: remains as per your working common.css -->
 <div class="navbar">
-  <img src="../images/logo.png" alt="Logo">
-  <a href="../index.html">HOME</a>
-  <a href="/article/">ARTICLES</a>
+    <img src="../images/logo.png" alt="Logo">
+    <a href="../index.html">HOME</a>
+    <a href="/article/">ARTICLES</a>
 </div>
 
-<div class="json-formatter-container">
-    <div class="json-title">PHP FORMATTER</div>
+<div class="formatter-container">
+    <div class="formatter-title">PHP FORMATTER</div>
     <div class="action-buttons-container">
-        <button onclick="formatPHP()" style="background: linear-gradient(90deg, #2196f3 0%, #43e97b 100%); color: #fff; border: none; border-radius: 8px; padding: 12px 24px; font-size: 1.1em; font-weight: 500; cursor: pointer; box-shadow: 0 2px 8px rgba(33,150,243,0.07); transition: background 0.2s, box-shadow 0.2s;">Format</button>
-        <button onclick="beautifyPHP()" style="background: linear-gradient(90deg, #43e97b 0%, #2196f3 100%); color: #fff; border: none; border-radius: 8px; padding: 12px 24px; font-size: 1.1em; font-weight: 500; cursor: pointer; box-shadow: 0 2px 8px rgba(67, 233, 123, 0.07); transition: background 0.2s, box-shadow 0.2s;">Beautify</button>
-        <button onclick="validatePHP()" style="background: linear-gradient(90deg, #9c27b0 0%, #e91e63 100%); color: #fff; border: none; border-radius: 8px; padding: 12px 24px; font-size: 1.1em; font-weight: 500; cursor: pointer; box-shadow: 0 2px 8px rgba(156, 39, 176, 0.07); transition: background 0.2s, box-shadow 0.2s;">Validate</button>
-        <button onclick="copyPHP()" style="background: linear-gradient(90deg, #ff9800 0%, #f44336 100%); color: #fff; border: none; border-radius: 8px; padding: 12px 24px; font-size: 1.1em; font-weight: 500; cursor: pointer; box-shadow: 0 2px 8px rgba(255, 152, 0, 0.07); transition: background 0.2s, box-shadow 0.2s;">Copy PHP</button>
-        <button onclick="downloadPHP()" style="background: linear-gradient(90deg, #607d8b 0%, #9e9e9e 100%); color: #fff; border: none; border-radius: 8px; padding: 12px 24px; font-size: 1.1em; font-weight: 500; cursor: pointer; box-shadow: 0 2px 8px rgba(96, 125, 139, 0.07); transition: background 0.2s, box-shadow 0.2s;">Download PHP</button>
+        <button onclick="formatPHP()">Format</button>
+        <button onclick="beautifyPHP()">Beautify</button>
+        <button onclick="validatePHP()">Validate</button>
+        <button onclick="copyPHP()">Copy PHP</button>
+        <button onclick="downloadPHP()">Download PHP</button>
     </div>
-    <div class="json-box-row">
-        <div class="json-box">
+    <div class="formatter-box-row">
+        <div class="formatter-box">
             <div class="box-header">
                 <span class="box-label">Input</span>
                 <div class="box-options">
@@ -38,13 +36,13 @@ permalink: /Formatters/phpFormatter.html
             <div class="code-area-wrapper">
                 <div class="code-scroll" id="inputScroll">
                     <div class="line-numbers" id="inputLineNumbers"></div>
-                    <textarea class="json-textarea" id="phpInput" placeholder="Paste or type your PHP script here..." oninput="updateInputLineNumbers()" onscroll="syncScroll('input')"></textarea>
+                    <textarea class="formatter-textarea" id="phpInput" placeholder="Paste or type your PHP code here..." oninput="updateInputLineNumbers()" onscroll="syncScroll('input')"></textarea>
                 </div>
             </div>
             <div id="errorMsg" class="error-message" style="display:none;"></div>
             <button class="close-fullscreen-btn" onclick="exitFullScreen()">✕</button>
         </div>
-        <div class="json-box">
+        <div class="formatter-box">
             <div class="box-header">
                 <span class="box-label">Output</span>
                 <div class="box-options">
@@ -55,7 +53,7 @@ permalink: /Formatters/phpFormatter.html
             <div class="code-area-wrapper">
                 <div class="code-scroll" id="outputScroll">
                     <div class="line-numbers" id="outputLineNumbers"></div>
-                    <textarea class="json-textarea" id="phpOutput" placeholder="Formatted/Beautified PHP will appear here..." readonly oninput="updateOutputLineNumbers()" onscroll="syncScroll('output')"></textarea>
+                    <textarea class="formatter-textarea" id="phpOutput" placeholder="Formatted/Beautified PHP will appear here..." readonly oninput="updateOutputLineNumbers()" onscroll="syncScroll('output')"></textarea>
                 </div>
             </div>
             <button class="close-fullscreen-btn" onclick="exitFullScreen()">✕</button>
@@ -63,30 +61,29 @@ permalink: /Formatters/phpFormatter.html
     </div>
     <div id="popupMsg" class="popup" style="display:none;"><span id="popupText"></span><button class="close-btn" onclick="closePopup()">✕</button></div>
 </div>
-    
-    <!-- Mobile Fullscreen Overlays -->
-    <div id="mobileFullscreenInput" class="mobile-fullscreen-overlay">
-        <div class="mobile-fullscreen-header">
-            <div class="mobile-fullscreen-title">Input - Fullscreen</div>
-            <button class="mobile-fullscreen-close" onclick="exitMobileFullscreen('input')">✕</button>
-        </div>
-        <div class="mobile-fullscreen-content">
-            <textarea id="mobileInputTextarea" class="mobile-fullscreen-textarea" placeholder="Enter PHP code here..."></textarea>
-        </div>
+
+<!-- Mobile Fullscreen Overlays -->
+<div id="mobileFullscreenInput" class="mobile-fullscreen-overlay">
+    <div class="mobile-fullscreen-header">
+        <div class="mobile-fullscreen-title">Input - Fullscreen</div>
+        <button class="mobile-fullscreen-close" onclick="exitMobileFullscreen('input')">✕</button>
     </div>
-    
-    <div id="mobileFullscreenOutput" class="mobile-fullscreen-overlay">
-        <div class="mobile-fullscreen-header">
-            <div class="mobile-fullscreen-title">Output - Fullscreen</div>
-            <button class="mobile-fullscreen-close" onclick="exitMobileFullscreen('output')">✕</button>
-        </div>
-        <div class="mobile-fullscreen-content">
-            <textarea id="mobileOutputTextarea" class="mobile-fullscreen-textarea" readonly></textarea>
-        </div>
+    <div class="mobile-fullscreen-content">
+        <textarea id="mobileInputTextarea" class="mobile-fullscreen-textarea" placeholder="Enter PHP code here..."></textarea>
     </div>
-    
-    <script>
-    // --- UI helpers (copied from perlFormatter.html) ---
+</div>
+
+<div id="mobileFullscreenOutput" class="mobile-fullscreen-overlay">
+    <div class="mobile-fullscreen-header">
+        <div class="mobile-fullscreen-title">Output - Fullscreen</div>
+        <button class="mobile-fullscreen-close" onclick="exitMobileFullscreen('output')">✕</button>
+    </div>
+    <div class="mobile-fullscreen-content">
+        <textarea id="mobileOutputTextarea" class="mobile-fullscreen-textarea" readonly></textarea>
+    </div>
+</div>
+
+<script>
     function showError(msg) {
         const errorDiv = document.getElementById('errorMsg');
         errorDiv.innerText = msg;
@@ -132,62 +129,20 @@ permalink: /Formatters/phpFormatter.html
             lineNumbers.scrollTop = textarea.scrollTop;
         }
     }
-    // --- PHP formatting/beautifying/validation (best effort) ---
-    function isPHPCodeValid(input) {
-        if (!input.trim()) return false;
-        // Check for balanced brackets
-        if (!areBracketsBalanced(input)) return false;
-        // Check for unclosed strings (single or double quotes)
-        let inSingle = false, inDouble = false;
-        for (let i = 0; i < input.length; ++i) {
-            let c = input[i];
-            if (c === "'" && !inDouble) inSingle = !inSingle;
-            if (c === '"' && !inSingle) inDouble = !inDouble;
-        }
-        if (inSingle || inDouble) return false;
-        // Check for missing semicolons at end of statements
-        const lines = input.split('\n');
-        for (let i = 0; i < lines.length; ++i) {
-            let line = lines[i].trim();
-            if (!line || line.startsWith('//') || line.startsWith('#') || line.startsWith('<?') || line.startsWith('?>') || line.startsWith('}') || line.startsWith('{')) continue;
-            if (line.endsWith('{') || line.endsWith('}') || line.endsWith(':')) continue;
-            if (/^(if|else|elseif|while|for|foreach|switch|case|function|do|try|catch|finally)\b/.test(line) && line.endsWith(')')) continue;
-            if (/\b(do|then|else|elseif|catch|finally)$/.test(line)) continue;
-            if (/^\?>/.test(line) || /^<\?php/.test(line)) continue;
-            if (!line.endsWith(';')) return false;
-        }
-        return true;
-    }
     function formatPHP() {
         clearError();
         const input = document.getElementById('phpInput').value;
-        if (!isPHPCodeValid(input)) {
-            showPopup('Invalid PHP code. Cannot format.');
-            return;
-        }
         try {
-            const formatted = beautifyPHPCode(input, 2); // 2 spaces indent
+            // Simple PHP formatting
+            const formatted = input
+                .split('\n')
+                .map(line => line.trim())
+                .filter(line => line.length > 0)
+                .join('\n');
             document.getElementById('phpOutput').value = formatted;
             updateOutputLineNumbers();
         } catch (e) {
-            showError('Could not format PHP: ' + e.message);
-            document.getElementById('phpOutput').value = '';
-            updateOutputLineNumbers();
-        }
-    }
-    function beautifyPHP() {
-        clearError();
-        const input = document.getElementById('phpInput').value;
-        if (!isPHPCodeValid(input)) {
-            showPopup('Invalid PHP code. Cannot beautify.');
-            return;
-        }
-        try {
-            const beautified = beautifyPHPCode(input, 4); // 4 spaces indent
-            document.getElementById('phpOutput').value = beautified;
-            updateOutputLineNumbers();
-        } catch (e) {
-            showError('Could not beautify PHP: ' + e.message);
+            showError('Error formatting PHP: ' + e.message);
             document.getElementById('phpOutput').value = '';
             updateOutputLineNumbers();
         }
@@ -195,141 +150,70 @@ permalink: /Formatters/phpFormatter.html
     function validatePHP() {
         clearError();
         const input = document.getElementById('phpInput').value;
-        if (!isPHPCodeValid(input)) {
-            showPopup('Invalid PHP code.');
-        } else {
-            showPopup('Valid PHP code.');
-        }
-    }
-    // --- PHP code beautifier (robust: splits on semicolons/braces, handles comments) ---
-    function beautifyPHPCode(code, indentSize) {
-        let lines = [];
-        let buffer = '';
-        let inString = false;
-        let stringChar = '';
-        let inComment = false;
-        let i = 0;
-        code = code.replace(/\r\n?/g, '\n'); // Normalize newlines
-        while (i < code.length) {
-            let c = code[i];
-            let next = code[i+1];
-            // PHP tags
-            if (i === 0 && code.startsWith('<?php')) {
-                let tagEnd = code.indexOf('\n');
-                if (tagEnd === -1) tagEnd = code.length;
-                lines.push(code.slice(0, tagEnd));
-                i = tagEnd;
-                buffer = '';
-                continue;
-            }
-            // Single-line comment
-            if (!inString && (c === '#' || (c === '/' && next === '/'))) {
-                let commentEnd = code.indexOf('\n', i);
-                if (commentEnd === -1) commentEnd = code.length;
-                buffer += code.slice(i, commentEnd);
-                lines.push(buffer.trim());
-                buffer = '';
-                i = commentEnd;
-                continue;
-            }
-            // String start/end
-            if (!inString && (c === '"' || c === "'")) {
-                inString = true;
-                stringChar = c;
-                buffer += c;
-                i++;
-                continue;
-            } else if (inString && c === stringChar) {
-                inString = false;
-                stringChar = '';
-                buffer += c;
-                i++;
-                continue;
-            }
-            // Statement/brace splitting
-            if (!inString && (c === ';' || c === '{' || c === '}')) {
-                buffer += c;
-                lines.push(buffer.trim());
-                buffer = '';
-                i++;
-                if (c === '}') lines.push('');
-                continue;
-            }
-            // Newline
-            if (!inString && c === '\n') {
-                if (buffer.trim() !== '') {
-                    lines.push(buffer.trim());
-                    buffer = '';
+        try {
+            // Basic PHP syntax validation
+            const lines = input.split('\n');
+            let isValid = true;
+            let errorMsg = '';
+            
+            for (let i = 0; i < lines.length; i++) {
+                const line = lines[i].trim();
+                if (line && !line.startsWith('//') && !line.startsWith('/*') && !line.startsWith('*')) {
+                    // Basic validation - check for common syntax errors
+                    if (line.includes('function ') && !line.includes('(')) {
+                        isValid = false;
+                        errorMsg = `Line ${i + 1}: Invalid function declaration`;
+                        break;
+                    }
+                    if (line.includes('if ') && !line.includes('(')) {
+                        isValid = false;
+                        errorMsg = `Line ${i + 1}: Invalid if statement`;
+                        break;
+                    }
+                    if (line.includes('for ') && !line.includes('(')) {
+                        isValid = false;
+                        errorMsg = `Line ${i + 1}: Invalid for loop`;
+                        break;
+                    }
                 }
-                i++;
-                continue;
             }
-            buffer += c;
-            i++;
+            
+            if (isValid) {
+                showPopup('Valid PHP syntax');
+            } else {
+                showError(errorMsg);
+            }
+        } catch (e) {
+            showError('Invalid PHP syntax');
         }
-        if (buffer.trim() !== '') lines.push(buffer.trim());
-        // Now process lines for indentation and spacing
-        let indent = 0;
-        let beautified = [];
-        for (let idx = 0; idx < lines.length; ++idx) {
-            let line = lines[idx];
-            if (line === '') {
-                if (beautified.length && beautified[beautified.length-1] !== '') beautified.push('');
-                continue;
-            }
-            // PHP tag or comment
-            if (line.startsWith('<?php') || line.startsWith('?>') || line.startsWith('//') || line.startsWith('#')) {
-                beautified.push(line);
-                continue;
-            }
-            // Decrease indent if line is closing brace
-            if (line === '}') {
-                indent = Math.max(0, indent - 1);
-            }
-            // Add spaces after keywords (simple heuristic)
-            line = line.replace(/\b(if|elseif|else|while|for|foreach|switch|case|function|do|try|catch|finally|return|echo|print)\s*\(/g, '$1 (');
-            // Add spaces around =, +=, -=, etc. (not inside string)
-            line = line.replace(/([^!<>])=([^=])/g, '$1 = $2');
-            line = line.replace(/\+=/g, ' += ');
-            line = line.replace(/-=/g, ' -= ');
-            line = line.replace(/\*= /g, ' *= ');
-            line = line.replace(/\/= /g, ' /= ');
-            line = line.replace(/\s*([<>!]=|==|!=|<=|>=|<|>)\s*/g, ' $1 ');
-            // Add space after commas
-            line = line.replace(/,\s*/g, ', ');
-            // Remove double spaces
-            line = line.replace(/\s{2,}/g, ' ');
-            // Indent line
-            beautified.push(' '.repeat(indent * indentSize) + line);
-            // Increase indent if line is opening brace
-            if (line.endsWith('{')) {
-                indent++;
-            }
-        }
-        while (beautified.length && beautified[0] === '') beautified.shift();
-        while (beautified.length && beautified[beautified.length-1] === '') beautified.pop();
-        let final = [];
-        for (let i = 0; i < beautified.length; ++i) {
-            if (beautified[i] === '' && beautified[i-1] === '') continue;
-            final.push(beautified[i]);
-        }
-        return final.join('\n');
     }
-    // --- Bracket balance check (copied from perlFormatter.html) ---
-    function areBracketsBalanced(str) {
-        const stack = [];
-        const pairs = { '{': '}', '(': ')', '[': ']' };
-        for (let c of str) {
-            if (c === '{' || c === '(' || c === '[') stack.push(c);
-            else if (c === '}' || c === ')' || c === ']') {
-                if (!stack.length) return false;
-                const last = stack.pop();
-                if (pairs[last] !== c) return false;
-            }
+    function beautifyPHP() {
+        clearError();
+        const input = document.getElementById('phpInput').value;
+        try {
+            // Simple PHP beautification
+            const beautified = input
+                .split('\n')
+                .map(line => {
+                    const trimmed = line.trim();
+                    if (trimmed.startsWith('function ') || trimmed.startsWith('class ') || trimmed.startsWith('if ') || 
+                        trimmed.startsWith('elseif ') || trimmed.startsWith('else') || trimmed.startsWith('for ') || 
+                        trimmed.startsWith('while ') || trimmed.startsWith('try') || trimmed.startsWith('catch') ||
+                        trimmed.startsWith('finally') || trimmed.startsWith('foreach ')) {
+                        return '    ' + trimmed;
+                    }
+                    return '        ' + trimmed;
+                })
+                .join('\n');
+            document.getElementById('phpOutput').value = beautified;
+            updateOutputLineNumbers();
+        } catch (e) {
+            showError('Error beautifying PHP: ' + e.message);
+            document.getElementById('phpOutput').value = '';
+            updateOutputLineNumbers();
         }
-        return stack.length === 0;
     }
-    // --- Copy/Download/Clear/Upload/Fullscreen ---
+
     function copyPHP() {
         const output = document.getElementById('phpOutput').value;
         if (!output) return;
@@ -345,22 +229,28 @@ permalink: /Formatters/phpFormatter.html
         link.download = 'formatted.php';
         link.click();
     }
+
     function uploadPHPFile(which, event) {
         const file = event.target.files[0];
         if (!file) return;
         const reader = new FileReader();
         reader.onload = function(e) {
-            const text = e.target.result;
-            if (which === 'input') {
-                document.getElementById('phpInput').value = text;
-                updateInputLineNumbers();
-            } else {
-                document.getElementById('phpOutput').value = text;
-                updateOutputLineNumbers();
+            try {
+                const text = e.target.result;
+                if (which === 'input') {
+                    document.getElementById('phpInput').value = text;
+                    updateInputLineNumbers();
+                } else {
+                    document.getElementById('phpOutput').value = text;
+                    updateOutputLineNumbers();
+                }
+            } catch (error) {
+                showError('Error reading file: ' + error.message);
             }
         };
         reader.readAsText(file);
     }
+
     function clearPHP(which) {
         if (which === 'input') {
             document.getElementById('phpInput').value = '';
@@ -369,96 +259,76 @@ permalink: /Formatters/phpFormatter.html
             document.getElementById('phpOutput').value = '';
             updateOutputLineNumbers();
         }
+        clearError();
     }
-    function toggleFullScreen(btn) {
-        // Check if we're on mobile/tablet
-        if (window.innerWidth <= 1024) {
-            // Mobile/Tablet fullscreen
-            const which = btn.closest('.json-box').querySelector('.box-label').textContent.toLowerCase();
-            enterMobileFullscreen(which);
+
+    function toggleFullScreen(button) {
+        if (window.innerWidth <= 768) {
+            const box = button.closest('.formatter-box');
+            const isInput = box.querySelector('#phpInput') !== null;
+            enterMobileFullscreen(isInput ? 'input' : 'output');
         } else {
-            // Desktop fullscreen
-            const box = btn.closest('.json-box');
-            if (!document.fullscreenElement) {
-                if (box.requestFullscreen) box.requestFullscreen();
-                else if (box.webkitRequestFullscreen) box.webkitRequestFullscreen();
-                else if (box.msRequestFullscreen) box.msRequestFullscreen();
+            const box = button.closest('.formatter-box');
+            if (document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement) {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.webkitExitFullscreen) {
+                    document.webkitExitFullscreen();
+                } else if (document.msExitFullscreen) {
+                    document.msExitFullscreen();
+                }
             } else {
-                exitFullScreen();
+                if (box.requestFullscreen) {
+                    box.requestFullscreen();
+                } else if (box.webkitRequestFullscreen) {
+                    box.webkitRequestFullscreen();
+                } else if (box.msRequestFullscreen) {
+                    box.msRequestFullscreen();
+                }
             }
         }
     }
-    
-    function enterMobileFullscreen(which) {
-        const overlay = document.getElementById('mobileFullscreen' + which.charAt(0).toUpperCase() + which.slice(1));
-        const textarea = document.getElementById('php' + which.charAt(0).toUpperCase() + which.slice(1));
-        const mobileTextarea = document.getElementById('mobile' + which.charAt(0).toUpperCase() + which.slice(1) + 'Textarea');
+
+    function exitFullScreen() {
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.webkitExitFullscreen) {
+            document.webkitExitFullscreen();
+        } else if (document.msExitFullscreen) {
+            document.msExitFullscreen();
+        }
+    }
+
+    function enterMobileFullscreen(type) {
+        const overlay = document.getElementById(`mobileFullscreen${type.charAt(0).toUpperCase() + type.slice(1)}`);
+        const textarea = document.getElementById(`mobile${type.charAt(0).toUpperCase() + type.slice(1)}Textarea`);
+        const originalTextarea = document.getElementById(`php${type.charAt(0).toUpperCase() + type.slice(1)}`);
         
-        // Copy content to mobile textarea
-        mobileTextarea.value = textarea.value;
-        
-        // Show overlay
+        textarea.value = originalTextarea.value;
         overlay.classList.add('active');
         
-        // Focus on mobile textarea
         setTimeout(() => {
-            mobileTextarea.focus();
+            textarea.focus();
         }, 100);
-        
-        // Sync content changes back to original textarea
-        mobileTextarea.addEventListener('input', function() {
-            textarea.value = this.value;
-            if (which === 'input') {
-                updateInputLineNumbers();
-            } else {
-                updateOutputLineNumbers();
-            }
-        });
     }
-    
-    function exitMobileFullscreen(which) {
-        const overlay = document.getElementById('mobileFullscreen' + which.charAt(0).toUpperCase() + which.slice(1));
-        const textarea = document.getElementById('php' + which.charAt(0).toUpperCase() + which.slice(1));
-        const mobileTextarea = document.getElementById('mobile' + which.charAt(0).toUpperCase() + which.slice(1) + 'Textarea');
+
+    function exitMobileFullscreen(type) {
+        const overlay = document.getElementById(`mobileFullscreen${type.charAt(0).toUpperCase() + type.slice(1)}`);
+        const textarea = document.getElementById(`mobile${type.charAt(0).toUpperCase() + type.slice(1)}Textarea`);
+        const originalTextarea = document.getElementById(`php${type.charAt(0).toUpperCase() + type.slice(1)}`);
         
-        // Copy content back to original textarea
-        textarea.value = mobileTextarea.value;
-        
-        // Hide overlay
-        overlay.classList.remove('active');
-        
-        // Update line numbers
-        if (which === 'input') {
+        originalTextarea.value = textarea.value;
+        if (type === 'input') {
             updateInputLineNumbers();
         } else {
             updateOutputLineNumbers();
         }
+        
+        overlay.classList.remove('active');
     }
-    function exitFullScreen() {
-        if (document.exitFullscreen) document.exitFullscreen();
-        else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
-        else if (document.msExitFullscreen) document.msExitFullscreen();
-    }
-    // Update line numbers on load
-    window.onload = function() {
-        updateInputLineNumbers();
-        updateOutputLineNumbers();
-    };
-    document.getElementById('phpOutput').addEventListener('input', updateOutputLineNumbers);
-    document.getElementById('phpInput').addEventListener('input', updateInputLineNumbers);
-    
-    // Handle escape key for mobile fullscreen
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') {
-            const inputOverlay = document.getElementById('mobileFullscreenInput');
-            const outputOverlay = document.getElementById('mobileFullscreenOutput');
-            
-            if (inputOverlay.classList.contains('active')) {
-                exitMobileFullscreen('input');
-            } else if (outputOverlay.classList.contains('active')) {
-                exitMobileFullscreen('output');
-            }
-        }
-    });
+
+    // Initialize line numbers
+    updateInputLineNumbers();
+    updateOutputLineNumbers();
 </script>
 
