@@ -39,6 +39,16 @@
     <script src="https://cdn.jsdelivr.net/npm/js-sha3@0.9.2/build/sha3.min.js"></script>
   {% endif %}
 
+  {% if page.path == "/File-Converter/doc-formatter.html" %}
+    <!-- PDF-lib for PDF manipulation -->
+    <script src="https://unpkg.com/pdf-lib@1.4.0/dist/pdf-lib.min.js"></script>
+    <script>
+      window.pdfLib = window.PDFLib;
+    </script>
+    <!-- PDF.js for text extraction/preview -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.2.67/pdf.js"></script>
+  {% endif %}
+
   <!-- SEO -->
   {% seo %}
 

@@ -22,22 +22,11 @@ permalink: /File-Converter/doc-formatter.html
   <div class="feature-area" id="featureArea">
     <!-- Dynamic content will be injected here -->
   </div>
-  <div id="pageEditSection" class="feature-section" style="display:none;">
-    <div class="feature-title">Add/Remove Pages</div>
-    <div class="feature-desc">Upload a PDF, add blank pages, or remove selected pages.</div>
-    <input type="file" id="pageEditInput" accept="application/pdf">
-    <div id="pageList" style="margin: 16px 0;"></div>
-    <button id="addBlankBtn" class="toolbar-btn" style="display:none;">Add Blank Page</button>
-    <button id="removePageBtn" class="toolbar-btn" style="display:none;">Remove Selected Page(s)</button>
-    <button class="download-btn" id="downloadEditedBtn">Download Modified PDF</button>
-    <button id="downloadPageEditBtn" class="download-btn" style="display:none;">Download Modified PDF</button>
-    <button id="pageEditResetBtn" class="toolbar-btn" style="display:none;">Start Over</button>
-  </div>
   <div class="output-area" id="outputArea" style="display:none;">
     <div id="outputMessage"></div>
-    <button class="download-btn" id="downloadBtn" style="display:none;">Download Result</button>
+    <button class="toolbar-btn" id="downloadBtn" style="display:none;">Download Result</button>
     <div id="previewBox" style="display:none;margin-top:18px;background:#fafdff;border:1.5px solid #b2ebf2;border-radius:10px;padding:16px 12px;max-height:220px;overflow:auto;text-align:left;font-family:monospace;font-size:1.04em;color:#1976d2;"></div>
-    <button class="download-btn" id="resetBtn" style="display:none;margin-top:18px;background:#e3f6fc;color:#1976d2;">Start Over</button>
+    <button class="toolbar-btn" id="resetBtn" style="display:none;margin-top:18px;">Start Over</button>
   </div>
 </div>
 <!-- PDF-lib for PDF manipulation -->
@@ -57,7 +46,7 @@ permalink: /File-Converter/doc-formatter.html
         <div class="info">Select two or more PDF files to merge them into one.</div>
         <input type="file" id="mergeInput" accept="application/pdf" multiple>
         <div class="file-list" id="mergeFileList"></div>
-        <button class="download-btn" id="mergeBtn">Merge & Download</button>
+        <button class="toolbar-btn" id="mergeBtn">Merge & Download</button>
       `
     },
     split: {
@@ -67,7 +56,7 @@ permalink: /File-Converter/doc-formatter.html
         <input type="file" id="splitInput" accept="application/pdf">
         <div class="file-list" id="splitFileList"></div>
         <input type="text" id="splitRanges" placeholder="e.g. 1-2,4,6-8" style="margin-top:10px;width:80%;">
-        <button class="download-btn" id="splitBtn">Split & Download</button>
+        <button class="toolbar-btn" id="splitBtn">Split & Download</button>
       `
     },
     pages: {
@@ -77,9 +66,9 @@ permalink: /File-Converter/doc-formatter.html
         <input type="file" id="pagesInput" accept="application/pdf">
         <div class="file-list" id="pagesFileList"></div>
         <div style="margin-top:10px;">
-          <button class="download-btn" id="addPageBtn">Add Blank Page</button>
+          <button class="toolbar-btn" id="addPageBtn">Add Blank Page</button>
           <input type="text" id="removePages" placeholder="Pages to remove (e.g. 2,4,5)" style="width:60%;">
-          <button class="download-btn" id="removePageBtn">Remove Pages</button>
+          <button class="toolbar-btn" id="removePageBtn">Remove Pages</button>
         </div>
       `
     },
@@ -90,7 +79,7 @@ permalink: /File-Converter/doc-formatter.html
         <input type="file" id="annotateInput" accept="application/pdf">
         <div class="file-list" id="annotateFileList"></div>
         <input type="text" id="annotationText" placeholder="Annotation/Watermark text" style="margin-top:10px;width:80%;">
-        <button class="download-btn" id="annotateBtn">Add & Download</button>
+        <button class="toolbar-btn" id="annotateBtn">Add & Download</button>
       `
     }
   };
@@ -123,7 +112,6 @@ permalink: /File-Converter/doc-formatter.html
     if (e.target.classList.contains('toolbar-btn')) {
       renderFeature(e.target.dataset.feature);
       document.getElementById('outputArea').style.display = 'none';
-      document.getElementById('pageEditSection').style.display = 'none'; // Hide page edit section
     }
   });
 
