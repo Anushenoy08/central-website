@@ -13,45 +13,45 @@ permalink: /Generators/regex.html
 
 <div class="regex-title" style="margin-top:90px;">Regex Generator & Tester</div>
 
-<!-- Regex Generator Container -->
-<div class="regex-generator-container">
-  <h2 class="container-title">Regex Generator</h2>
-  <p class="container-subtitle">Enter a sample value and click Generate to create a regex pattern automatically.</p>
-  
-  <div class="generator-input-section">
-    <input id="example-input" type="text" class="input-field" placeholder="E.g. 123456, abc123, test@example.com, 2024-06-01">
-    <button class="primary-btn" id="generate-regex-btn">Generate Regex</button>
-  </div>
-  
-  <div id="generated-regex-output" class="generator-output" style="display:none;"></div>
-</div>
+<!-- Main Container with Left-Right Split -->
+<div class="regex-main-container">
+  <!-- Left Side: Generator and Tester -->
+  <div class="regex-left-side">
+    
+    <!-- Regex Generator Container -->
+    <div class="regex-generator-container">
+      <h2 class="container-title">Regex Generator</h2>
+      <p class="container-subtitle">Enter a sample value and click Generate to create a regex pattern automatically.</p>
+      
+      <div class="generator-input-section">
+        <input id="example-input" type="text" class="input-field" placeholder="E.g. 123456, abc123, test@example.com, 2024-06-01">
+        <button class="primary-btn" id="generate-regex-btn">Generate Regex</button>
+      </div>
+      
+      <div id="generated-regex-output" class="generator-output" style="display:none;"></div>
+    </div>
 
-<!-- Regex Tester Container -->
-<div class="regex-tester-container">
-  <h2 class="container-title">Regex Tester</h2>
-  <p class="container-subtitle">Test your regex patterns with real-time matching and replacement.</p>
-  
-  <!-- Main Layout Container -->
-  <div class="regex-main-layout">
-    <!-- Input Container -->
-    <div class="regex-input-container">
-      <h3 class="section-title">Input Settings</h3>
+    <!-- Regex Tester Container -->
+    <div class="regex-tester-container">
+      <h2 class="container-title">Regex Tester</h2>
+      <p class="container-subtitle">Test your regex patterns with real-time matching and replacement.</p>
       
       <!-- Presets Section -->
       <div class="input-section">
         <label class="section-label">Presets</label>
-        <div class="preset-options">
-          <div class="preset-option" data-pattern="^\\d{4}-\\d{2}-\\d{2}$">Date (YYYY-MM-DD)</div>
-          <div class="preset-option" data-pattern="^\\d{10}$">10-digit Number</div>
-          <div class="preset-option" data-pattern="^\\w+@[a-zA-Z_]+?\\.[a-zA-Z]{2,3}$">Email Address</div>
-          <div class="preset-option" data-pattern="^(https?:\\/\\/)?([\\w-]+\\.)+[\\w-]+(\\/\\S*)?$">URL</div>
-          <div class="preset-option" data-pattern="^\\+?\\d{1,3}?[-.\\s]?\\(?\\d{1,4}\\)?[-.\\s]?\\d{1,4}[-.\\s]?\\d{1,9}$">Phone Number</div>
-          <div class="preset-option" data-pattern="^[A-Fa-f0-9]{6}$">Hex Color</div>
-          <div class="preset-option" data-pattern="^#[A-Fa-f0-9]{6}$">CSS Hex Color</div>
-        </div>
+        <select id="preset-selector" class="preset-dropdown">
+          <option value="">Select a preset...</option>
+          <option value="^\\d{4}-\\d{2}-\\d{2}$">Date (YYYY-MM-DD)</option>
+          <option value="^\\d{10}$">10-digit Number</option>
+          <option value="^\\w+@[a-zA-Z_]+?\\.[a-zA-Z]{2,3}$">Email Address</option>
+          <option value="^(https?:\\/\\/)?([\\w-]+\\.)+[\\w-]+(\\/\\S*)?$">URL</option>
+          <option value="^\\+?\\d{1,3}?[-.\\s]?\\(?\\d{1,4}\\)?[-.\\s]?\\d{1,4}[-.\\s]?\\d{1,9}$">Phone Number</option>
+          <option value="^[A-Fa-f0-9]{6}$">Hex Color</option>
+          <option value="^#[A-Fa-f0-9]{6}$">CSS Hex Color</option>
+        </select>
       </div>
 
-      <!-- Regex Pattern Section -->
+      <!-- Regex Pattern Section - Single Row -->
       <div class="input-section">
         <label class="section-label">Regex Pattern</label>
         <div class="pattern-input-container">
@@ -70,15 +70,20 @@ permalink: /Generators/regex.html
             <button class="quick-btn" data-insert="?">?</button>
           </div>
           <input class="regex-input" id="regex" type="text" placeholder="Enter regex pattern..." autocomplete="off" spellcheck="false">
-          <div class="flags-group">
-            <label class="flag-checkbox"><input type="checkbox" id="flag-g" checked>g</label>
-            <label class="flag-checkbox"><input type="checkbox" id="flag-i">i</label>
-            <label class="flag-checkbox"><input type="checkbox" id="flag-m">m</label>
-            <label class="flag-checkbox"><input type="checkbox" id="flag-s">s</label>
-            <label class="flag-checkbox"><input type="checkbox" id="flag-u">u</label>
-            <label class="flag-checkbox"><input type="checkbox" id="flag-y">y</label>
-          </div>
-          <div id="regex-error" class="error-msg" style="display:none;"></div>
+        </div>
+        <div id="regex-error" class="error-msg" style="display:none;"></div>
+      </div>
+
+      <!-- Flags Section - Single Row -->
+      <div class="input-section">
+        <label class="section-label">Flags</label>
+        <div class="flags-group">
+          <label class="flag-checkbox"><input type="checkbox" id="flag-g" checked>g</label>
+          <label class="flag-checkbox"><input type="checkbox" id="flag-i">i</label>
+          <label class="flag-checkbox"><input type="checkbox" id="flag-m">m</label>
+          <label class="flag-checkbox"><input type="checkbox" id="flag-s">s</label>
+          <label class="flag-checkbox"><input type="checkbox" id="flag-u">u</label>
+          <label class="flag-checkbox"><input type="checkbox" id="flag-y">y</label>
         </div>
       </div>
 
@@ -94,35 +99,35 @@ permalink: /Generators/regex.html
         <textarea class="replace-input" id="replace" placeholder="Replacement string (for .replace)"></textarea>
       </div>
     </div>
+  </div>
 
-    <!-- Output Container -->
-    <div class="regex-output-container">
-      <h3 class="section-title">Results</h3>
-      
-      <!-- Match Results Section -->
-      <div class="output-section">
-        <div class="section-header">
-          <h4 class="section-subtitle">Match Results</h4>
-          <div class="action-buttons-small">
-            <button class="result-btn" id="copy-matches">Copy Matches</button>
-            <button class="result-btn" id="download-matches">Download Matches</button>
-          </div>
+  <!-- Right Side: Results -->
+  <div class="regex-right-side">
+    <h3 class="section-title">Results</h3>
+    
+    <!-- Match Results Section -->
+    <div class="output-section">
+      <div class="section-header">
+        <h4 class="section-subtitle">Match Results</h4>
+        <div class="action-buttons-small">
+          <button class="result-btn" id="copy-matches">Copy Matches</button>
+          <button class="result-btn" id="download-matches">Download Matches</button>
         </div>
-        <div class="match-results" id="match-results">Matches will appear here...</div>
-        <div style="font-size:0.98em;color:#e94391;margin-bottom:8px;" id="match-count"></div>
       </div>
+      <div class="match-results" id="match-results">Matches will appear here...</div>
+      <div style="font-size:0.98em;color:#e94391;margin-bottom:8px;" id="match-count"></div>
+    </div>
 
-      <!-- Replacement Result Section -->
-      <div class="output-section">
-        <div class="section-header">
-          <h4 class="section-subtitle">Replacement Result</h4>
-          <div class="action-buttons-small">
-            <button class="result-btn" id="copy-replace">Copy Replaced</button>
-            <button class="result-btn" id="download-replace">Download Replaced</button>
-          </div>
+    <!-- Replacement Result Section -->
+    <div class="output-section">
+      <div class="section-header">
+        <h4 class="section-subtitle">Replacement Result</h4>
+        <div class="action-buttons-small">
+          <button class="result-btn" id="copy-replace">Copy Replaced</button>
+          <button class="result-btn" id="download-replace">Download Replaced</button>
         </div>
-        <div class="match-results" id="replace-results">Replacement output will appear here...</div>
       </div>
+      <div class="match-results" id="replace-results">Replacement output will appear here...</div>
     </div>
   </div>
 </div>
@@ -199,21 +204,14 @@ document.querySelectorAll('.quick-btn').forEach(btn => {
   });
 });
 
-// Preset options
-document.querySelectorAll('.preset-option').forEach(option => {
-  option.addEventListener('click', function() {
-    // Remove selected class from all options
-    document.querySelectorAll('.preset-option').forEach(opt => opt.classList.remove('selected'));
-    // Add selected class to clicked option
-    this.classList.add('selected');
-    
-    let val = this.getAttribute('data-pattern');
-    if (val) {
-      val = val.replace(/\\\\/g, '\\');
-      document.getElementById('regex').value = val;
-      triggerUpdate();
-    }
-  });
+// Preset dropdown
+document.getElementById('preset-selector').addEventListener('change', function() {
+  const val = this.value;
+  if (val) {
+    const cleanVal = val.replace(/\\\\/g, '\\');
+    document.getElementById('regex').value = cleanVal;
+    triggerUpdate();
+  }
 });
 
 // Flags
@@ -469,7 +467,7 @@ document.getElementById('generate-regex-btn')?.addEventListener('click', functio
     regex = `[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-z]{2,}`;
     desc = 'Email address';
   } else if (/^(https?:\/\/)?([\w-]+\.)+[\w-]+(\/\S*)?$/.test(val)) {
-    regex = `https?:\\/\\/[\\w.-]+(?:\\.[\\w\\.-]+)+[/#?]?.*`;
+    regex = `https?:\\/\\/[\\w.-]+(?:\\.[\\w\\.-]+)[/#?]?.*`;
     desc = 'URL';
   } else if (/^\d{4}-\d{2}-\d{2}$/.test(val)) {
     regex = `\\d{4}-\\d{2}-\\d{2}`;
