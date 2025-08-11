@@ -7002,7 +7002,7 @@ body {
       padding: 10px;
   }
   .json-title {
-      font-size: 1.3em;
+  font-size: 1.3em;
   }
 }
 
@@ -7357,8 +7357,8 @@ body {
   }
   
   .qr-selector i {
-    font-size: 1.5em;
-  }
+  font-size: 1.5em;
+}
   
   .qr-selector-label {
     font-size: 0.9em;
@@ -7822,7 +7822,7 @@ body {
   }
   
   .file-type-option i {
-    font-size: 1.3em;
+  font-size: 1.3em;
   }
   
   .upload-area {
@@ -8397,13 +8397,13 @@ body {
 /* Mobile Responsive */
 @media (max-width: 768px) {
   .formatter-container {
-    padding: 16px;
+  padding: 16px;
     margin-top: 100px;
     overflow: visible;
-  }
-  
+}
+
   .formatter-box {
-    width: 100%;
+  width: 100%;
     padding: 16px;
     min-height: 300px;
     overflow: visible;
@@ -8421,7 +8421,7 @@ body {
   }
   
   .box-header .box-label {
-    font-size: 1em;
+  font-size: 1em;
     margin-left: 4px;
     overflow: visible;
   }
@@ -8549,30 +8549,30 @@ body {
 .formatter-container {
   display: flex;
   flex-direction: column;
-    align-items: center;
-    gap: 32px;
+  align-items: center;
+  gap: 32px;
     margin-top: 120px;
-    padding: 32px 0;
-    max-width: 1800px;
-    margin-left: auto;
-    margin-right: auto;
+  padding: 32px 0;
+  max-width: 1800px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .formatter-title {
-    text-align: center;
-    font-size: 2.2em;
-    font-weight: bold;
-    color: #2196f3;
+  text-align: center;
+  font-size: 2.2em;
+  font-weight: bold;
+  color: #2196f3;
     margin-top: 90px;
     margin-bottom: 10px;
-    letter-spacing: 0.03em;
+  letter-spacing: 0.03em;
 }
 
 .action-buttons-container {
-    display: flex;
+  display: flex;
     gap: 12px;
     flex-wrap: wrap;
-    justify-content: center;
+  justify-content: center;
     margin-top: 20px;
     padding: 0 8px;
     width: 100%;
@@ -8583,11 +8583,11 @@ body {
     background: linear-gradient(90deg, #2196f3 0%, #43e97b 100%);
     color: #fff;
   border: none;
-    border-radius: 8px;
+  border-radius: 8px;
     padding: 12px 20px;
     font-size: 1.1em;
-    font-weight: 500;
-    cursor: pointer;
+  font-weight: 500;
+  cursor: pointer;
     box-shadow: 0 2px 8px rgba(33,150,243,0.07);
     transition: background 0.2s, box-shadow 0.2s;
     white-space: nowrap;
@@ -8596,40 +8596,40 @@ body {
 }
 
 .action-buttons-container button:hover {
-    background: linear-gradient(90deg, #43e97b 0%, #2196f3 100%);
+  background: linear-gradient(90deg, #43e97b 0%, #2196f3 100%);
     box-shadow: 0 4px 12px rgba(33,150,243,0.15);
 }
 
 .formatter-box-row {
-    display: flex;
+  display: flex;
     flex-direction: row;
-    gap: 32px;
-    width: 100%;
-    justify-content: center;
+  gap: 32px;
+  width: 100%;
+  justify-content: center;
     margin-bottom: 18px;
 }
 
 .formatter-box {
-    background: #f4fbfa;
-    border-radius: 16px;
-    box-shadow: 0 4px 16px rgba(33, 150, 243, 0.10);
-    border: 1px solid #e0f2f1;
+  background: #f4fbfa;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(33, 150, 243, 0.10);
+  border: 1px solid #e0f2f1;
     padding: 32px 32px 32px 32px;
-    width: 90vw;
+  width: 90vw;
     max-width: 800px;
     min-height: 400px;
-    position: relative;
+  position: relative;
     overflow: visible;
     box-sizing: border-box;
     margin: 0;
 }
 
 .formatter-box .box-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
     background: #1a1a1a;
-    color: #fff;
+  color: #fff;
     padding: 12px 16px;
     border-radius: 8px 8px 0 0;
     margin: -32px -32px 16px -32px;
@@ -8641,7 +8641,7 @@ body {
 }
 
 .formatter-box .box-header .box-label {
-    font-weight: bold;
+  font-weight: bold;
     font-size: 1.1em;
     margin-left: 8px;
     overflow: visible;
@@ -8649,9 +8649,9 @@ body {
 }
 
 .box-options {
-    display: flex;
+  display: flex;
     gap: 8px;
-    align-items: center;
+  align-items: center;
     overflow: visible;
     flex-wrap: nowrap;
 }
@@ -8719,7 +8719,7 @@ body {
   position: relative;
     min-width: 36px;
     height: 36px;
-    display: flex;
+  display: flex;
   align-items: center;
     justify-content: center;
     overflow: visible;
@@ -8754,7 +8754,7 @@ body {
 }
 
 .code-area-wrapper {
-    position: relative;
+  position: relative;
     background: #1e1e1e;
     border-radius: 8px;
     overflow: hidden;
@@ -8818,7 +8818,7 @@ body {
     cursor: pointer;
     font-size: 0.9em;
     z-index: 1000;
-    display: none;
+  display: none;
 }
 
 .formatter-box:fullscreen .close-fullscreen-btn,
@@ -8856,10 +8856,10 @@ body {
     position: absolute;
     top: 8px;
     right: 8px;
-    background: none;
-    border: none;
+  background: none;
+  border: none;
     font-size: 1.2em;
-    cursor: pointer;
+  cursor: pointer;
     color: #666;
 }
 
@@ -9037,7 +9037,7 @@ body {
         padding: 4px 8px;
     }
     
-    .code-area-wrapper {
+.code-area-wrapper {
         min-height: 250px;
         max-height: 400px;
     }
@@ -9184,4 +9184,168 @@ body {
     .formatter-box {
         max-width: 1000px;
     }
+}
+
+/* UUID Generator Page Styling */
+.uuid-container {
+  max-width: 800px;
+  width: 90%;
+  margin: 40px auto;
+  padding: 40px;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+}
+
+.uuid-container .form-group {
+  margin-bottom: 24px;
+}
+
+.uuid-container .form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #2563eb;
+  font-size: 1.1em;
+}
+
+.uuid-container .form-group input,
+.uuid-container .form-group select {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 1em;
+  background: #ffffff;
+  color: #374151;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
+}
+
+.uuid-container .form-group input:focus,
+.uuid-container .form-group select:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.uuid-container .button-grid {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 32px;
+  justify-content: center;
+}
+
+.uuid-container .button-grid button {
+  padding: 14px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  min-width: 140px;
+  text-align: center;
+}
+
+.uuid-container .button-grid .primary-btn {
+  background: #2563eb;
+  color: #ffffff;
+}
+
+.uuid-container .button-grid .primary-btn:hover {
+  background: #1d4ed8;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+.uuid-container .button-grid .unique-download {
+  background: #10b981;
+  color: #ffffff;
+}
+
+.uuid-container .button-grid .unique-download:hover {
+  background: #059669;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.uuid-container .output-section {
+  margin-top: 24px;
+}
+
+.uuid-container .output-label {
+  font-weight: 600;
+  color: #2563eb;
+  margin-bottom: 12px;
+  font-size: 1.1em;
+}
+
+.uuid-container .uuid-output-box {
+  width: 100%;
+  min-height: 120px;
+  padding: 20px;
+  background: #f8fafc;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  font-family: 'Courier New', monospace;
+  font-size: 0.95em;
+  line-height: 1.6;
+  color: #374151;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  box-sizing: border-box;
+  transition: border-color 0.2s;
+}
+
+.uuid-container .uuid-output-box:focus {
+  outline: none;
+  border-color: #2563eb;
+}
+
+/* Responsive Design for UUID Generator */
+@media (max-width: 768px) {
+  .uuid-container {
+    width: 95%;
+    margin: 20px auto;
+    padding: 24px 20px;
+  }
+  
+  .uuid-container .button-grid {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .uuid-container .button-grid button {
+    width: 100%;
+    min-width: auto;
+  }
+  
+  .uuid-container .form-group input,
+  .uuid-container .form-group select {
+    padding: 10px 14px;
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+}
+
+@media (max-width: 480px) {
+  .uuid-container {
+    width: 98%;
+    margin: 16px auto;
+    padding: 20px 16px;
+  }
+  
+  .uuid-container h1 {
+    font-size: 1.8em;
+    margin-bottom: 24px;
+  }
+  
+  .uuid-container .uuid-output-box {
+    min-height: 100px;
+    padding: 16px;
+    font-size: 0.9em;
+  }
 }

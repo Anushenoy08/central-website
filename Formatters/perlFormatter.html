@@ -5,61 +5,61 @@ permalink: /Formatters/perlFormatter.html
 ---
 
 <div class="navbar">
-    <img src="../images/logo.png" alt="Logo">
-    <a href="../index.html">HOME</a>
-    <a href="/article/">ARTICLES</a>
+  <img src="../images/logo.png" alt="Logo">
+  <a href="../index.html">HOME</a>
+  <a href="/article/">ARTICLES</a>
 </div>
 
 <div class="formatter-container">
     <div class="formatter-title">PERL FORMATTER</div>
-    <div class="action-buttons-container">
+<div class="action-buttons-container">
         <button onclick="formatPerl()">Format</button>
         <button onclick="beautifyPerl()">Beautify</button>
         <button onclick="validatePerl()">Validate</button>
         <button onclick="copyPerl()">Copy Perl</button>
         <button onclick="downloadPerl()">Download Perl</button>
-    </div>
+</div>
     <div class="formatter-box-row">
         <div class="formatter-box">
-            <div class="box-header">
-                <span class="box-label">Input</span>
-                <div class="box-options">
+        <div class="box-header">
+            <span class="box-label">Input</span>
+                            <div class="box-options">
                     <label class="upload-label">
                         <input type="file" accept=".pl,.pm,.txt" onchange="uploadPerlFile('input', event)">
                         <span class="upload-icon">📁</span>
                         <span class="upload-text">Upload a file</span>
                     </label>
-                    <button class="icon-btn" title="Full Screen" onclick="toggleFullScreen(this)">⛶<span class="tooltip">Full Screen</span></button>
-                    <button class="icon-btn" title="Clear" onclick="clearPerl('input')">🗑️<span class="tooltip">Clear</span></button>
-                </div>
+                <button class="icon-btn" title="Full Screen" onclick="toggleFullScreen(this)">⛶<span class="tooltip">Full Screen</span></button>
+                <button class="icon-btn" title="Clear" onclick="clearPerl('input')">🗑️<span class="tooltip">Clear</span></button>
             </div>
-            <div class="code-area-wrapper">
-                <div class="code-scroll" id="inputScroll">
-                    <div class="line-numbers" id="inputLineNumbers"></div>
+        </div>
+        <div class="code-area-wrapper">
+            <div class="code-scroll" id="inputScroll">
+                <div class="line-numbers" id="inputLineNumbers"></div>
                     <textarea class="formatter-textarea" id="perlInput" placeholder="Paste or type your Perl code here..." oninput="updateInputLineNumbers()" onscroll="syncScroll('input')"></textarea>
                 </div>
-            </div>
-            <div id="errorMsg" class="error-message" style="display:none;"></div>
-            <button class="close-fullscreen-btn" onclick="exitFullScreen()">✕</button>
         </div>
+        <div id="errorMsg" class="error-message" style="display:none;"></div>
+        <button class="close-fullscreen-btn" onclick="exitFullScreen()">✕</button>
+    </div>
         <div class="formatter-box">
-            <div class="box-header">
-                <span class="box-label">Output</span>
-                <div class="box-options">
-                    <button class="icon-btn" title="Full Screen" onclick="toggleFullScreen(this)">⛶<span class="tooltip">Full Screen</span></button>
-                    <button class="icon-btn" title="Clear" onclick="clearPerl('output')">🗑️<span class="tooltip">Clear</span></button>
-                </div>
+        <div class="box-header">
+            <span class="box-label">Output</span>
+            <div class="box-options">
+                <button class="icon-btn" title="Full Screen" onclick="toggleFullScreen(this)">⛶<span class="tooltip">Full Screen</span></button>
+                <button class="icon-btn" title="Clear" onclick="clearPerl('output')">🗑️<span class="tooltip">Clear</span></button>
             </div>
-            <div class="code-area-wrapper">
-                <div class="code-scroll" id="outputScroll">
-                    <div class="line-numbers" id="outputLineNumbers"></div>
+        </div>
+        <div class="code-area-wrapper">
+            <div class="code-scroll" id="outputScroll">
+                <div class="line-numbers" id="outputLineNumbers"></div>
                     <textarea class="formatter-textarea" id="perlOutput" placeholder="Formatted/Beautified Perl will appear here..." readonly oninput="updateOutputLineNumbers()" onscroll="syncScroll('output')"></textarea>
                 </div>
             </div>
             <button class="close-fullscreen-btn" onclick="exitFullScreen()">✕</button>
-        </div>
     </div>
-    <div id="popupMsg" class="popup" style="display:none;"><span id="popupText"></span><button class="close-btn" onclick="closePopup()">✕</button></div>
+</div>
+<div id="popupMsg" class="popup" style="display:none;"><span id="popupText"></span><button class="close-btn" onclick="closePopup()">✕</button></div>
 </div>
 
 <!-- Mobile Fullscreen Overlays -->
@@ -84,54 +84,54 @@ permalink: /Formatters/perlFormatter.html
 </div>
 
 <script>
-    function showError(msg) {
-        const errorDiv = document.getElementById('errorMsg');
-        errorDiv.innerText = msg;
-        errorDiv.style.display = 'block';
-    }
-    function clearError() {
-        const errorDiv = document.getElementById('errorMsg');
-        errorDiv.innerText = '';
-        errorDiv.style.display = 'none';
-    }
-    function showPopup(msg) {
-        const popup = document.getElementById('popupMsg');
-        document.getElementById('popupText').innerText = msg;
-        popup.style.display = 'flex';
-    }
-    function closePopup() {
-        document.getElementById('popupMsg').style.display = 'none';
-    }
-    function updateInputLineNumbers() {
+function showError(msg) {
+    const errorDiv = document.getElementById('errorMsg');
+    errorDiv.innerText = msg;
+    errorDiv.style.display = 'block';
+}
+function clearError() {
+    const errorDiv = document.getElementById('errorMsg');
+    errorDiv.innerText = '';
+    errorDiv.style.display = 'none';
+}
+function showPopup(msg) {
+    const popup = document.getElementById('popupMsg');
+    document.getElementById('popupText').innerText = msg;
+    popup.style.display = 'flex';
+}
+function closePopup() {
+    document.getElementById('popupMsg').style.display = 'none';
+}
+function updateInputLineNumbers() {
+    const textarea = document.getElementById('perlInput');
+    const lineNumbers = document.getElementById('inputLineNumbers');
+    const lines = textarea.value.split('\n').length || 1;
+    let html = '';
+    for (let i = 1; i <= lines; i++) html += i + '<br>';
+    lineNumbers.innerHTML = html;
+}
+function updateOutputLineNumbers() {
+    const textarea = document.getElementById('perlOutput');
+    const lineNumbers = document.getElementById('outputLineNumbers');
+    const lines = textarea.value.split('\n').length || 1;
+    let html = '';
+    for (let i = 1; i <= lines; i++) html += i + '<br>';
+    lineNumbers.innerHTML = html;
+}
+function syncScroll(which) {
+    if (which === 'input') {
         const textarea = document.getElementById('perlInput');
         const lineNumbers = document.getElementById('inputLineNumbers');
-        const lines = textarea.value.split('\n').length || 1;
-        let html = '';
-        for (let i = 1; i <= lines; i++) html += i + '<br>';
-        lineNumbers.innerHTML = html;
-    }
-    function updateOutputLineNumbers() {
+        lineNumbers.scrollTop = textarea.scrollTop;
+    } else {
         const textarea = document.getElementById('perlOutput');
         const lineNumbers = document.getElementById('outputLineNumbers');
-        const lines = textarea.value.split('\n').length || 1;
-        let html = '';
-        for (let i = 1; i <= lines; i++) html += i + '<br>';
-        lineNumbers.innerHTML = html;
+        lineNumbers.scrollTop = textarea.scrollTop;
     }
-    function syncScroll(which) {
-        if (which === 'input') {
-            const textarea = document.getElementById('perlInput');
-            const lineNumbers = document.getElementById('inputLineNumbers');
-            lineNumbers.scrollTop = textarea.scrollTop;
-        } else {
-            const textarea = document.getElementById('perlOutput');
-            const lineNumbers = document.getElementById('outputLineNumbers');
-            lineNumbers.scrollTop = textarea.scrollTop;
-        }
-    }
-    function formatPerl() {
-        clearError();
-        const input = document.getElementById('perlInput').value;
+}
+function formatPerl() {
+    clearError();
+    const input = document.getElementById('perlInput').value;
         try {
             // Simple Perl formatting
             const formatted = input
@@ -139,17 +139,17 @@ permalink: /Formatters/perlFormatter.html
                 .map(line => line.trim())
                 .filter(line => line.length > 0)
                 .join('\n');
-            document.getElementById('perlOutput').value = formatted;
-            updateOutputLineNumbers();
-        } catch (e) {
+        document.getElementById('perlOutput').value = formatted;
+        updateOutputLineNumbers();
+    } catch (e) {
             showError('Error formatting Perl: ' + e.message);
-            document.getElementById('perlOutput').value = '';
-            updateOutputLineNumbers();
-        }
+        document.getElementById('perlOutput').value = '';
+        updateOutputLineNumbers();
     }
-    function validatePerl() {
-        clearError();
-        const input = document.getElementById('perlInput').value;
+}
+function validatePerl() {
+    clearError();
+    const input = document.getElementById('perlInput').value;
         try {
             // Basic Perl syntax validation
             const lines = input.split('\n');
@@ -218,51 +218,51 @@ permalink: /Formatters/perlFormatter.html
         }
     }
 
-    function copyPerl() {
-        const output = document.getElementById('perlOutput').value;
-        if (!output) return;
-        navigator.clipboard.writeText(output);
-        showPopup('Copied to clipboard!');
-    }
-    function downloadPerl() {
-        const output = document.getElementById('perlOutput').value;
-        if (!output) return;
-        const blob = new Blob([output], { type: 'text/plain' });
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(blob);
-        link.download = 'formatted.pl';
-        link.click();
-    }
+function copyPerl() {
+    const output = document.getElementById('perlOutput').value;
+    if (!output) return;
+    navigator.clipboard.writeText(output);
+    showPopup('Copied to clipboard!');
+}
+function downloadPerl() {
+    const output = document.getElementById('perlOutput').value;
+    if (!output) return;
+    const blob = new Blob([output], { type: 'text/plain' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'formatted.pl';
+    link.click();
+}
 
-    function uploadPerlFile(which, event) {
-        const file = event.target.files[0];
-        if (!file) return;
-        const reader = new FileReader();
-        reader.onload = function(e) {
+function uploadPerlFile(which, event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(e) {
             try {
-                const text = e.target.result;
-                if (which === 'input') {
-                    document.getElementById('perlInput').value = text;
-                    updateInputLineNumbers();
-                } else {
-                    document.getElementById('perlOutput').value = text;
-                    updateOutputLineNumbers();
+        const text = e.target.result;
+        if (which === 'input') {
+            document.getElementById('perlInput').value = text;
+            updateInputLineNumbers();
+        } else {
+            document.getElementById('perlOutput').value = text;
+            updateOutputLineNumbers();
                 }
             } catch (error) {
                 showError('Error reading file: ' + error.message);
-            }
-        };
-        reader.readAsText(file);
-    }
-
-    function clearPerl(which) {
-        if (which === 'input') {
-            document.getElementById('perlInput').value = '';
-            updateInputLineNumbers();
-        } else {
-            document.getElementById('perlOutput').value = '';
-            updateOutputLineNumbers();
         }
+    };
+    reader.readAsText(file);
+}
+
+function clearPerl(which) {
+    if (which === 'input') {
+        document.getElementById('perlInput').value = '';
+        updateInputLineNumbers();
+    } else {
+        document.getElementById('perlOutput').value = '';
+        updateOutputLineNumbers();
+    }
         clearError();
     }
 
@@ -309,11 +309,11 @@ permalink: /Formatters/perlFormatter.html
         const originalTextarea = document.getElementById(`perl${type.charAt(0).toUpperCase() + type.slice(1)}`);
         
         textarea.value = originalTextarea.value;
-        overlay.classList.add('active');
-        
-        setTimeout(() => {
+    overlay.classList.add('active');
+    
+    setTimeout(() => {
             textarea.focus();
-        }, 100);
+    }, 100);
     }
 
     function exitMobileFullscreen(type) {
@@ -328,7 +328,7 @@ permalink: /Formatters/perlFormatter.html
             updateOutputLineNumbers();
         }
         
-        overlay.classList.remove('active');
+    overlay.classList.remove('active');
     }
 
     // Initialize line numbers
