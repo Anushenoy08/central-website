@@ -9952,13 +9952,14 @@ body {
 
 .sha-btn-row {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: 12px;
   width: 100%;
+  justify-content: center;
 }
 
 .sha-btn-large {
-  width: 100%;
+  flex: 1;
   padding: 18px 24px;
   border: none;
   border-radius: 8px;
@@ -9968,6 +9969,9 @@ body {
   transition: all 0.2s;
   text-align: center;
   min-height: 56px;
+  white-space: normal;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .sha-btn-large:nth-child(1) {
@@ -10050,6 +10054,11 @@ body {
     min-height: 50px;
   }
   
+  .sha-btn-row {
+    flex-direction: column;
+    gap: 8px;
+  }
+  
   .sha-btn-large {
     padding: 16px 20px;
     font-size: 1em;
@@ -10077,6 +10086,11 @@ body {
     padding: 12px 14px;
     font-size: 0.95em;
     min-height: 48px;
+  }
+  
+  .sha-btn-row {
+    flex-direction: column;
+    gap: 6px;
   }
   
   .sha-btn-large {
