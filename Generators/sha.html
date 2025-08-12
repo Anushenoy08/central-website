@@ -9,8 +9,8 @@ permalink: /Generators/sha.html
     <a href="../index.html">HOME</a>
     <a href="/article/">ARTICLES</a>
 </div>
-<div class="json-formatter-container">
-    <div class="json-title">SHA HASH GENERATOR</div>
+<div class="sha-generator-container">
+    <div class="sha-title">SHA HASH GENERATOR</div>
     <div class="sha-box-row">
         <div class="sha-box">
             <div class="sha-io-box">
@@ -19,7 +19,7 @@ permalink: /Generators/sha.html
             </div>
             <div class="sha-center-col">
                 <div class="sha-dropdowns" id="shaAlgoDropdowns" style="gap:14px;">
-                    <select id="sha2Select" onchange="onSHA2Select()">
+                    <select id="sha2Select" class="sha-dropdown" onchange="onSHA2Select()">
                         <option value="">SHA-2 Family</option>
                         <option value="SHA-224">SHA-224</option>
                         <option value="SHA-256">SHA-256</option>
@@ -28,7 +28,7 @@ permalink: /Generators/sha.html
                         <option value="SHA-512/224">SHA-512/224</option>
                         <option value="SHA-512/256">SHA-512/256</option>
                     </select>
-                    <select id="sha3Select" onchange="onSHA3Select()">
+                    <select id="sha3Select" class="sha-dropdown" onchange="onSHA3Select()">
                         <option value="">SHA-3 Family</option>
                         <option value="SHA3-224">SHA3-224</option>
                         <option value="SHA3">SHA3</option>
@@ -39,9 +39,9 @@ permalink: /Generators/sha.html
                     </select>
                 </div>
                 <div class="sha-btn-row">
-                    <button class="sha-btn" onclick="generateSHA()">Generate</button>
-                    <button class="sha-btn" onclick="copySHA()">Copy</button>
-                    <button class="sha-btn" onclick="clearSHA()">Clear</button>
+                    <button class="sha-btn-large" onclick="generateSHA()">Generate</button>
+                    <button class="sha-btn-large" onclick="copySHA()">Copy</button>
+                    <button class="sha-btn-large" onclick="clearSHA()">Clear</button>
                 </div>
                 <div class="error" id="shaError"></div>
                 <div class="popup" id="shaPopup">Copied!</div>

@@ -9827,3 +9827,261 @@ body {
     gap: 8px;
   }
 }
+
+/* SHA Generator Page Styling */
+.sha-generator-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  margin-top: 80px;
+  padding: 32px 0;
+  max-width: 1800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.sha-title {
+  text-align: center;
+  font-size: 2.2em;
+  font-weight: bold;
+  color: #2196f3;
+  margin: 0;
+  letter-spacing: 0.03em;
+}
+
+.sha-box-row {
+  display: flex;
+  flex-direction: row;
+  gap: 32px;
+  width: 100%;
+  justify-content: center;
+  margin-bottom: 18px;
+}
+
+.sha-box {
+  background: #f4fbfa;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(33, 150, 243, 0.10);
+  border: 1px solid #e0f2f1;
+  padding: 32px 32px 32px 32px;
+  width: 90vw;
+  max-width: 800px;
+  min-height: 400px;
+  position: relative;
+  overflow: visible;
+  box-sizing: border-box;
+}
+
+.sha-io-box {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sha-label {
+  font-weight: 600;
+  color: #374151;
+  font-size: 1.1em;
+}
+
+.sha-input,
+.sha-output {
+  width: 100%;
+  min-height: 120px;
+  padding: 16px;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 1em;
+  background: #ffffff;
+  color: #374151;
+  font-family: 'Courier New', monospace;
+  resize: vertical;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
+}
+
+.sha-input:focus,
+.sha-output:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.sha-output {
+  background: #f8fafc;
+  color: #6b7280;
+  cursor: default;
+}
+
+.sha-center-col {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+  min-width: 200px;
+}
+
+.sha-dropdowns {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+}
+
+.sha-dropdown {
+  width: 100%;
+  padding: 16px 20px;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 1.1em;
+  background: #ffffff;
+  color: #374151;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
+  cursor: pointer;
+  min-height: 56px;
+}
+
+.sha-dropdown:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.sha-btn-row {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.sha-btn-large {
+  width: 100%;
+  padding: 18px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+  min-height: 56px;
+}
+
+.sha-btn-large:nth-child(1) {
+  background: #2563eb;
+  color: #ffffff;
+}
+
+.sha-btn-large:nth-child(1):hover {
+  background: #1d4ed8;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+.sha-btn-large:nth-child(2) {
+  background: #10b981;
+  color: #ffffff;
+}
+
+.sha-btn-large:nth-child(2):hover {
+  background: #059669;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.sha-btn-large:nth-child(3) {
+  background: #f59e0b;
+  color: #ffffff;
+}
+
+.sha-btn-large:nth-child(3):hover {
+  background: #d97706;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+}
+
+.error {
+  background: #fef2f2;
+  color: #dc2626;
+  padding: 12px;
+  border-radius: 6px;
+  font-size: 0.9em;
+  border-left: 4px solid #dc2626;
+  text-align: center;
+}
+
+.popup {
+  display: none;
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  background: #2196f3;
+  color: #fff;
+  padding: 6px 16px;
+  border-radius: 8px;
+  font-size: 1em;
+  z-index: 10;
+  box-shadow: 0 2px 8px rgba(33,150,243,0.15);
+}
+
+/* Responsive Design for SHA Generator */
+@media (max-width: 768px) {
+  .sha-generator-container {
+    margin-top: 70px;
+    padding: 16px;
+  }
+  
+  .sha-title {
+    font-size: 1.8em;
+  }
+  
+  .sha-box {
+    width: 95%;
+    padding: 20px;
+    min-height: 350px;
+  }
+  
+  .sha-dropdown {
+    padding: 14px 16px;
+    font-size: 1em;
+    min-height: 50px;
+  }
+  
+  .sha-btn-large {
+    padding: 16px 20px;
+    font-size: 1em;
+    min-height: 50px;
+  }
+}
+
+@media (max-width: 480px) {
+  .sha-generator-container {
+    margin-top: 60px;
+    padding: 12px;
+  }
+  
+  .sha-title {
+    font-size: 1.6em;
+  }
+  
+  .sha-box {
+    width: 98%;
+    padding: 16px;
+    min-height: 300px;
+  }
+  
+  .sha-dropdown {
+    padding: 12px 14px;
+    font-size: 0.95em;
+    min-height: 48px;
+  }
+  
+  .sha-btn-large {
+    padding: 14px 18px;
+    font-size: 0.95em;
+    min-height: 48px;
+  }
+}
