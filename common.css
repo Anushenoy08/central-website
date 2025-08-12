@@ -9351,21 +9351,32 @@ body {
 }
 
 /* Regex Generator & Tester Page Styling */
-.regex-main-container {
+.regex-generator-container {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e5e7eb;
+  padding: 24px;
+  margin: 40px auto 24px auto;
+  max-width: 800px;
+  box-sizing: border-box;
+}
+
+.regex-tester-results-container {
   display: flex;
   gap: 32px;
   max-width: 1400px;
-  margin: 40px auto;
+  margin: 0 auto 40px auto;
   padding: 0 20px;
   box-sizing: border-box;
 }
 
-.regex-left-side {
+.regex-tester-left {
   flex: 1;
   max-width: 700px;
 }
 
-.regex-right-side {
+.regex-results-right {
   flex: 1;
   max-width: 600px;
   background: #f8fafc;
@@ -9377,7 +9388,6 @@ body {
   top: 120px;
 }
 
-.regex-generator-container,
 .regex-tester-container {
   background: #ffffff;
   border-radius: 16px;
@@ -9693,29 +9703,33 @@ body {
 
 /* Responsive Design for Regex Page */
 @media (max-width: 1024px) {
-  .regex-main-container {
+  .regex-tester-results-container {
     flex-direction: column;
     gap: 24px;
   }
   
-  .regex-left-side,
-  .regex-right-side {
+  .regex-tester-left,
+  .regex-results-right {
     max-width: none;
   }
   
-  .regex-right-side {
+  .regex-results-right {
     position: static;
     top: auto;
   }
 }
 
 @media (max-width: 768px) {
-  .regex-main-container {
-    margin: 20px auto;
+  .regex-generator-container {
+    margin: 20px auto 20px auto;
+    padding: 20px;
+  }
+  
+  .regex-tester-results-container {
+    margin: 0 auto 20px auto;
     padding: 0 16px;
   }
   
-  .regex-generator-container,
   .regex-tester-container {
     padding: 20px;
   }
@@ -9733,18 +9747,22 @@ body {
     justify-content: center;
   }
   
-  .regex-right-side {
+  .regex-results-right {
     padding: 20px;
   }
 }
 
 @media (max-width: 480px) {
-  .regex-main-container {
-    margin: 16px auto;
+  .regex-generator-container {
+    margin: 16px auto 16px auto;
+    padding: 16px;
+  }
+  
+  .regex-tester-results-container {
+    margin: 0 auto 16px auto;
     padding: 0 12px;
   }
   
-  .regex-generator-container,
   .regex-tester-container {
     padding: 16px;
   }
@@ -9759,7 +9777,7 @@ body {
     font-size: 11px;
   }
   
-  .regex-right-side {
+  .regex-results-right {
     padding: 16px;
   }
   
