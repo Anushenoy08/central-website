@@ -9497,23 +9497,23 @@ body {
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
 
-.pattern-flags-row {
-  display: flex;
-  gap: 20px;
-  align-items: flex-start;
-}
-
 .pattern-input-container {
-  flex: 1;
   display: flex;
   flex-direction: column;
   gap: 12px;
+}
+
+.pattern-input-row {
+  display: flex;
+  gap: 16px;
+  align-items: center;
 }
 
 .quick-insert {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
+  flex-shrink: 0;
 }
 
 .quick-btn {
@@ -9563,13 +9563,32 @@ body {
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
 
+.regex-input-compact {
+  flex: 1;
+  padding: 12px 16px;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 1em;
+  background: #ffffff;
+  color: #374151;
+  font-family: 'Courier New', monospace;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
+  min-width: 200px;
+  max-width: 400px;
+}
+
+.regex-input-compact:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
 .flags-group {
   display: flex;
-  gap: 12px;
+  gap: 16px;
   flex-wrap: wrap;
   align-items: center;
-  min-width: 200px;
-  padding-top: 12px;
 }
 
 .flag-checkbox {
@@ -9748,15 +9767,19 @@ body {
     align-items: stretch;
   }
   
-  .pattern-flags-row {
-    flex-direction: column;
-    gap: 16px;
-  }
-  
   .flags-group {
     justify-content: center;
+  }
+  
+  .pattern-input-row {
+    flex-direction: column;
+    gap: 12px;
+    align-items: stretch;
+  }
+  
+  .regex-input-compact {
     min-width: auto;
-    padding-top: 0;
+    max-width: none;
   }
   
   .quick-insert {
