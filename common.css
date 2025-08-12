@@ -9512,11 +9512,7 @@ body {
   gap: 12px;
 }
 
-.pattern-input-row {
-  display: flex;
-  gap: 16px;
-  align-items: center;
-}
+
 
 .quick-insert {
   display: flex;
@@ -9780,12 +9776,6 @@ body {
   
   .flags-group {
     justify-content: center;
-  }
-  
-  .pattern-input-row {
-    flex-direction: column;
-    gap: 12px;
-    align-items: stretch;
   }
   
   .regex-input-compact {

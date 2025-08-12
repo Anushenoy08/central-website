@@ -51,23 +51,26 @@ permalink: /Generators/regex.html
     <!-- Regex Pattern Section -->
     <div class="input-section">
       <label class="section-label">Regex Pattern</label>
-      <div class="pattern-input-row">
-        <div class="quick-insert">
-          <button class="quick-btn" data-insert="^">^</button>
-          <button class="quick-btn" data-insert="$">$</button>
-          <button class="quick-btn" data-insert=".">.</button>
-          <button class="quick-btn" data-insert="\\d">\\d</button>
-          <button class="quick-btn" data-insert="\\w">\\w</button>
-          <button class="quick-btn" data-insert="\\s">\\s</button>
-          <button class="quick-btn" data-insert="[ ]">[ ]</button>
-          <button class="quick-btn" data-insert="( )">( )</button>
-          <button class="quick-btn" data-insert="|">|</button>
-          <button class="quick-btn" data-insert="*">*</button>
-          <button class="quick-btn" data-insert="+">+</button>
-          <button class="quick-btn" data-insert="?">?</button>
-        </div>
-        <input class="regex-input-compact" id="regex" type="text" placeholder="Enter regex pattern..." autocomplete="off" spellcheck="false">
+      <div class="quick-insert">
+        <button class="quick-btn" data-insert="^">^</button>
+        <button class="quick-btn" data-insert="$">$</button>
+        <button class="quick-btn" data-insert=".">.</button>
+        <button class="quick-btn" data-insert="\\d">\\d</button>
+        <button class="quick-btn" data-insert="\\w">\\w</button>
+        <button class="quick-btn" data-insert="\\s">\\s</button>
+        <button class="quick-btn" data-insert="[ ]">[ ]</button>
+        <button class="quick-btn" data-insert="( )">( )</button>
+        <button class="quick-btn" data-insert="|">|</button>
+        <button class="quick-btn" data-insert="*">*</button>
+        <button class="quick-btn" data-insert="+">+</button>
+        <button class="quick-btn" data-insert="?">?</button>
       </div>
+    </div>
+
+    <!-- Regex Pattern Input Section -->
+    <div class="input-section">
+      <label class="section-label">Enter Regex Pattern</label>
+      <input class="regex-input-compact" id="regex" type="text" placeholder="Enter regex pattern..." autocomplete="off" spellcheck="false">
       <div id="regex-error" class="error-msg" style="display:none;"></div>
     </div>
 
