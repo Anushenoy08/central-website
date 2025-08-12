@@ -9397,6 +9397,15 @@ body {
   margin-bottom: 24px;
 }
 
+.regex-tester-results-container {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e5e7eb;
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
 .container-title {
   font-size: 1.5em;
   font-weight: 700;
@@ -9517,7 +9526,7 @@ body {
 }
 
 .quick-btn {
-  width: 36px;
+  min-width: 36px;
   height: 36px;
   background: #f0f8ff;
   border: 1px solid #b2ebf2;
@@ -9529,9 +9538,11 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0;
+  padding: 6px 8px;
   text-align: center;
   transition: all 0.2s;
+  white-space: nowrap;
+  box-sizing: border-box;
 }
 
 .quick-btn:hover {
