@@ -17,6 +17,18 @@ permalink: /Json-Converter/json-csv.html
     <!-- Left side: Input -->
     <div class="json-converter-left">
       <div class="json-converter-box">
+        <div class="toolbar">
+          <label class="upload-option">
+            <input type="file" accept="application/json" onchange="uploadJSONFile(event)">
+            <span class="upload-icon">📁</span>
+          </label>
+          <button class="fullscreen-option" title="Full Screen" onclick="toggleFullScreen(this)">
+            <span class="fullscreen-icon">⛶</span>
+          </button>
+          <button class="clear-option" title="Clear" onclick="clearInput()">
+            <span class="clear-icon">🗑️</span>
+          </button>
+        </div>
         <div class="code-area-wrapper">
           <textarea class="json-textarea" id="jsonInput" placeholder='Enter JSON Array Example: [{"name":"John","age":30},{"name":"Jane","age":25}]'></textarea>
         </div>
@@ -35,6 +47,14 @@ permalink: /Json-Converter/json-csv.html
     <!-- Right side: Output -->
     <div class="json-converter-right">
       <div class="json-converter-box">
+        <div class="toolbar">
+          <button class="fullscreen-option" title="Full Screen" onclick="toggleFullScreen(this)">
+            <span class="fullscreen-icon">⛶</span>
+          </button>
+          <button class="clear-option" title="Clear" onclick="clearOutput()">
+            <span class="clear-icon">🗑️</span>
+          </button>
+        </div>
         <div class="code-area-wrapper">
           <textarea class="json-textarea" id="csvOutput" placeholder="CSV result will appear here..." readonly></textarea>
         </div>
@@ -77,9 +97,33 @@ function convertToCSV() {
   }
 }
 
-function clearJSON(which) {
-  if (which === 'input') document.getElementById('jsonInput').value = '';
-  else document.getElementById('csvOutput').value = '';
+function clearInput() {
+  document.getElementById('jsonInput').value = '';
+}
+
+function clearOutput() {
+  document.getElementById('csvOutput').value = '';
+}
+
+function toggleFullScreen(button) {
+  const box = button.closest('.json-converter-box');
+  if (!document.fullscreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement) {
+    if (box.requestFullscreen) {
+      box.requestFullscreen().catch(err => console.error('Fullscreen error:', err));
+    } else if (box.webkitRequestFullscreen) {
+      box.webkitRequestFullscreen().catch(err => console.error('Fullscreen error:', err));
+    } else if (box.msRequestFullscreen) {
+      box.msRequestFullscreen().catch(err => console.error('Fullscreen error:', err));
+    }
+  } else {
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    } else if (document.webkitExitFullscreen) {
+      document.webkitExitFullscreen();
+    } else if (document.msExitFullscreen) {
+      document.msExitFullscreen();
+    }
+  }
 }
 
 function uploadJSONFile(event) {

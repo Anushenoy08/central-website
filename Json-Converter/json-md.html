@@ -17,6 +17,18 @@ permalink: /Json-Converter/json-md.html
     <!-- Left side: Input -->
     <div class="json-converter-left">
       <div class="json-converter-box">
+        <div class="toolbar">
+          <label class="upload-option">
+            <input type="file" accept="application/json" onchange="uploadJSONFile(event)">
+            <span class="upload-icon">📁</span>
+          </label>
+          <button class="fullscreen-option" title="Full Screen" onclick="toggleFullScreen(this)">
+            <span class="fullscreen-icon">⛶</span>
+          </button>
+          <button class="clear-option" title="Clear" onclick="clearInput()">
+            <span class="clear-icon">🗑️</span>
+          </button>
+        </div>
         <div class="code-area-wrapper">
           <textarea class="json-textarea" id="jsonInput" placeholder='Enter JSON Array of Objects Example: [{"name":"John","age":30,"city":"New York"}]'></textarea>
         </div>
@@ -45,6 +57,14 @@ permalink: /Json-Converter/json-md.html
     <!-- Right side: Output -->
     <div class="json-converter-right">
       <div class="json-converter-box">
+        <div class="toolbar">
+          <button class="fullscreen-option" title="Full Screen" onclick="toggleFullScreen(this)">
+            <span class="fullscreen-icon">⛶</span>
+          </button>
+          <button class="clear-option" title="Clear" onclick="clearOutput()">
+            <span class="clear-icon">🗑️</span>
+          </button>
+        </div>
         <div class="code-area-wrapper">
           <textarea class="json-textarea" id="mdOutput" placeholder="Markdown table will appear here..." readonly></textarea>
         </div>
@@ -199,9 +219,16 @@ function escapeHTML(str) {
     .replace(/'/g, '&#39;');
 }
 
-function clearJSON(which) {
-  if (which === 'input') document.getElementById('jsonInput').value = '';
-  else document.getElementById('mdOutput').value = '';
+function clearInput() {
+  document.getElementById('jsonInput').value = '';
+  document.getElementById('tablePreview').style.display = 'none';
+  document.getElementById('tablePreview').innerHTML = '';
+  document.getElementById('copyBtn').disabled = true;
+  document.getElementById('downloadBtn').disabled = true;
+}
+
+function clearOutput() {
+  document.getElementById('mdOutput').value = '';
   document.getElementById('tablePreview').style.display = 'none';
   document.getElementById('tablePreview').innerHTML = '';
   document.getElementById('copyBtn').disabled = true;
@@ -219,20 +246,22 @@ function uploadJSONFile(event) {
 }
 
 function toggleFullScreen(button) {
-  // Check if we're on mobile/tablet
-  if (window.innerWidth <= 1024) {
-    // Mobile/Tablet fullscreen
-    const which = button.closest('.json-converter-box').querySelector('.box-label').textContent.toLowerCase();
-    enterMobileFullscreen(which);
+  const box = button.closest('.json-converter-box');
+  if (!document.fullscreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement) {
+    if (box.requestFullscreen) {
+      box.requestFullscreen().catch(err => console.error('Fullscreen error:', err));
+    } else if (box.webkitRequestFullscreen) {
+      box.webkitRequestFullscreen().catch(err => console.error('Fullscreen error:', err));
+    } else if (box.msRequestFullscreen) {
+      box.msRequestFullscreen().catch(err => console.error('Fullscreen error:', err));
+    }
   } else {
-    // Desktop fullscreen
-    const box = button.closest('.json-converter-box');
-    if (!document.fullscreenElement) {
-      if (box.requestFullscreen) box.requestFullscreen();
-      else if (box.webkitRequestFullscreen) box.webkitRequestFullscreen();
-      else if (box.msRequestFullscreen) box.msRequestFullscreen();
-    } else {
-      exitFullScreen();
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    } else if (document.webkitExitFullscreen) {
+      document.webkitExitFullscreen();
+    } else if (document.msExitFullscreen) {
+      document.msExitFullscreen();
     }
   }
 }

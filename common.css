@@ -9992,6 +9992,54 @@ body .main-container {
   position: relative !important;
 }
 
+/* New Toolbar Styling for JSON-Converter */
+.json-converter-container .json-converter-box .toolbar {
+  background: #111 !important;
+  padding: 12px 16px !important;
+  display: flex !important;
+  gap: 12px !important;
+  align-items: center !important;
+  border-radius: 10px 10px 0 0 !important;
+}
+
+.json-converter-container .json-converter-box .toolbar .upload-option {
+  display: flex !important;
+  align-items: center !important;
+  cursor: pointer !important;
+  color: #fff !important;
+}
+
+.json-converter-container .json-converter-box .toolbar .upload-option input[type='file'] {
+  display: none !important;
+}
+
+.json-converter-container .json-converter-box .toolbar .upload-icon {
+  font-size: 1.2em !important;
+  color: #fff !important;
+}
+
+.json-converter-container .json-converter-box .toolbar .fullscreen-option,
+.json-converter-container .json-converter-box .toolbar .clear-option {
+  background: none !important;
+  border: none !important;
+  cursor: pointer !important;
+  color: #fff !important;
+  padding: 6px !important;
+  border-radius: 4px !important;
+  transition: background 0.2s !important;
+}
+
+.json-converter-container .json-converter-box .toolbar .fullscreen-option:hover,
+.json-converter-container .json-converter-box .toolbar .clear-option:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+}
+
+.json-converter-container .json-converter-box .toolbar .fullscreen-icon,
+.json-converter-container .json-converter-box .toolbar .clear-icon {
+  font-size: 1.1em !important;
+  color: #fff !important;
+}
+
 .json-converter-box .icon-btn:hover {
   background: #e0e0e0 !important;
 }

@@ -17,6 +17,18 @@ permalink: /Json-Converter/json-sql.html
     <!-- Left side: Input -->
     <div class="json-converter-left">
       <div class="json-converter-box">
+        <div class="toolbar">
+          <label class="upload-option">
+            <input type="file" accept="application/json" onchange="uploadJSONFile(event)">
+            <span class="upload-icon">📁</span>
+          </label>
+          <button class="fullscreen-option" title="Full Screen" onclick="toggleFullScreen(this)">
+            <span class="fullscreen-icon">⛶</span>
+          </button>
+          <button class="clear-option" title="Clear" onclick="clearInput()">
+            <span class="clear-icon">🗑️</span>
+          </button>
+        </div>
         <div class="code-area-wrapper">
           <textarea class="json-textarea" id="jsonInput" placeholder='Enter JSON Array of Objects Example: [{"id":1,"name":"Alice","profile":{"age":30,"city":"New York"},"hobbies":["reading","swimming"]}]'></textarea>
         </div>
@@ -41,6 +53,14 @@ permalink: /Json-Converter/json-sql.html
     <!-- Right side: Output -->
     <div class="json-converter-right">
       <div class="json-converter-box">
+        <div class="toolbar">
+          <button class="fullscreen-option" title="Full Screen" onclick="toggleFullScreen(this)">
+            <span class="fullscreen-icon">⛶</span>
+          </button>
+          <button class="clear-option" title="Clear" onclick="clearOutput()">
+            <span class="clear-icon">🗑️</span>
+          </button>
+        </div>
         <div class="code-area-wrapper">
           <textarea class="json-textarea" id="sqlOutput" placeholder="SQL INSERT statements will appear here..." readonly></textarea>
         </div>
@@ -89,9 +109,12 @@ function sqlValue(val) {
   return `'${String(val).replace(/'/g, "''")}'`;
 }
 
-function clearJSON(which) {
-  if (which === 'input') document.getElementById('jsonInput').value = '';
-  else document.getElementById('sqlOutput').value = '';
+function clearInput() {
+  document.getElementById('jsonInput').value = '';
+}
+
+function clearOutput() {
+  document.getElementById('sqlOutput').value = '';
 }
 
 function toggleFullScreen(button) {
@@ -197,6 +220,27 @@ function downloadOutput() {
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
+}
+
+function toggleFullScreen(button) {
+  const box = button.closest('.json-converter-box');
+  if (!document.fullscreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement) {
+    if (box.requestFullscreen) {
+      box.requestFullscreen().catch(err => console.error('Fullscreen error:', err));
+    } else if (box.webkitRequestFullscreen) {
+      box.webkitRequestFullscreen().catch(err => console.error('Fullscreen error:', err));
+    } else if (box.msRequestFullscreen) {
+      box.msRequestFullscreen().catch(err => console.error('Fullscreen error:', err));
+    }
+  } else {
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    } else if (document.webkitExitFullscreen) {
+      document.webkitExitFullscreen();
+    } else if (document.msExitFullscreen) {
+      document.msExitFullscreen();
+    }
+  }
 }
 </script>
 

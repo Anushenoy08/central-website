@@ -17,6 +17,18 @@ permalink: /Json-Converter/json-xml.html
     <!-- Left side: Input -->
     <div class="json-converter-left">
       <div class="json-converter-box">
+        <div class="toolbar">
+          <label class="upload-option">
+            <input type="file" accept="application/json" onchange="uploadJSONFile(event)">
+            <span class="upload-icon">📁</span>
+          </label>
+          <button class="fullscreen-option" title="Full Screen" onclick="toggleFullScreen(this)">
+            <span class="fullscreen-icon">⛶</span>
+          </button>
+          <button class="clear-option" title="Clear" onclick="clearInput()">
+            <span class="clear-icon">🗑️</span>
+          </button>
+        </div>
         <div class="code-area-wrapper">
           <textarea class="json-textarea" id="jsonInput" placeholder='Enter JSON Object or Array'></textarea>
         </div>
@@ -35,6 +47,14 @@ permalink: /Json-Converter/json-xml.html
     <!-- Right side: Output -->
     <div class="json-converter-right">
       <div class="json-converter-box">
+        <div class="toolbar">
+          <button class="fullscreen-option" title="Full Screen" onclick="toggleFullScreen(this)">
+            <span class="fullscreen-icon">⛶</span>
+          </button>
+          <button class="clear-option" title="Clear" onclick="clearOutput()">
+            <span class="clear-icon">🗑️</span>
+          </button>
+        </div>
         <div class="code-area-wrapper">
           <textarea class="json-textarea" id="xmlOutput" placeholder="XML result will appear here..." readonly></textarea>
         </div>
@@ -75,9 +95,12 @@ function jsonToXml(obj, root = 'root') {
   return xml;
 }
 
-function clearJSON(which) {
-  if (which === 'input') document.getElementById('jsonInput').value = '';
-  else document.getElementById('xmlOutput').value = '';
+function clearInput() {
+  document.getElementById('jsonInput').value = '';
+}
+
+function clearOutput() {
+  document.getElementById('xmlOutput').value = '';
 }
 
 function uploadJSONFile(event) {
@@ -88,6 +111,27 @@ function uploadJSONFile(event) {
     document.getElementById('jsonInput').value = e.target.result;
   };
   reader.readAsText(file);
+}
+
+function toggleFullScreen(button) {
+  const box = button.closest('.json-converter-box');
+  if (!document.fullscreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement) {
+    if (box.requestFullscreen) {
+      box.requestFullscreen().catch(err => console.error('Fullscreen error:', err));
+    } else if (box.webkitRequestFullscreen) {
+      box.webkitRequestFullscreen().catch(err => console.error('Fullscreen error:', err));
+    } else if (box.msRequestFullscreen) {
+      box.msRequestFullscreen().catch(err => console.error('Fullscreen error:', err));
+    }
+  } else {
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    } else if (document.webkitExitFullscreen) {
+      document.webkitExitFullscreen();
+    } else if (document.msExitFullscreen) {
+      document.msExitFullscreen();
+    }
+  }
 }
 
 function toggleFullScreen(button) {
