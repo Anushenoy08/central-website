@@ -9306,6 +9306,26 @@ body {
   border-color: #2563eb;
 }
 
+.button-grid button {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 140px;
+  max-width: 200px;
+  padding: 14px 16px;
+  font-size: 0.95em;
+}
+
+.button-grid .primary-btn {
+  background: #2563eb;
+  color: #ffffff;
+}
+
+.button-grid .unique-download {
+  background: #10b981;
+  color: #ffffff;
+}
+
 /* Responsive Design for UUID Generator */
 @media (max-width: 768px) {
   .uuid-container {
