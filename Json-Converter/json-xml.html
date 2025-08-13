@@ -19,26 +19,10 @@ permalink: /Json-Converter/json-xml.html
       <div class="json-converter-box">
         <div class="box-header">
           <span class="box-label">Input</span>
-          <div class="box-options">
-            <label class="upload-label">
-              <input type="file" accept="application/json" onchange="uploadJSONFile(event)">
-              <span class="upload-icon">📁</span>
-              <span class="upload-text">Upload a file</span>
-            </label>
-            <button class="icon-btn" title="Full Screen" onclick="toggleFullScreen(this)">
-              ⛶
-              <span class="tooltip">Full Screen</span>
-            </button>
-            <button class="icon-btn" title="Clear" onclick="clearJSON('input')">
-              🗑️
-              <span class="tooltip">Clear</span>
-            </button>
-          </div>
         </div>
         <div class="code-area-wrapper">
           <textarea class="json-textarea" id="jsonInput" placeholder='Enter JSON Object or Array'></textarea>
         </div>
-        <button class="close-fullscreen-btn" onclick="exitFullScreen()">✕</button>
       </div>
     </div>
     
@@ -56,21 +40,10 @@ permalink: /Json-Converter/json-xml.html
       <div class="json-converter-box">
         <div class="box-header">
           <span class="box-label">Output</span>
-          <div class="box-options">
-            <button class="icon-btn" title="Full Screen" onclick="toggleFullScreen(this)">
-              ⛶
-              <span class="tooltip">Full Screen</span>
-            </button>
-            <button class="icon-btn" title="Clear" onclick="clearJSON('output')">
-              🗑️
-              <span class="tooltip">Clear</span>
-            </button>
-          </div>
         </div>
         <div class="code-area-wrapper">
           <textarea class="json-textarea" id="xmlOutput" placeholder="XML result will appear here..." readonly></textarea>
         </div>
-        <button class="close-fullscreen-btn" onclick="exitFullScreen()">✕</button>
       </div>
     </div>
   </div>
