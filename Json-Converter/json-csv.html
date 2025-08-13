@@ -10,63 +10,68 @@ permalink: /Json-Converter/json-csv.html
   <a href="/article/">ARTICLES</a>
 </div>
 
-<div class="json-formatter-container">
-  <div class="json-title">JSON to CSV Converter</div>
-
-  <div class="button-panel">
-    <button onclick="convertToCSV()">Convert to CSV</button>
-    <button onclick="copyOutput()">Copy CSV</button>
-    <button onclick="downloadOutput()">Download CSV</button>
-  </div>
-
-  <div class="json-box-row">
-    <div class="json-box">
-      <div class="box-header">
-        <span class="box-label">Input</span>
-        <div class="box-options">
-          <label class="upload-label">
-            <input type="file" accept="application/json" onchange="uploadJSONFile(event)">
-            <span class="upload-icon">📁</span>
-            <span class="upload-text">Upload a file</span>
-          </label>
-          <button class="icon-btn" title="Full Screen" onclick="toggleFullScreen(this)">
-            ⛶
-            <span class="tooltip">Full Screen</span>
-          </button>
-          <button class="icon-btn" title="Clear" onclick="clearJSON('input')">
-            🗑️
-            <span class="tooltip">Clear</span>
-          </button>
+<div class="json-converter-container">
+  <div class="json-converter-title">JSON to CSV Converter</div>
+  
+  <div class="json-converter-layout">
+    <!-- Left side: Input -->
+    <div class="json-converter-left">
+      <div class="json-converter-box">
+        <div class="box-header">
+          <span class="box-label">Input</span>
+          <div class="box-options">
+            <label class="upload-label">
+              <input type="file" accept="application/json" onchange="uploadJSONFile(event)">
+              <span class="upload-icon">📁</span>
+              <span class="upload-text">Upload a file</span>
+            </label>
+            <button class="icon-btn" title="Full Screen" onclick="toggleFullScreen(this)">
+              ⛶
+              <span class="tooltip">Full Screen</span>
+            </button>
+            <button class="icon-btn" title="Clear" onclick="clearJSON('input')">
+              🗑️
+              <span class="tooltip">Clear</span>
+            </button>
+          </div>
         </div>
-      </div>
-      <div class="code-area-wrapper">
-        <div class="code-scroll">
+        <div class="code-area-wrapper">
           <textarea class="json-textarea" id="jsonInput" placeholder='Enter JSON Array Example: [{"name":"John","age":30},{"name":"Jane","age":25}]'></textarea>
         </div>
+        <button class="close-fullscreen-btn" onclick="exitFullScreen()">✕</button>
       </div>
-      <button class="close-fullscreen-btn" onclick="exitFullScreen()">✕</button>
     </div>
-
-    <div class="json-box">
-      <div class="box-header">
-        <span class="box-label">Output</span>
-        <div class="box-options">
-          <button class="icon-btn" title="Full Screen" onclick="toggleFullScreen(this)">
-            ⛶
-            <span class="tooltip">Full Screen</span>
-          </button>
-          <button class="icon-btn" title="Clear" onclick="clearJSON('output')">
-            🗑️
-            <span class="tooltip">Clear</span>
-          </button>
-        </div>
+    
+    <!-- Center: Buttons -->
+    <div class="json-converter-center">
+      <div class="action-btns">
+        <button onclick="convertToCSV()">Convert to CSV</button>
+        <button onclick="copyOutput()">Copy CSV</button>
+        <button onclick="downloadOutput()">Download CSV</button>
       </div>
-      <div class="code-area-wrapper">
-        <div class="code-scroll">
+    </div>
+    
+    <!-- Right side: Output -->
+    <div class="json-converter-right">
+      <div class="json-converter-box">
+        <div class="box-header">
+          <span class="box-label">Output</span>
+          <div class="box-options">
+            <button class="icon-btn" title="Full Screen" onclick="toggleFullScreen(this)">
+              ⛶
+              <span class="tooltip">Full Screen</span>
+            </button>
+            <button class="icon-btn" title="Clear" onclick="clearJSON('output')">
+              🗑️
+              <span class="tooltip">Clear</span>
+            </button>
+          </div>
+        </div>
+        <div class="code-area-wrapper">
           <textarea class="json-textarea" id="csvOutput" placeholder="CSV result will appear here..." readonly></textarea>
         </div>
+        <button class="close-fullscreen-btn" onclick="exitFullScreen()">✕</button>
       </div>
-      <button class="close-fullscreen-btn" onclick="exitFullScreen()">✕</button>
     </div>
   </div>
 </div>
