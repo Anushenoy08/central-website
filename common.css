@@ -2692,7 +2692,7 @@ body {
   font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
 }
 .main-container {
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 110px auto 32px auto;
   background: #fff;
   border-radius: 18px;
@@ -2751,12 +2751,31 @@ label {
   color: #fff;
   border: none;
   border-radius: 8px;
-  padding: 10px 22px;
+  padding: 10px 16px;
   font-size: 1.08em;
   font-weight: 600;
   cursor: pointer;
   transition: background 0.18s;
-  min-width: 180px;
+  min-width: 160px;
+  max-width: 200px;
+  white-space: nowrap;
+  overflow: visible;
+  text-align: center;
+}
+
+/* Ensure Copy button matches exactly */
+.copy-btn {
+  background: #2196f3;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 1.08em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.18s;
+  min-width: 160px;
+  max-width: 200px;
   white-space: nowrap;
   overflow: visible;
   text-align: center;
@@ -2772,8 +2791,8 @@ label {
 /* URL Encoder specific styles */
 .url-encoder-layout {
   display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  gap: 32px;
+  grid-template-columns: 2fr auto 2fr;
+  gap: 40px;
   width: 100%;
   align-items: start;
 }
@@ -2796,6 +2815,8 @@ label {
   gap: 16px;
   justify-content: center;
   padding: 20px 0;
+  width: 200px;
+  align-items: center;
 }
 
 @media (max-width: 700px) {
