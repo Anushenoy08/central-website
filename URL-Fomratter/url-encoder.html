@@ -12,20 +12,34 @@ permalink: /URL-Fomratter/url-encoder.html
 </div>
 <div class="main-container">
   <div class="url-title">URL Encoder</div>
-  <div class="form-group">
-    <label for="url-input">Enter text or URL to encode:</label>
-    <textarea id="url-input" class="url-input" rows="4" placeholder="Paste your text or URL here..."></textarea>
-  </div>
-  <div class="action-btns">
-    <button class="encode-btn" id="encode-uri-component-btn" onclick="encodeURIComponentFn()">encodeURIComponent</button>
-    <button class="encode-btn" id="base64-btn" onclick="base64Encode()">Base64</button>
-  </div>
-  <div class="form-group">
-    <label for="url-output">Encoded URL:</label>
-    <textarea id="url-output" class="url-output" rows="3" readonly placeholder="Encoded result will appear here..."></textarea>
-  </div>
-  <div class="action-btns">
-    <button class="copy-btn" id="copy-btn">Copy</button>
+  
+  <div class="url-encoder-layout">
+    <!-- Left side: Input -->
+    <div class="url-encoder-left">
+      <div class="form-group">
+        <label for="url-input">Enter text or URL to encode:</label>
+        <textarea id="url-input" class="url-input" rows="4" placeholder="Paste your text or URL here..."></textarea>
+      </div>
+    </div>
+    
+    <!-- Center: Buttons -->
+    <div class="url-encoder-center">
+      <div class="action-btns">
+        <button class="encode-btn" id="encode-uri-component-btn" onclick="encodeURIComponentFn()">encodeURIComponent</button>
+        <button class="encode-btn" id="base64-btn" onclick="base64Encode()">Base64</button>
+      </div>
+      <div class="action-btns">
+        <button class="copy-btn" id="copy-btn">Copy</button>
+      </div>
+    </div>
+    
+    <!-- Right side: Output -->
+    <div class="url-encoder-right">
+      <div class="form-group">
+        <label for="url-output">Encoded URL:</label>
+        <textarea id="url-output" class="url-output" rows="3" readonly placeholder="Encoded result will appear here..."></textarea>
+      </div>
+    </div>
   </div>
 </div>
 <script>
