@@ -2692,7 +2692,8 @@ body {
   font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
 }
 .main-container {
-  max-width: 2400px;
+  width: 95vw;
+  max-width: none;
   margin: 110px auto 32px auto;
   background: #fff;
   border-radius: 18px;
