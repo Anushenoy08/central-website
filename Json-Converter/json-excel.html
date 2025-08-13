@@ -19,16 +19,19 @@ permalink: /Json-Converter/json-excel.html
     <div class="json-converter-left">
       <div class="json-converter-box">
         <div class="toolbar">
-          <label class="upload-option">
-            <input type="file" accept="application/json" onchange="uploadJSONFile(event)">
-            <span class="upload-icon">📁</span>
-          </label>
-          <button class="fullscreen-option" title="Full Screen" onclick="toggleFullScreen(this)">
-            <span class="fullscreen-icon">⛶</span>
-          </button>
-          <button class="clear-option" title="Clear" onclick="clearInput()">
-            <span class="clear-icon">🗑️</span>
-          </button>
+          <span class="toolbar-label">Input</span>
+          <div class="toolbar-options">
+            <label class="upload-option">
+              <input type="file" accept="application/json" onchange="uploadJSONFile(event)">
+              <span class="upload-icon">📁</span>
+            </label>
+            <button class="fullscreen-option" title="Full Screen" onclick="toggleFullScreen(this)">
+              <span class="fullscreen-icon">⛶</span>
+            </button>
+            <button class="clear-option" title="Clear" onclick="clearInput()">
+              <span class="clear-icon">🗑️</span>
+            </button>
+          </div>
         </div>
         <div class="code-area-wrapper">
           <textarea class="json-textarea" id="jsonInput" placeholder='Enter JSON Array of Objects Example: [{"name":"John","age":30,"city":"New York"}]'></textarea>
@@ -58,12 +61,15 @@ permalink: /Json-Converter/json-excel.html
     <div class="json-converter-right">
       <div class="json-converter-box">
         <div class="toolbar">
-          <button class="fullscreen-option" title="Full Screen" onclick="toggleFullScreen(this)">
-            <span class="fullscreen-icon">⛶</span>
-          </button>
-          <button class="clear-option" title="Clear" onclick="clearOutput()">
-            <span class="clear-icon">🗑️</span>
-          </button>
+          <span class="toolbar-label">Output Preview</span>
+          <div class="toolbar-options">
+            <button class="fullscreen-option" title="Full Screen" onclick="toggleFullScreen(this)">
+              <span class="fullscreen-icon">⛶</span>
+            </button>
+            <button class="clear-option" title="Clear" onclick="clearOutput()">
+              <span class="clear-icon">🗑️</span>
+            </button>
+          </div>
         </div>
         <div class="code-area-wrapper">
           <textarea class="json-textarea" id="excelOutput" placeholder="Excel conversion preview will appear here..." readonly></textarea>
