@@ -255,11 +255,11 @@ function toggleFullScreen(button) {
   // Check if we're on mobile/tablet
   if (window.innerWidth <= 1024) {
     // Mobile/Tablet fullscreen
-    const which = button.closest('.json-box').querySelector('.box-label').textContent.toLowerCase();
+    const which = button.closest('.json-converter-box').querySelector('.box-label').textContent.toLowerCase();
     enterMobileFullscreen(which);
   } else {
     // Desktop fullscreen
-    const box = button.closest('.json-box');
+    const box = button.closest('.json-converter-box');
     if (!document.fullscreenElement) {
       if (box.requestFullscreen) box.requestFullscreen();
       else if (box.webkitRequestFullscreen) box.webkitRequestFullscreen();
