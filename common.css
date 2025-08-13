@@ -2692,7 +2692,7 @@ body {
   font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
 }
 .main-container {
-  max-width: 1400px;
+  max-width: 2000px;
   margin: 110px auto 32px auto;
   background: #fff;
   border-radius: 18px;
@@ -2751,13 +2751,13 @@ label {
   color: #fff;
   border: none;
   border-radius: 8px;
-  padding: 10px 16px;
+  padding: 12px 20px;
   font-size: 1.08em;
   font-weight: 600;
   cursor: pointer;
   transition: background 0.18s;
-  min-width: 160px;
-  max-width: 200px;
+  min-width: 180px;
+  max-width: 220px;
   white-space: nowrap;
   overflow: visible;
   text-align: center;
@@ -2769,13 +2769,13 @@ label {
   color: #fff;
   border: none;
   border-radius: 8px;
-  padding: 10px 16px;
+  padding: 12px 20px;
   font-size: 1.08em;
   font-weight: 600;
   cursor: pointer;
   transition: background 0.18s;
-  min-width: 160px;
-  max-width: 200px;
+  min-width: 180px;
+  max-width: 220px;
   white-space: nowrap;
   overflow: visible;
   text-align: center;
@@ -2815,7 +2815,7 @@ label {
   gap: 16px;
   justify-content: center;
   padding: 20px 0;
-  width: 200px;
+  width: 220px;
   align-items: center;
 }
 
