@@ -10011,6 +10011,8 @@ body .main-container {
   align-items: center !important;
   border-radius: 8px 8px 0 0 !important;
   margin: -32px -32px 16px -32px !important;
+  position: relative !important;
+  z-index: 10 !important;
 }
 
 .formatter-container .formatter-box .toolbar .toolbar-label {
@@ -10061,6 +10063,93 @@ body .main-container {
 .formatter-container .formatter-box .toolbar .clear-icon {
   font-size: 1.1em !important;
   color: #fff !important;
+}
+
+/* Additional specificity to prevent overrides */
+body .formatter-container .formatter-box .toolbar {
+  background: #111 !important;
+  background-color: #111 !important;
+}
+
+body .formatter-container .formatter-box .toolbar .toolbar-label {
+  color: #fff !important;
+  color: #fff !important;
+}
+
+body .formatter-container .formatter-box .toolbar .fullscreen-option,
+body .formatter-container .formatter-box .toolbar .clear-option {
+  color: #fff !important;
+  color: #fff !important;
+}
+
+body .formatter-container .formatter-box .toolbar .upload-icon {
+  color: #fff !important;
+  color: #fff !important;
+}
+
+/* Force override any conflicting styles */
+html body .formatter-container .formatter-box .toolbar {
+  background: #111 !important;
+  background-color: #111 !important;
+  background-image: none !important;
+  background-attachment: scroll !important;
+  background-position: 0% 0% !important;
+  background-repeat: repeat !important;
+}
+
+html body .formatter-container .formatter-box .toolbar * {
+  color: #fff !important;
+}
+
+/* Ensure toolbar background is completely solid */
+.formatter-container .formatter-box .toolbar {
+  background: #111 !important;
+  background-color: #111 !important;
+  background-image: none !important;
+  background-attachment: scroll !important;
+  background-position: 0% 0% !important;
+  background-repeat: repeat !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+/* Cross-browser compatibility */
+.formatter-container .formatter-box .toolbar {
+  -webkit-background: #111 !important;
+  -moz-background: #111 !important;
+  -ms-background: #111 !important;
+  -o-background: #111 !important;
+}
+
+/* Force override any inherited styles */
+.formatter-container .formatter-box .toolbar,
+.formatter-container .formatter-box .toolbar * {
+  background: #111 !important;
+  background-color: #111 !important;
+}
+
+.formatter-container .formatter-box .toolbar .toolbar-label,
+.formatter-container .formatter-box .toolbar .fullscreen-option,
+.formatter-container .formatter-box .toolbar .clear-option,
+.formatter-container .formatter-box .toolbar .upload-icon {
+  color: #fff !important;
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+/* Isolate formatter toolbar from parent container */
+.formatter-container .formatter-box .toolbar {
+  isolation: isolate !important;
+  contain: layout style paint !important;
+  background: #111 !important;
+  background-color: #111 !important;
+  background-image: none !important;
+  background-attachment: scroll !important;
+  background-position: 0% 0% !important;
+  background-repeat: repeat !important;
+  box-shadow: none !important;
+  border: none !important;
+  outline: none !important;
 }
 
 .json-converter-container .json-converter-box .toolbar .toolbar-label {
@@ -16600,32 +16689,36 @@ body {
         min-height: 300px;
     }
     
-.toolbar {
+.formatter-container .formatter-box .toolbar {
         height: 40px;
         padding: 0 12px;
         margin: -16px -16px 12px -16px;
+        background: #111 !important;
     }
     
-    .toolbar .toolbar-label {
+    .formatter-container .formatter-box .toolbar .toolbar-label {
         font-size: 1em;
         margin-left: 4px;
+        color: #fff !important;
     }
     
-    .toolbar-options {
+    .formatter-container .formatter-box .toolbar .toolbar-options {
         gap: 6px;
     }
     
-    .toolbar-options .fullscreen-option,
-    .toolbar-options .clear-option {
+    .formatter-container .formatter-box .toolbar .toolbar-options .fullscreen-option,
+    .formatter-container .formatter-box .toolbar .toolbar-options .clear-option {
         min-width: 32px;
         height: 32px;
         font-size: 1em;
         padding: 6px 8px;
+        color: #fff !important;
     }
     
-    .upload-option {
+    .formatter-container .formatter-box .toolbar .upload-option {
         font-size: 0.85em;
         padding: 4px 8px;
+        color: #fff !important;
     }
     
 .code-area-wrapper {
