@@ -10012,6 +10012,7 @@ body .main-container {
   border-radius: 16px;
   box-shadow: 0 4px 16px rgba(33, 150, 243, 0.10);
   border: 1px solid #e0f2f1;
+  margin-top: 20px;
 }
 
 .tool-title {
@@ -10058,7 +10059,7 @@ body .main-container {
 
 .content-section {
   display: flex;
-  gap: 0;
+  gap: 24px;
   align-items: flex-start;
   width: 100%;
 }
@@ -10067,20 +10068,10 @@ body .main-container {
 .output-section {
   flex: 1;
   background: #f4fbfa;
-  border-radius: 0;
+  border-radius: 12px;
   border: 1px solid #e0f2f1;
   overflow: hidden;
   margin: 0;
-}
-
-.input-section {
-  border-radius: 12px 0 0 12px;
-  border-right: none;
-}
-
-.output-section {
-  border-radius: 0 12px 12px 0;
-  border-left: none;
 }
 
 /* New Toolbar Styling for Formatters */

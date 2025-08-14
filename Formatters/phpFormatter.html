@@ -10,69 +10,66 @@ permalink: /Formatters/phpFormatter.html
     <a href="/article/">ARTICLES</a>
 </div>
 
-<div class="formatter-container">
+<div class="main-container">
+    <div class="tool-title">PHP FORMATTER</div>
     
-    <div class="main-container">
-        <div class="tool-title">PHP FORMATTER</div>
-        
-        <div class="buttons-section">
-            <button onclick="formatPHP()">Format</button>
-            <button onclick="beautifyPHP()">Beautify</button>
-            <button onclick="validatePHP()">Validate</button>
-            <button onclick="copyPHP()">Copy PHP</button>
-            <button onclick="downloadPHP()">Download PHP</button>
+    <div class="buttons-section">
+        <button onclick="formatPHP()">Format</button>
+        <button onclick="beautifyPHP()">Beautify</button>
+        <button onclick="validatePHP()">Validate</button>
+        <button onclick="copyPHP()">Copy PHP</button>
+        <button onclick="downloadPHP()">Download PHP</button>
+    </div>
+    
+    <div class="content-section">
+        <div class="input-section">
+            <div class="toolbar">
+                <span class="toolbar-label">Input</span>
+                <div class="toolbar-options">
+                    <label class="upload-option">
+                        <input type="file" accept=".php,.txt" onchange="uploadPHPFile('input', event)">
+                        <span class="upload-icon">📁</span>
+                    </label>
+                    <button class="fullscreen-option" title="Full Screen" onclick="toggleFullScreen(this)">
+                        <span class="fullscreen-icon">⛶</span>
+                    </button>
+                    <button class="clear-option" title="Clear" onclick="clearPHP('input')">
+                        <span class="clear-icon">🗑️</span>
+                    </button>
+                </div>
+            </div>
+            <div class="code-area-wrapper">
+                <div class="code-scroll" id="inputScroll">
+                    <div class="line-numbers" id="inputLineNumbers"></div>
+                    <textarea class="formatter-textarea" id="phpInput" placeholder="Paste or type your PHP code here..." oninput="updateInputLineNumbers()" onscroll="syncScroll('input')"></textarea>
+                </div>
+            </div>
+            <div id="errorMsg" class="error-message" style="display:none;"></div>
         </div>
         
-        <div class="content-section">
-            <div class="input-section">
-                <div class="toolbar">
-                    <span class="toolbar-label">Input</span>
-                    <div class="toolbar-options">
-                        <label class="upload-option">
-                            <input type="file" accept=".php,.txt" onchange="uploadPHPFile('input', event)">
-                            <span class="upload-icon">📁</span>
-                        </label>
-                        <button class="fullscreen-option" title="Full Screen" onclick="toggleFullScreen(this)">
-                            <span class="fullscreen-icon">⛶</span>
-                        </button>
-                        <button class="clear-option" title="Clear" onclick="clearPHP('input')">
-                            <span class="clear-icon">🗑️</span>
-                        </button>
-                    </div>
+        <div class="output-section">
+            <div class="toolbar">
+                <span class="toolbar-label">Output</span>
+                <div class="toolbar-options">
+                    <button class="fullscreen-option" title="Full Screen" onclick="toggleFullScreen(this)">
+                        <span class="fullscreen-icon">⛶</span>
+                    </button>
+                    <button class="clear-option" title="Clear" onclick="clearPHP('output')">
+                        <span class="clear-icon">🗑️</span>
+                    </button>
                 </div>
-                <div class="code-area-wrapper">
-                    <div class="code-scroll" id="inputScroll">
-                        <div class="line-numbers" id="inputLineNumbers"></div>
-                        <textarea class="formatter-textarea" id="phpInput" placeholder="Paste or type your PHP code here..." oninput="updateInputLineNumbers()" onscroll="syncScroll('input')"></textarea>
-                    </div>
-                </div>
-                <div id="errorMsg" class="error-message" style="display:none;"></div>
             </div>
-            
-            <div class="output-section">
-                <div class="toolbar">
-                    <span class="toolbar-label">Output</span>
-                    <div class="toolbar-options">
-                        <button class="fullscreen-option" title="Full Screen" onclick="toggleFullScreen(this)">
-                            <span class="fullscreen-icon">⛶</span>
-                        </button>
-                        <button class="clear-option" title="Clear" onclick="clearPHP('output')">
-                            <span class="clear-icon">🗑️</span>
-                        </button>
-                    </div>
-                </div>
-                <div class="code-area-wrapper">
-                    <div class="code-scroll" id="outputScroll">
-                        <div class="line-numbers" id="outputLineNumbers"></div>
-                        <textarea class="formatter-textarea" id="phpOutput" placeholder="Formatted/Beautified PHP will appear here..." readonly oninput="updateOutputLineNumbers()" onscroll="syncScroll('output')"></textarea>
-                    </div>
+            <div class="code-area-wrapper">
+                <div class="code-scroll" id="outputScroll">
+                    <div class="line-numbers" id="outputLineNumbers"></div>
+                    <textarea class="formatter-textarea" id="phpOutput" placeholder="Formatted/Beautified PHP will appear here..." readonly oninput="updateOutputLineNumbers()" onscroll="syncScroll('output')"></textarea>
                 </div>
             </div>
         </div>
     </div>
-
-    <div id="popupMsg" class="popup" style="display:none;"><span id="popupText"></span><button class="close-btn" onclick="closePopup()">✕</button></div>
 </div>
+
+<div id="popupMsg" class="popup" style="display:none;"><span id="popupText"></span><button class="close-btn" onclick="closePopup()">✕</button></div>
 
 
 
