@@ -10026,12 +10026,13 @@ body .main-container {
 .buttons-section {
   display: flex;
   gap: 12px;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   justify-content: center;
   margin-bottom: 24px;
   padding: 16px;
   background: #f8f9fa;
   border-radius: 12px;
+  overflow-x: auto;
 }
 
 .buttons-section button {
@@ -10057,17 +10058,29 @@ body .main-container {
 
 .content-section {
   display: flex;
-  gap: 24px;
+  gap: 0;
   align-items: flex-start;
+  width: 100%;
 }
 
 .input-section,
 .output-section {
   flex: 1;
   background: #f4fbfa;
-  border-radius: 12px;
+  border-radius: 0;
   border: 1px solid #e0f2f1;
   overflow: hidden;
+  margin: 0;
+}
+
+.input-section {
+  border-radius: 12px 0 0 12px;
+  border-right: none;
+}
+
+.output-section {
+  border-radius: 0 12px 12px 0;
+  border-left: none;
 }
 
 /* New Toolbar Styling for Formatters */
@@ -16250,12 +16263,25 @@ body {
   
   .content-section {
     flex-direction: column;
-    gap: 20px;
+    gap: 0;
   }
   
   .input-section,
   .output-section {
     width: 100%;
+    border-radius: 12px;
+    border: 1px solid #e0f2f1;
+    margin-bottom: 20px;
+  }
+  
+  .input-section {
+    border-radius: 12px;
+    border-right: 1px solid #e0f2f1;
+  }
+  
+  .output-section {
+    border-radius: 12px;
+    border-left: 1px solid #e0f2f1;
   }
   
   .formatter-container {
