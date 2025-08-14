@@ -13,19 +13,16 @@ permalink: /Formatters/jsonFormatter.html
 <div class="json-converter-container">
     <div class="json-converter-title">JSON Formatter</div>
     
+    <!-- Buttons Section Above Text Boxes -->
+    <div class="buttons-section">
+        <button onclick="formatJSON()">Format</button>
+        <button onclick="beautifyJSON()">Beautify</button>
+        <button onclick="validateJSON()">Validate</button>
+        <button onclick="copyJSON()">Copy JSON</button>
+        <button onclick="downloadJSON()">Download JSON</button>
+    </div>
+
     <div class="json-converter-layout">
-
-      <!--  Buttons -->
-      <div class="json-converter-center">
-        <div class="buttons-section">
-            <button onclick="formatKotlin()">Format</button>
-            <button onclick="beautifyKotlin()">Beautify</button>
-            <button onclick="validateKotlin()">Validate</button>
-            <button onclick="copyKotlin()">Copy Kotlin</button>
-            <button onclick="downloadKotlin()">Download Kotlin</button>
-        </div>
-      </div>
-
       <!-- Left side: Input -->
       <div class="json-converter-left">
         <div class="json-converter-box">
@@ -39,7 +36,7 @@ permalink: /Formatters/jsonFormatter.html
               <button class="fullscreen-option" title="Full Screen" onclick="toggleFullScreen(this)">
                 <span class="fullscreen-icon">⛶</span>
               </button>
-              <button class="clear-option" title="Clear" onclick="clearInput()">
+              <button class="clear-option" title="Clear" onclick="clearJSON('input')">
                 <span class="clear-icon">🗑️</span>
               </button>
             </div>
@@ -59,14 +56,13 @@ permalink: /Formatters/jsonFormatter.html
               <button class="fullscreen-option" title="Full Screen" onclick="toggleFullScreen(this)">
                 <span class="fullscreen-icon">⛶</span>
               </button>
-              <button class="clear-option" title="Clear" onclick="clearOutput()">
+              <button class="clear-option" title="Clear" onclick="clearJSON('output')">
                 <span class="clear-icon">🗑️</span>
               </button>
             </div>
           </div>
           <div class="code-area-wrapper">
             <textarea class="json-textarea" id="jsonOutput" placeholder="Formatted/Beautified JSON will appear here..." readonly></textarea>
-
           </div>
         </div>
       </div>
@@ -218,6 +214,4 @@ permalink: /Formatters/jsonFormatter.html
             document.exitFullscreen();
         }
     }
-
-
 </script>
