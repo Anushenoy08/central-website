@@ -10468,34 +10468,59 @@ body .main-container {
 
 /* Mobile responsive for Formatters using json-converter-layout */
 @media (max-width: 768px) {
-  .main-container .json-converter-layout {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+  /* Override conflicting formatter CSS rules */
+  .formatter-container .formatter-box .toolbar {
+    height: auto !important;
+    margin: 0 !important;
+    padding: 10px 12px !important;
+    overflow: visible !important;
   }
   
-  .main-container .json-converter-left,
-  .main-container .json-converter-right {
-    width: 100%;
+  .formatter-container .formatter-box .toolbar .toolbar-label {
+    margin-left: 0 !important;
+    overflow: visible !important;
   }
   
-  .main-container .json-converter-box {
-    min-height: 300px;
-    overflow: visible;
+  .formatter-container .formatter-box .toolbar .toolbar-options {
+    overflow: visible !important;
   }
   
-  .main-container .code-area-wrapper {
-    min-height: 250px;
-    overflow: visible;
+  .formatter-container .formatter-box .toolbar .toolbar-options .fullscreen-option,
+  .formatter-container .formatter-box .toolbar .toolbar-options .clear-option {
+    overflow: visible !important;
   }
   
-  .main-container .json-textarea {
-    min-height: 250px;
-    font-size: 0.9em;
-    overflow: visible;
+  .formatter-container .formatter-box .toolbar .upload-option {
+    overflow: visible !important;
+  }
+  .json-converter-container .json-converter-layout {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 20px !important;
   }
   
-  .main-container .toolbar {
+  .json-converter-container .json-converter-left,
+  .json-converter-container .json-converter-right {
+    width: 100% !important;
+  }
+  
+  .json-converter-container .json-converter-box {
+    min-height: 300px !important;
+    overflow: visible !important;
+  }
+  
+  .json-converter-container .code-area-wrapper {
+    min-height: 250px !important;
+    overflow: visible !important;
+  }
+  
+  .json-converter-container .json-textarea {
+    min-height: 250px !important;
+    font-size: 0.9em !important;
+    overflow: visible !important;
+  }
+  
+  .json-converter-container .toolbar {
     padding: 10px 12px !important;
     overflow: visible !important;
     width: 100% !important;
@@ -10503,17 +10528,27 @@ body .main-container {
     display: flex !important;
     align-items: center !important;
     justify-content: space-between !important;
+    height: auto !important;
+    margin: 0 !important;
+    background: #111 !important;
+    background-color: #111 !important;
+    border-radius: 0 !important;
+    position: relative !important;
+    z-index: 10 !important;
+    box-shadow: none !important;
+    border: none !important;
   }
   
-  .main-container .toolbar-label {
+  .json-converter-container .toolbar-label {
     font-size: 1em !important;
     color: #fff !important;
     font-weight: 600 !important;
     white-space: nowrap !important;
     overflow: visible !important;
+    margin-left: 0 !important;
   }
   
-  .main-container .toolbar-options {
+  .json-converter-container .toolbar-options {
     gap: 8px !important;
     display: flex !important;
     align-items: center !important;
@@ -10521,9 +10556,9 @@ body .main-container {
     overflow: visible !important;
   }
   
-  .main-container .upload-option,
-  .main-container .fullscreen-option,
-  .main-container .clear-option {
+  .json-converter-container .upload-option,
+  .json-converter-container .fullscreen-option,
+  .json-converter-container .clear-option {
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
@@ -10532,15 +10567,15 @@ body .main-container {
     overflow: visible !important;
   }
   
-  .main-container .upload-icon,
-  .main-container .fullscreen-icon,
-  .main-container .clear-icon {
+  .json-converter-container .upload-icon,
+  .json-converter-container .fullscreen-icon,
+  .json-converter-container .clear-icon {
     font-size: 1.1em !important;
     color: #fff !important;
     overflow: visible !important;
   }
   
-  .main-container .buttons-section {
+  .json-converter-container .buttons-section {
     flex-wrap: wrap !important;
     justify-content: center !important;
     gap: 10px !important;
@@ -10548,7 +10583,7 @@ body .main-container {
     overflow: visible !important;
   }
   
-  .main-container .buttons-section button {
+  .json-converter-container .buttons-section button {
     min-width: 130px !important;
     max-width: 180px !important;
     padding: 12px 16px !important;
@@ -10561,45 +10596,45 @@ body .main-container {
 
 /* Extra small mobile devices */
 @media (max-width: 480px) {
-  .main-container .json-converter-layout {
-    gap: 16px;
+  .json-converter-container .json-converter-layout {
+    gap: 16px !important;
   }
   
-  .main-container .buttons-section {
+  .json-converter-container .buttons-section {
     padding: 12px !important;
     gap: 8px !important;
   }
   
-  .main-container .buttons-section button {
+  .json-converter-container .buttons-section button {
     min-width: 110px !important;
     max-width: 150px !important;
     padding: 10px 12px !important;
     font-size: 0.9em !important;
   }
   
-  .main-container .toolbar {
+  .json-converter-container .toolbar {
     padding: 8px 10px !important;
     min-height: 44px !important;
   }
   
-  .main-container .toolbar-label {
+  .json-converter-container .toolbar-label {
     font-size: 0.95em !important;
   }
   
-  .main-container .toolbar-options {
+  .json-converter-container .toolbar-options {
     gap: 6px !important;
   }
   
-  .main-container .upload-option,
-  .main-container .fullscreen-option,
-  .main-container .clear-option {
+  .json-converter-container .upload-option,
+  .json-converter-container .fullscreen-option,
+  .json-converter-container .clear-option {
     min-width: 28px !important;
     height: 28px !important;
   }
   
-  .main-container .upload-icon,
-  .main-container .fullscreen-icon,
-  .main-container .clear-icon {
+  .json-converter-container .upload-icon,
+  .json-converter-container .fullscreen-icon,
+  .json-converter-container .clear-icon {
     font-size: 1em !important;
   }
 }
