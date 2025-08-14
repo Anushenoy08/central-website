@@ -21,48 +21,47 @@ permalink: /Formatters/swiftFormatter.html
             <button onclick="downloadSwift()">Download Swift</button>
         </div>
         
-        <div class="content-section">
-            <div class="input-section">
-                <div class="toolbar">
-                    <span class="toolbar-label">Input</span>
-                    <div class="toolbar-options">
-                        <label class="upload-option">
-                            <input type="file" accept=".swift,.txt" onchange="uploadSwiftFile('input', event)">
-                            <span class="upload-icon">📁</span>
-                        </label>
-                        <button class="fullscreen-option" title="Full Screen" onclick="toggleFullScreen(this)">
-                            <span class="fullscreen-icon">⛶</span>
-                        </button>
-                        <button class="clear-option" title="Clear" onclick="clearSwift('input')">
-                            <span class="clear-icon">🗑️</span>
-                        </button>
+        <div class="json-converter-layout">
+            <!-- Left side: Input -->
+            <div class="json-converter-left">
+                <div class="json-converter-box">
+                    <div class="toolbar">
+                        <span class="toolbar-label">Input</span>
+                        <div class="toolbar-options">
+                            <label class="upload-option">
+                                <input type="file" accept=".swift,.txt" onchange="uploadSwiftFile('input', event)">
+                                <span class="upload-icon">📁</span>
+                            </label>
+                            <button class="fullscreen-option" title="Full Screen" onclick="toggleFullScreen(this)">
+                                <span class="fullscreen-icon">⛶</span>
+                            </button>
+                            <button class="clear-option" title="Clear" onclick="clearSwift('input')">
+                                <span class="clear-icon">🗑️</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="code-area-wrapper">
+                        <textarea class="json-textarea" id="swiftInput" placeholder="Paste or type your Swift code here..."></textarea>
                     </div>
                 </div>
-                <div class="code-area-wrapper">
-                    <div class="code-scroll" id="inputScroll">
-                        <div class="line-numbers" id="inputLineNumbers"></div>
-                        <textarea class="formatter-textarea" id="swiftInput" placeholder="Paste or type your Swift code here..." oninput="updateInputLineNumbers()" onscroll="syncScroll('input')"></textarea>
-                    </div>
-                </div>
-                <div id="errorMsg" class="error-message" style="display:none;"></div>
             </div>
             
-            <div class="output-section">
-                <div class="toolbar">
-                    <span class="toolbar-label">Output</span>
-                    <div class="toolbar-options">
-                        <button class="fullscreen-option" title="Full Screen" onclick="toggleFullScreen(this)">
-                            <span class="fullscreen-icon">⛶</span>
-                        </button>
-                        <button class="clear-option" title="Clear" onclick="clearSwift('output')">
-                            <span class="clear-icon">🗑️</span>
-                        </button>
+            <!-- Right side: Output -->
+            <div class="json-converter-right">
+                <div class="json-converter-box">
+                    <div class="toolbar">
+                        <span class="toolbar-label">Output</span>
+                        <div class="toolbar-options">
+                            <button class="fullscreen-option" title="Full Screen" onclick="toggleFullScreen(this)">
+                                <span class="fullscreen-icon">⛶</span>
+                            </button>
+                            <button class="clear-option" title="Clear" onclick="clearSwift('output')">
+                                <span class="clear-icon">🗑️</span>
+                            </button>
+                        </div>
                     </div>
-                </div>
-                <div class="code-area-wrapper">
-                    <div class="code-scroll" id="outputScroll">
-                        <div class="line-numbers" id="outputLineNumbers"></div>
-                        <textarea class="formatter-textarea" id="swiftOutput" placeholder="Formatted/Beautified Swift will appear here..." readonly oninput="updateOutputLineNumbers()" onscroll="syncScroll('output')"></textarea>
+                    <div class="code-area-wrapper">
+                        <textarea class="json-textarea" id="swiftOutput" placeholder="Formatted/Beautified Swift will appear here..." readonly></textarea>
                     </div>
                 </div>
             </div>

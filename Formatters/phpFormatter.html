@@ -21,48 +21,47 @@ permalink: /Formatters/phpFormatter.html
         <button onclick="downloadPHP()">Download PHP</button>
     </div>
     
-    <div class="content-section">
-        <div class="input-section">
-            <div class="toolbar">
-                <span class="toolbar-label">Input</span>
-                <div class="toolbar-options">
-                    <label class="upload-option">
-                        <input type="file" accept=".php,.txt" onchange="uploadPHPFile('input', event)">
-                        <span class="upload-icon">📁</span>
-                    </label>
-                    <button class="fullscreen-option" title="Full Screen" onclick="toggleFullScreen(this)">
-                        <span class="fullscreen-icon">⛶</span>
-                    </button>
-                    <button class="clear-option" title="Clear" onclick="clearPHP('input')">
-                        <span class="clear-icon">🗑️</span>
-                    </button>
+    <div class="json-converter-layout">
+        <!-- Left side: Input -->
+        <div class="json-converter-left">
+            <div class="json-converter-box">
+                <div class="toolbar">
+                    <span class="toolbar-label">Input</span>
+                    <div class="toolbar-options">
+                        <label class="upload-option">
+                            <input type="file" accept=".php,.txt" onchange="uploadPHPFile('input', event)">
+                            <span class="upload-icon">📁</span>
+                        </label>
+                        <button class="fullscreen-option" title="Full Screen" onclick="toggleFullScreen(this)">
+                            <span class="fullscreen-icon">⛶</span>
+                        </button>
+                        <button class="clear-option" title="Clear" onclick="clearPHP('input')">
+                            <span class="clear-icon">🗑️</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="code-area-wrapper">
+                    <textarea class="json-textarea" id="phpInput" placeholder="Paste or type your PHP code here..."></textarea>
                 </div>
             </div>
-            <div class="code-area-wrapper">
-                <div class="code-scroll" id="inputScroll">
-                    <div class="line-numbers" id="inputLineNumbers"></div>
-                    <textarea class="formatter-textarea" id="phpInput" placeholder="Paste or type your PHP code here..." oninput="updateInputLineNumbers()" onscroll="syncScroll('input')"></textarea>
-                </div>
-            </div>
-            <div id="errorMsg" class="error-message" style="display:none;"></div>
         </div>
         
-        <div class="output-section">
-            <div class="toolbar">
-                <span class="toolbar-label">Output</span>
-                <div class="toolbar-options">
-                    <button class="fullscreen-option" title="Full Screen" onclick="toggleFullScreen(this)">
-                        <span class="fullscreen-icon">⛶</span>
-                    </button>
-                    <button class="clear-option" title="Clear" onclick="clearPHP('output')">
-                        <span class="clear-icon">🗑️</span>
-                    </button>
+        <!-- Right side: Output -->
+        <div class="json-converter-right">
+            <div class="json-converter-box">
+                <div class="toolbar">
+                    <span class="toolbar-label">Output</span>
+                    <div class="toolbar-options">
+                        <button class="fullscreen-option" title="Full Screen" onclick="toggleFullScreen(this)">
+                            <span class="fullscreen-icon">⛶</span>
+                        </button>
+                        <button class="clear-option" title="Clear" onclick="clearPHP('output')">
+                            <span class="clear-icon">🗑️</span>
+                        </button>
+                    </div>
                 </div>
-            </div>
-            <div class="code-area-wrapper">
-                <div class="code-scroll" id="outputScroll">
-                    <div class="line-numbers" id="outputLineNumbers"></div>
-                    <textarea class="formatter-textarea" id="phpOutput" placeholder="Formatted/Beautified PHP will appear here..." readonly oninput="updateOutputLineNumbers()" onscroll="syncScroll('output')"></textarea>
+                <div class="code-area-wrapper">
+                    <textarea class="json-textarea" id="phpOutput" placeholder="Formatted/Beautified PHP will appear here..." readonly></textarea>
                 </div>
             </div>
         </div>
@@ -229,10 +228,8 @@ permalink: /Formatters/phpFormatter.html
                 const text = e.target.result;
                 if (which === 'input') {
                     document.getElementById('phpInput').value = text;
-                    updateInputLineNumbers();
                 } else {
                     document.getElementById('phpOutput').value = text;
-                    updateOutputLineNumbers();
                 }
             } catch (error) {
                 showError('Error reading file: ' + error.message);
@@ -244,37 +241,23 @@ permalink: /Formatters/phpFormatter.html
     function clearPHP(which) {
         if (which === 'input') {
             document.getElementById('phpInput').value = '';
-            updateInputLineNumbers();
         } else {
             document.getElementById('phpOutput').value = '';
-            updateOutputLineNumbers();
         }
         clearError();
     }
 
     function toggleFullScreen(button) {
-        const box = button.closest('.formatter-box');
-        if (document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement) {
-            if (document.exitFullscreen) {
-                document.exitFullscreen();
-            } else if (document.webkitExitFullscreen) {
-                document.webkitExitFullscreen();
-            } else if (document.msExitFullscreen) {
-                document.msExitFullscreen();
-            }
+        const box = button.closest('.json-converter-box');
+        if (!document.fullscreenElement) {
+            box.requestFullscreen().catch(err => {
+                console.log('Error attempting to enable fullscreen:', err);
+            });
         } else {
-            if (box.requestFullscreen) {
-                box.requestFullscreen();
-            } else if (box.webkitRequestFullscreen) {
-                box.webkitRequestFullscreen();
-            } else if (box.msRequestFullscreen) {
-                box.msRequestFullscreen();
-            }
+            document.exitFullscreen();
         }
     }
 
-    // Initialize line numbers
-    updateInputLineNumbers();
-    updateOutputLineNumbers();
+
 </script>
 
