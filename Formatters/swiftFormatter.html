@@ -67,26 +67,7 @@ permalink: /Formatters/swiftFormatter.html
     <div id="popupMsg" class="popup" style="display:none;"><span id="popupText"></span><button class="close-btn" onclick="closePopup()">✕</button></div>
 </div>
 
-<!-- Mobile Fullscreen Overlays -->
-<div id="mobileFullscreenInput" class="mobile-fullscreen-overlay">
-    <div class="mobile-fullscreen-header">
-        <div class="mobile-fullscreen-title">Input - Fullscreen</div>
-        <button class="mobile-fullscreen-close" onclick="exitMobileFullscreen('input')">✕</button>
-    </div>
-    <div class="mobile-fullscreen-content">
-        <textarea id="mobileInputTextarea" class="mobile-fullscreen-textarea" placeholder="Enter Swift code here..."></textarea>
-    </div>
-</div>
 
-<div id="mobileFullscreenOutput" class="mobile-fullscreen-overlay">
-    <div class="mobile-fullscreen-header">
-        <div class="mobile-fullscreen-title">Output - Fullscreen</div>
-        <button class="mobile-fullscreen-close" onclick="exitMobileFullscreen('output')">✕</button>
-    </div>
-    <div class="mobile-fullscreen-content">
-        <textarea id="mobileOutputTextarea" class="mobile-fullscreen-textarea" readonly></textarea>
-    </div>
-</div>
 
 <script>
     function showError(msg) {
@@ -270,68 +251,24 @@ permalink: /Formatters/swiftFormatter.html
     }
 
     function toggleFullScreen(button) {
-        if (window.innerWidth <= 768) {
-            const box = button.closest('.formatter-box');
-            const isInput = box.querySelector('#swiftInput') !== null;
-            enterMobileFullscreen(isInput ? 'input' : 'output');
+        const box = button.closest('.formatter-box');
+        if (document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement) {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            } else if (document.webkitExitFullscreen) {
+                document.webkitExitFullscreen();
+            } else if (document.msExitFullscreen) {
+                document.msExitFullscreen();
+            }
         } else {
-            const box = button.closest('.formatter-box');
-            if (document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement) {
-                if (document.exitFullscreen) {
-                    document.exitFullscreen();
-                } else if (document.webkitExitFullscreen) {
-                    document.webkitExitFullscreen();
-                } else if (document.msExitFullscreen) {
-                    document.msExitFullscreen();
-                }
-            } else {
-                if (box.requestFullscreen) {
-                    box.requestFullscreen();
-                } else if (box.webkitRequestFullscreen) {
-                    box.webkitRequestFullscreen();
-                } else if (box.msRequestFullscreen) {
-                    box.msRequestFullscreen();
-                }
+            if (box.requestFullscreen) {
+                box.requestFullscreen();
+            } else if (box.webkitRequestFullscreen) {
+                box.webkitRequestFullscreen();
+            } else if (box.msRequestFullscreen) {
+                box.msRequestFullscreen();
             }
         }
-    }
-
-    function exitFullScreen() {
-        if (document.exitFullscreen) {
-            document.exitFullscreen();
-        } else if (document.webkitExitFullscreen) {
-            document.webkitExitFullscreen();
-        } else if (document.msExitFullscreen) {
-            document.msExitFullscreen();
-        }
-    }
-
-    function enterMobileFullscreen(type) {
-        const overlay = document.getElementById(`mobileFullscreen${type.charAt(0).toUpperCase() + type.slice(1)}`);
-        const textarea = document.getElementById(`mobile${type.charAt(0).toUpperCase() + type.slice(1)}Textarea`);
-        const originalTextarea = document.getElementById(`swift${type.charAt(0).toUpperCase() + type.slice(1)}`);
-        
-        textarea.value = originalTextarea.value;
-        overlay.classList.add('active');
-        
-        setTimeout(() => {
-            textarea.focus();
-        }, 100);
-    }
-
-    function exitMobileFullscreen(type) {
-        const overlay = document.getElementById(`mobileFullscreen${type.charAt(0).toUpperCase() + type.slice(1)}`);
-        const textarea = document.getElementById(`mobile${type.charAt(0).toUpperCase() + type.slice(1)}Textarea`);
-        const originalTextarea = document.getElementById(`swift${type.charAt(0).toUpperCase() + type.slice(1)}`);
-        
-        originalTextarea.value = textarea.value;
-        if (type === 'input') {
-            updateInputLineNumbers();
-        } else {
-            updateOutputLineNumbers();
-        }
-        
-        overlay.classList.remove('active');
     }
 
     // Initialize line numbers
