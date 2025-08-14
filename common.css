@@ -9877,7 +9877,7 @@ body .main-container {
 
 .json-converter-layout {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr auto 1fr;
   gap: 40px;
   width: 100%;
   align-items: start;
