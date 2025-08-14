@@ -18252,9 +18252,14 @@ body {
 /* === Welcome Title === */
 .welcome-title {
   text-align: center;
-  padding: 40px 20px 30px 20px;
+  padding: 30px 20px 20px 20px;
   margin-top: 60px;
   background: linear-gradient(135deg, #fafdff 0%, #e8f6ef 100%);
+}
+
+/* Reduce gap between welcome title and sections */
+.welcome-title + .section-container {
+  margin-top: 60px !important;
 }
 
 .welcome-title h1 {
@@ -18279,6 +18284,10 @@ body {
   .welcome-title h1 {
     font-size: 2.4em;
   }
+  
+  .welcome-title + .section-container {
+    margin-top: 40px !important;
+  }
 }
 
 @media (max-width: 480px) {
@@ -18289,5 +18298,9 @@ body {
   
   .welcome-title h1 {
     font-size: 2em;
+  }
+  
+  .welcome-title + .section-container {
+    margin-top: 30px !important;
   }
 }
