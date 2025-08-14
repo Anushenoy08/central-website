@@ -10,65 +10,66 @@ permalink: /Formatters/jsonFormatter.html
     <a href="/article/">ARTICLES</a>
 </div>
 
-<div class="main-container">
-        <div class="tool-title">JSON FORMATTER</div>
-        
+<div class="json-converter-container">
+    <div class="json-converter-title">JSON Formatter</div>
+    
+    <div class="json-converter-layout">
+      <!-- Left side: Input -->
+      <div class="json-converter-left">
+        <div class="json-converter-box">
+          <div class="toolbar">
+            <span class="toolbar-label">Input</span>
+            <div class="toolbar-options">
+              <label class="upload-option">
+                <input type="file" accept="application/json" onchange="uploadJSONFile(event)">
+                <span class="upload-icon">📁</span>
+              </label>
+              <button class="fullscreen-option" title="Full Screen" onclick="toggleFullScreen(this)">
+                <span class="fullscreen-icon">⛶</span>
+              </button>
+              <button class="clear-option" title="Clear" onclick="clearInput()">
+                <span class="clear-icon">🗑️</span>
+              </button>
+            </div>
+          </div>
+          <div class="code-area-wrapper">
+            <textarea class="json-textarea" id="jsonInput" placeholder='Enter JSON Array Example: [{"name":"John","age":30},{"name":"Jane","age":25}]'></textarea>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Center: Buttons -->
+      <div class="json-converter-center">
         <div class="buttons-section">
-            <button onclick="formatJSON()">Format</button>
-            <button onclick="beautifyJSON()">Beautify</button>
-            <button onclick="validateJSON()">Validate</button>
-            <button onclick="copyJSON()">Copy JSON</button>
-            <button onclick="downloadJSON()">Download JSON</button>
+            <button onclick="formatKotlin()">Format</button>
+            <button onclick="beautifyKotlin()">Beautify</button>
+            <button onclick="validateKotlin()">Validate</button>
+            <button onclick="copyKotlin()">Copy Kotlin</button>
+            <button onclick="downloadKotlin()">Download Kotlin</button>
         </div>
-        
-        <div class="json-converter-layout">
-            <!-- Left side: Input -->
-            <div class="json-converter-left">
-                <div class="json-converter-box">
-                    <div class="toolbar">
-                        <span class="toolbar-label">Input</span>
-                        <div class="toolbar-options">
-                            <label class="upload-option">
-                                <input type="file" accept=".json,.txt" onchange="uploadJSONFile('input', event)">
-                                <span class="upload-icon">📁</span>
-                            </label>
-                            <button class="fullscreen-option" title="Full Screen" onclick="toggleFullScreen(this)">
-                                <span class="fullscreen-icon">⛶</span>
-                            </button>
-                            <button class="clear-option" title="Clear" onclick="clearJSON('input')">
-                                <span class="clear-icon">🗑️</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="code-area-wrapper">
-                        <textarea class="json-textarea" id="jsonInput" placeholder="Paste or type your JSON here..."></textarea>
-                    </div>
-                </div>
+      </div>
+      
+      <!-- Right side: Output -->
+      <div class="json-converter-right">
+        <div class="json-converter-box">
+          <div class="toolbar">
+            <span class="toolbar-label">Output</span>
+            <div class="toolbar-options">
+              <button class="fullscreen-option" title="Full Screen" onclick="toggleFullScreen(this)">
+                <span class="fullscreen-icon">⛶</span>
+              </button>
+              <button class="clear-option" title="Clear" onclick="clearOutput()">
+                <span class="clear-icon">🗑️</span>
+              </button>
             </div>
-           
-            <!-- Right side: Output -->
-            <div class="json-converter-right">
-                <div class="json-converter-box">
-                    <div class="toolbar">
-                        <span class="toolbar-label">Output</span>
-                        <div class="toolbar-options">
-                            <button class="fullscreen-option" title="Full Screen" onclick="toggleFullScreen(this)">
-                                <span class="fullscreen-icon">⛶</span>
-                            </button>
-                            <button class="clear-option" title="Clear" onclick="clearJSON('output')">
-                                <span class="clear-icon">🗑️</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="code-area-wrapper">
-                        <textarea class="json-textarea" id="jsonOutput" placeholder="Formatted/Beautified JSON will appear here..." readonly></textarea>
-                    </div>
-                </div>
-            </div>
+          </div>
+          <div class="code-area-wrapper">
+            <textarea class="json-textarea" id="csvOutput" placeholder="CSV result will appear here..." readonly></textarea>
+          </div>
         </div>
+      </div>
     </div>
-</div>
-
+  </div>
 <div id="popupMsg" class="popup" style="display:none;"><span id="popupText"></span><button class="close-btn" onclick="closePopup()">✕</button></div>
 
 
