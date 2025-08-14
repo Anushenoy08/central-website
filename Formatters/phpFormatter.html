@@ -10,8 +10,8 @@ permalink: /Formatters/phpFormatter.html
     <a href="/article/">ARTICLES</a>
 </div>
 
-<div class="main-container">
-    <div class="tool-title">PHP FORMATTER</div>
+<div class="json-converter-container">
+    <div class="json-converter-title">PHP FORMATTER</div>
     
     <div class="buttons-section">
         <button onclick="formatPHP()">Format</button>
@@ -29,7 +29,7 @@ permalink: /Formatters/phpFormatter.html
                     <span class="toolbar-label">Input</span>
                     <div class="toolbar-options">
                         <label class="upload-option">
-                            <input type="file" accept=".php,.txt" onchange="uploadPHPFile('input', event)">
+                            <input type="file" accept=".php,.txt" onchange="uploadPHPFile(event)">
                             <span class="upload-icon">📁</span>
                         </label>
                         <button class="fullscreen-option" title="Full Screen" onclick="toggleFullScreen(this)">

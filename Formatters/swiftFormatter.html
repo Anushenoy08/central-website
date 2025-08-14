@@ -10,8 +10,8 @@ permalink: /Formatters/swiftFormatter.html
     <a href="/article/">ARTICLES</a>
 </div>
 
-<div class="main-container">
-        <div class="tool-title">SWIFT FORMATTER</div>
+<div class="json-converter-container">
+    <div class="json-converter-title">SWIFT FORMATTER</div>
         
         <div class="buttons-section">
             <button onclick="formatSwift()">Format</button>
@@ -28,10 +28,10 @@ permalink: /Formatters/swiftFormatter.html
                     <div class="toolbar">
                         <span class="toolbar-label">Input</span>
                         <div class="toolbar-options">
-                            <label class="upload-option">
-                                <input type="file" accept=".swift,.txt" onchange="uploadSwiftFile('input', event)">
-                                <span class="upload-icon">📁</span>
-                            </label>
+                                                    <label class="upload-option">
+                            <input type="file" accept=".swift,.txt" onchange="uploadSwiftFile(event)">
+                            <span class="upload-icon">📁</span>
+                        </label>
                             <button class="fullscreen-option" title="Full Screen" onclick="toggleFullScreen(this)">
                                 <span class="fullscreen-icon">⛶</span>
                             </button>

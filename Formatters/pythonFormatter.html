@@ -10,8 +10,8 @@ permalink: /Formatters/pythonFormatter.html
     <a href="/article/">ARTICLES</a>
 </div>
 
-<div class="main-container">
-        <div class="tool-title">PYTHON FORMATTER</div>
+<div class="json-converter-container">
+    <div class="json-converter-title">PYTHON FORMATTER</div>
         
         <div class="buttons-section">
             <button onclick="formatPython()">Format</button>
@@ -28,10 +28,10 @@ permalink: /Formatters/pythonFormatter.html
                     <div class="toolbar">
                         <span class="toolbar-label">Input</span>
                         <div class="toolbar-options">
-                            <label class="upload-option">
-                                <input type="file" accept=".py,.txt" onchange="uploadPythonFile('input', event)">
-                                <span class="upload-icon">📁</span>
-                            </label>
+                                                    <label class="upload-option">
+                            <input type="file" accept=".py,.txt" onchange="uploadPythonFile(event)">
+                            <span class="upload-icon">📁</span>
+                        </label>
                             <button class="fullscreen-option" title="Full Screen" onclick="toggleFullScreen(this)">
                                 <span class="fullscreen-icon">⛶</span>
                             </button>
