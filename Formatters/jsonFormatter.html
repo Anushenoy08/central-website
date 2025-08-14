@@ -14,6 +14,18 @@ permalink: /Formatters/jsonFormatter.html
     <div class="json-converter-title">JSON Formatter</div>
     
     <div class="json-converter-layout">
+
+      <!--  Buttons -->
+      <div class="json-converter-center">
+        <div class="buttons-section">
+            <button onclick="formatKotlin()">Format</button>
+            <button onclick="beautifyKotlin()">Beautify</button>
+            <button onclick="validateKotlin()">Validate</button>
+            <button onclick="copyKotlin()">Copy Kotlin</button>
+            <button onclick="downloadKotlin()">Download Kotlin</button>
+        </div>
+      </div>
+
       <!-- Left side: Input -->
       <div class="json-converter-left">
         <div class="json-converter-box">
@@ -33,19 +45,8 @@ permalink: /Formatters/jsonFormatter.html
             </div>
           </div>
           <div class="code-area-wrapper">
-            <textarea class="json-textarea" id="jsonInput" placeholder='Enter JSON Array Example: [{"name":"John","age":30},{"name":"Jane","age":25}]'></textarea>
+            <textarea class="json-textarea" id="jsonInput" placeholder="Paste or type your JSON here..."></textarea>
           </div>
-        </div>
-      </div>
-      
-      <!-- Center: Buttons -->
-      <div class="json-converter-center">
-        <div class="buttons-section">
-            <button onclick="formatKotlin()">Format</button>
-            <button onclick="beautifyKotlin()">Beautify</button>
-            <button onclick="validateKotlin()">Validate</button>
-            <button onclick="copyKotlin()">Copy Kotlin</button>
-            <button onclick="downloadKotlin()">Download Kotlin</button>
         </div>
       </div>
       
@@ -64,12 +65,15 @@ permalink: /Formatters/jsonFormatter.html
             </div>
           </div>
           <div class="code-area-wrapper">
-            <textarea class="json-textarea" id="csvOutput" placeholder="CSV result will appear here..." readonly></textarea>
+            <textarea class="json-textarea" id="jsonOutput" placeholder="Formatted/Beautified JSON will appear here..." readonly></textarea>
+
           </div>
         </div>
       </div>
     </div>
   </div>
+
+
 <div id="popupMsg" class="popup" style="display:none;"><span id="popupText"></span><button class="close-btn" onclick="closePopup()">✕</button></div>
 
 
