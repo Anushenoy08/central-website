@@ -21,18 +21,21 @@ permalink: /Formatters/perlFormatter.html
 </div>
     <div class="formatter-box-row">
         <div class="formatter-box">
-        <div class="box-header">
-            <span class="box-label">Input</span>
-                            <div class="box-options">
-                    <label class="upload-label">
+            <div class="toolbar">
+                <span class="toolbar-label">Input</span>
+                <div class="toolbar-options">
+                    <label class="upload-option">
                         <input type="file" accept=".pl,.pm,.txt" onchange="uploadPerlFile('input', event)">
                         <span class="upload-icon">📁</span>
-                        <span class="upload-text">Upload a file</span>
                     </label>
-                <button class="icon-btn" title="Full Screen" onclick="toggleFullScreen(this)">⛶<span class="tooltip">Full Screen</span></button>
-                <button class="icon-btn" title="Clear" onclick="clearPerl('input')">🗑️<span class="tooltip">Clear</span></button>
+                    <button class="fullscreen-option" title="Full Screen" onclick="toggleFullScreen(this)">
+                        <span class="fullscreen-icon">⛶</span>
+                    </button>
+                    <button class="clear-option" title="Clear" onclick="clearPerl('input')">
+                        <span class="clear-icon">🗑️</span>
+                    </button>
+                </div>
             </div>
-        </div>
         <div class="code-area-wrapper">
             <div class="code-scroll" id="inputScroll">
                 <div class="line-numbers" id="inputLineNumbers"></div>
@@ -40,23 +43,25 @@ permalink: /Formatters/perlFormatter.html
                 </div>
         </div>
         <div id="errorMsg" class="error-message" style="display:none;"></div>
-        <button class="close-fullscreen-btn" onclick="exitFullScreen()">✕</button>
     </div>
         <div class="formatter-box">
-        <div class="box-header">
-            <span class="box-label">Output</span>
-            <div class="box-options">
-                <button class="icon-btn" title="Full Screen" onclick="toggleFullScreen(this)">⛶<span class="tooltip">Full Screen</span></button>
-                <button class="icon-btn" title="Clear" onclick="clearPerl('output')">🗑️<span class="tooltip">Clear</span></button>
+            <div class="toolbar">
+                <span class="toolbar-label">Output</span>
+                <div class="toolbar-options">
+                    <button class="fullscreen-option" title="Full Screen" onclick="toggleFullScreen(this)">
+                        <span class="fullscreen-icon">⛶</span>
+                    </button>
+                    <button class="clear-option" title="Clear" onclick="clearPerl('output')">
+                        <span class="clear-icon">🗑️</span>
+                    </button>
+                </div>
             </div>
-        </div>
         <div class="code-area-wrapper">
             <div class="code-scroll" id="outputScroll">
                 <div class="line-numbers" id="outputLineNumbers"></div>
                     <textarea class="formatter-textarea" id="perlOutput" placeholder="Formatted/Beautified Perl will appear here..." readonly oninput="updateOutputLineNumbers()" onscroll="syncScroll('output')"></textarea>
                 </div>
             </div>
-            <button class="close-fullscreen-btn" onclick="exitFullScreen()">✕</button>
     </div>
 </div>
 <div id="popupMsg" class="popup" style="display:none;"><span id="popupText"></span><button class="close-btn" onclick="closePopup()">✕</button></div>

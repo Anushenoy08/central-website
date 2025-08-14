@@ -10002,6 +10002,67 @@ body .main-container {
   border-radius: 10px 10px 0 0 !important;
 }
 
+/* New Toolbar Styling for Formatters */
+.formatter-container .formatter-box .toolbar {
+  background: #111 !important;
+  padding: 12px 16px !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  border-radius: 8px 8px 0 0 !important;
+  margin: -32px -32px 16px -32px !important;
+}
+
+.formatter-container .formatter-box .toolbar .toolbar-label {
+  color: #fff !important;
+  font-weight: 600 !important;
+  font-size: 1.1em !important;
+}
+
+.formatter-container .formatter-box .toolbar .toolbar-options {
+  display: flex !important;
+  gap: 12px !important;
+  align-items: center !important;
+}
+
+.formatter-container .formatter-box .toolbar .upload-option {
+  display: flex !important;
+  align-items: center !important;
+  cursor: pointer !important;
+  color: #fff !important;
+}
+
+.formatter-container .formatter-box .toolbar .upload-option input[type='file'] {
+  display: none !important;
+}
+
+.formatter-container .formatter-box .toolbar .upload-icon {
+  font-size: 1.2em !important;
+  color: #fff !important;
+}
+
+.formatter-container .formatter-box .toolbar .fullscreen-option,
+.formatter-container .formatter-box .toolbar .clear-option {
+  background: none !important;
+  border: none !important;
+  cursor: pointer !important;
+  color: #fff !important;
+  padding: 6px !important;
+  border-radius: 4px !important;
+  transition: background 0.2s !important;
+}
+
+.formatter-container .formatter-box .toolbar .fullscreen-option:hover,
+.formatter-container .formatter-box .toolbar .clear-option:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+}
+
+.formatter-container .formatter-box .toolbar .fullscreen-icon,
+.formatter-container .formatter-box .toolbar .clear-icon {
+  font-size: 1.1em !important;
+  color: #fff !important;
+}
+
 .json-converter-container .json-converter-box .toolbar .toolbar-label {
   color: #fff !important;
   font-weight: 600 !important;
@@ -16280,7 +16341,7 @@ body {
     color: #fff;
   border: none;
   border-radius: 8px;
-    padding: 12px 20px;
+    padding: 12px 16px;
     font-size: 1.1em;
   font-weight: 500;
   cursor: pointer;
@@ -16288,7 +16349,8 @@ body {
     transition: background 0.2s, box-shadow 0.2s;
     white-space: nowrap;
     width: auto;
-    min-width: fit-content;
+    min-width: 120px;
+    max-width: 150px;
 }
 
 .action-buttons-container button:hover {
